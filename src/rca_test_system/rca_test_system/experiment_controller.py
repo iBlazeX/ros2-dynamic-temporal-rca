@@ -52,9 +52,12 @@ SCENARIOS: List[Dict[str, Any]] = [
          expected_chain=['navigation_node']),
     dict(key='sensor_degradation', name='Scenario 5: Sensor Degradation (NaNs)',
          target='sensor_node', fault='degradation', param=0.0,
-         # localization reacts by *freezing* its pose; the generic monitor has no
-         # displacement metric, so the observable chain ends at perception.
-         expected_chain=['sensor_node', 'perception_node']),
+         # Observable chain (used for chain accuracy): the monitor has no pose
+         # displacement metric, so localization's frozen pose is invisible to it.
+         expected_chain=['sensor_node', 'perception_node'],
+         # Physical chain (reported separately as coverage, never credited):
+         # localization *is* affected (pose freezes after 3 empty inputs).
+         physical_chain=['sensor_node', 'perception_node', 'localization_node']),
     dict(key='perception_delay', name='Scenario 6: Perception Processing Delay',
          target='perception_node', fault='processing_delay', param=0.40,
          expected_chain=['perception_node', 'localization_node', 'navigation_node']),
@@ -111,8 +114,50 @@ class ExperimentController(Node):
         self.ablation_results: List[Dict[str, Any]] = []
         self.rca_window_sec = 6.0   # must match the monitor's rca_window_sec parameter
         self.t_last_clear: Optional[float] = None
-        self.warmup_false_alarms = 0
+        # Fault-free observation windows measured from the monitor's event store:
+        # [{'name', 't_start', 't_end', 'duration_sec', 'anomalies', 'diagnoses'}]
+        self.nominal_windows: List[Dict[str, Any]] = []
         self.get_logger().info(f'ExperimentController ready with DB: {db_path}')
+
+    # --------------------------------------------------------- nominal windows
+
+    def record_nominal_window(self, name: str, t_start: float, t_end: float) -> Dict[str, Any]:
+        """Counts monitor anomalies / diagnoses in a window during which no fault was active."""
+        anoms = self.store.get_anomalies_between(t_start, t_end)
+        diags = self.store.get_diagnoses_between(t_start, t_end)
+        w = {
+            'name': name, 't_start': t_start, 't_end': t_end,
+            'duration_sec': round(max(0.0, t_end - t_start), 3),
+            'anomalies': len(anoms), 'diagnoses': len(diags),
+            'anomalous_nodes': sorted({a['node'] for a in anoms}),
+            'diagnosed_roots': sorted({d['root_cause'] for d in diags}),
+        }
+        self.nominal_windows.append(w)
+        return w
+
+    def run_nominal_soak(self, soak_sec: float) -> Dict[str, Any]:
+        """Observes the fault-free system for `soak_sec` and records false alarms.
+
+        Runs inside the same benchmark execution so the nominal behaviour lands in
+        the same artifact as the fault scenarios. The monitor is not told anything.
+        """
+        print('\n' + '=' * 72)
+        print(f'NOMINAL SOAK: observing fault-free operation for {soak_sec:.0f}s')
+        print('=' * 72)
+        self.clear_faults()
+        t0 = time.time()
+        time.sleep(soak_sec)
+        w = self.record_nominal_window('nominal_soak', t0, time.time())
+        print(f"  duration {w['duration_sec']:.1f}s | anomalies {w['anomalies']} | "
+              f"diagnoses (false alarms) {w['diagnoses']}"
+              + (f" | anomalous nodes {w['anomalous_nodes']}" if w['anomalies'] else '')
+              + (f" | diagnosed roots {w['diagnosed_roots']}" if w['diagnoses'] else ''))
+        return w
+
+    def compute_aggregate(self) -> Dict[str, Any]:
+        """Single source of truth for the aggregate used by print_summary() and save()."""
+        return RCAEvaluator.aggregate_metrics(self.eval_results, k=self.k,
+                                              nominal_windows=self.nominal_windows)
 
     # ----------------------------------------------------------- fault control
 
@@ -161,11 +206,13 @@ class ExperimentController(Node):
         if not quiet:
             print('  (warning: monitor still reporting diagnoses before injection)')
         t_inject = time.time()
-        # False alarms during the nominal (pre-injection) window: diagnoses issued
-        # after the previous fault's evidence has left the RCA window and before injection.
+        # Fault-free (pre-injection) window: starts once the previous fault's evidence
+        # has left the RCA window. Usually short; the dedicated nominal soak is the
+        # main source of nominal evidence.
         nominal_start = max(t_settle_start, (self.t_last_clear or 0.0) + self.rca_window_sec + 1.0)
-        nominal_diags = self.store.get_diagnoses_between(nominal_start, t_inject)
-        nominal_len = max(0.0, t_inject - nominal_start)
+        nominal_w = self.record_nominal_window(f'pre_{sc["key"]}', nominal_start, t_inject)
+        nominal_diags = nominal_w['diagnoses']
+        nominal_len = nominal_w['duration_sec']
 
         # 2. Inject fault
         self.inject_fault(target, fault, param, duration)
@@ -196,19 +243,23 @@ class ExperimentController(Node):
                 'correct_diagnosis_latency_sec': None, 'false_diagnosis_rate': None,
                 'num_diagnoses_after_injection': 0, 'num_anomalies': len(anoms),
                 'chain_accuracy': 0.0, 'chain_order_correct': False,
-                'nominal_false_alarms': len(nominal_diags), 'explanation': 'No diagnosis recorded in window.',
+                'physical_chain_coverage': 0.0,
+                'nominal_false_alarms': nominal_diags, 'nominal_window_sec': nominal_len,
+                'explanation': 'No diagnosis recorded in window.',
             }
         else:
             final = _diag_from_record(diags[-1])
             res = RCAEvaluator.evaluate_single(
                 diagnosis=final, ground_truth_node=target, fault_injection_time=t_inject,
                 fault_type=fault, k=self.k, expected_chain=sc['expected_chain'],
+                physical_chain=sc.get('physical_chain', sc['expected_chain']),
                 first_anomaly_time=first_anom_t, first_diagnosis_time=first_diag_t,
                 first_correct_diagnosis_time=first_correct_t, diagnoses_after_injection=roots_after,
             )
             res.update({'scenario': name, 'key': sc['key'], 'num_anomalies': len(anoms),
                         't_inject': t_inject, 't_end': t_end,
-                        'nominal_false_alarms': len(nominal_diags), 'explanation': final.explanation,
+                        'nominal_false_alarms': nominal_diags, 'nominal_window_sec': nominal_len,
+                        'explanation': final.explanation,
                         'anomalous_nodes_observed': sorted({a['node'] for a in anoms}),
                         'discovered_graph': graph_snap['graph'] if graph_snap else None})
 
@@ -219,8 +270,12 @@ class ExperimentController(Node):
             print(f'  diagnosis latency  : {res["diagnosis_latency_sec"]}s  '
                   f'(correct root first named at {res["correct_diagnosis_latency_sec"]}s)')
             print(f'  false diag. rate   : {res["false_diagnosis_rate"]}  over {len(diags)} diagnoses')
-            print(f'  chain accuracy     : {res["chain_accuracy"]}  predicted={res["predicted_chain"]}')
-            print(f'  nominal false alarms before injection: {len(nominal_diags)} (in {nominal_len:.1f}s fault-free window)')
+            print(f'  chain accuracy     : {res["chain_accuracy"]} (observable chain {res["expected_chain"]})  '
+                  f'predicted={res["predicted_chain"]}')
+            if res['physical_chain'] != res['expected_chain']:
+                print(f'  physical coverage  : {res["physical_chain_coverage"]} of physical chain {res["physical_chain"]}; '
+                      f'NOT observed by any monitor metric: {res["physically_affected_unobserved"]}')
+            print(f'  nominal false alarms before injection: {nominal_diags} (in {nominal_len:.1f}s fault-free window)')
             print('\n' + final.explanation)
 
             # 5. Offline controlled comparison on identical evidence
@@ -272,9 +327,24 @@ class ExperimentController(Node):
                   f"{str(r.get('detection_latency_sec')):<6} {str(r.get('diagnosis_latency_sec')):<6} "
                   f"{str(r.get('false_diagnosis_rate')):<6} {r.get('chain_accuracy')}")
         print('-' * 100)
-        agg = RCAEvaluator.aggregate_metrics(self.eval_results, k=self.k)
-        agg['nominal_false_alarms'] = sum(r.get('nominal_false_alarms', 0) for r in self.eval_results) + self.warmup_false_alarms
+        agg = self.compute_aggregate()
         print(json.dumps(agg, indent=2))
+
+        if self.nominal_windows:
+            print('\nNOMINAL (fault-free) WINDOWS observed in this run:')
+            for w in self.nominal_windows:
+                print(f"  {w['name']:<26} {w['duration_sec']:6.1f}s  anomalies={w['anomalies']:<3} "
+                      f"diagnoses(false alarms)={w['diagnoses']}")
+            print(f"  total fault-free time {agg['nominal_fault_free_sec']:.1f}s, "
+                  f"false alarms {agg['nominal_false_alarms']} "
+                  f"({agg['nominal_false_alarms_per_min']} per min)")
+        unobs = [r for r in self.eval_results if r.get('physically_affected_unobserved')]
+        if unobs:
+            print('\nPHYSICALLY AFFECTED BUT UNOBSERVED NODES (not credited to the prediction):')
+            for r in unobs:
+                print(f"  {r['scenario']}: physical={r['physical_chain']} observable={r['expected_chain']} "
+                      f"unobserved={r['physically_affected_unobserved']} "
+                      f"(physical coverage {r['physical_chain_coverage']})")
 
         if self.baseline_results:
             print('\n' + '=' * 100)
@@ -301,7 +371,8 @@ class ExperimentController(Node):
             'generated_at': time.time(),
             'db_path': self.db_path,
             'results': self.eval_results,
-            'aggregate': RCAEvaluator.aggregate_metrics(self.eval_results, k=self.k),
+            'aggregate': self.compute_aggregate(),
+            'nominal_windows': self.nominal_windows,
             'baselines': self.baseline_results,
             'ablations': self.ablation_results,
         }
@@ -319,6 +390,8 @@ def main(args=None):
     parser.add_argument('--duration', type=float, default=9.0, help='Fault duration (s), > observation')
     parser.add_argument('--settle', type=float, default=8.0, help='Max settle time between scenarios (s)')
     parser.add_argument('--k', type=int, default=3, help='k for Top-k accuracy')
+    parser.add_argument('--soak', type=float, default=30.0,
+                        help='Fault-free nominal soak duration (s) run before the scenarios; 0 disables')
     parser.add_argument('--scenarios', type=str, default='',
                         help='Comma-separated scenario keys to run (default: all non-destructive)')
     parser.add_argument('--include-crash', action='store_true', help='Also run the destructive crash scenario last')
@@ -338,9 +411,9 @@ def main(args=None):
     print(f'Waiting {parsed.warmup}s for nominal system warm-up and graph discovery...')
     t_w0 = time.time()
     time.sleep(parsed.warmup)
-    controller.warmup_false_alarms = len(controller.store.get_diagnoses_between(t_w0, time.time()))
-    print(f'Diagnoses issued during {parsed.warmup}s fault-free warm-up (false alarms): '
-          f'{controller.warmup_false_alarms}')
+    w = controller.record_nominal_window('warmup', t_w0, time.time())
+    print(f"Fault-free warm-up {w['duration_sec']:.1f}s: anomalies {w['anomalies']}, "
+          f"diagnoses (false alarms) {w['diagnoses']}")
     snap = controller.store.get_latest_graph()
     if snap:
         g = snap['graph']
@@ -348,6 +421,9 @@ def main(args=None):
               f"edges: {[(e['from'], e['to']) for e in g['edges']]}")
     else:
         print('WARNING: monitor has not recorded a graph snapshot yet.')
+
+    if parsed.soak > 0:
+        controller.run_nominal_soak(parsed.soak)
 
     for sc in selected:
         controller.run_scenario(sc, observation_sec=parsed.observation,

@@ -27,7 +27,23 @@ class RCAEvaluator:
         return (list(ranking).index(ground_truth_node) + 1) if ground_truth_node in ranking else -1
 
     @staticmethod
-    def chain_metrics(predicted_chain: Sequence[str], expected_chain: Sequence[str]) -> Dict[str, Any]:
+    def chain_metrics(
+        predicted_chain: Sequence[str],
+        expected_chain: Sequence[str],
+        physical_chain: Optional[Sequence[str]] = None,
+    ) -> Dict[str, Any]:
+        """Scores the predicted propagation chain.
+
+        `expected_chain` is the *observable* affected set: the nodes whose failure
+        the monitor's metrics can actually see. `chain_accuracy` (Jaccard) and
+        `chain_order_correct` are computed against it.
+
+        `physical_chain` is the physically affected set, which may contain nodes
+        whose symptom is invisible to the monitor. `physical_chain_coverage` is the
+        fraction of physically affected nodes present in the prediction, and
+        `physically_affected_unobserved` lists the ones that are not - the
+        prediction is never credited with those.
+        """
         pred = list(predicted_chain or [])
         exp = list(expected_chain or [])
         ps, es = set(pred), set(exp)
@@ -37,12 +53,18 @@ class RCAEvaluator:
         present = [n for n in exp if n in ps]
         pred_order = [n for n in pred if n in es]
         order_ok = present == pred_order
-        return {
+        out = {
             'chain_accuracy': round(jaccard, 4),
             'chain_order_correct': bool(order_ok and len(present) == len(exp)),
             'predicted_chain': pred,
             'expected_chain': exp,
         }
+        phys = list(physical_chain) if physical_chain is not None else exp
+        phs = set(phys)
+        out['physical_chain'] = phys
+        out['physical_chain_coverage'] = round(len(ps & phs) / len(phs), 4) if phs else 1.0
+        out['physically_affected_unobserved'] = [n for n in phys if n not in ps]
+        return out
 
     @classmethod
     def evaluate_single(
@@ -53,6 +75,7 @@ class RCAEvaluator:
         fault_type: str = '',
         k: int = 3,
         expected_chain: Optional[Sequence[str]] = None,
+        physical_chain: Optional[Sequence[str]] = None,
         first_anomaly_time: Optional[float] = None,
         first_diagnosis_time: Optional[float] = None,
         first_correct_diagnosis_time: Optional[float] = None,
@@ -100,21 +123,55 @@ class RCAEvaluator:
             'ranking': candidate_names,
         }
         if expected_chain is not None:
-            res.update(cls.chain_metrics(diagnosis.propagation_chain, expected_chain))
+            res.update(cls.chain_metrics(diagnosis.propagation_chain, expected_chain, physical_chain))
         return res
 
+    @staticmethod
+    def nominal_metrics(
+        windows: List[Dict[str, Any]],
+    ) -> Dict[str, Any]:
+        """Summarises fault-free (nominal) observation windows.
+
+        Each window is {'name', 'duration_sec', 'anomalies', 'diagnoses'} measured
+        by the evaluation layer from the monitor's event store while no fault was
+        active. A diagnosis issued in a fault-free window is a false alarm.
+        """
+        total_sec = sum(float(w.get('duration_sec', 0.0)) for w in windows)
+        anomalies = sum(int(w.get('anomalies', 0)) for w in windows)
+        diagnoses = sum(int(w.get('diagnoses', 0)) for w in windows)
+        return {
+            'nominal_fault_free_sec': round(total_sec, 3),
+            'nominal_anomalies': anomalies,
+            'nominal_diagnoses': diagnoses,
+            'nominal_false_alarms': diagnoses,
+            'nominal_false_alarms_per_min': round(diagnoses / (total_sec / 60.0), 4) if total_sec > 0 else None,
+        }
+
     @classmethod
-    def aggregate_metrics(cls, eval_results: List[Dict[str, Any]], k: int = 3) -> Dict[str, Any]:
-        """Computes aggregate evaluation summary across multiple experiments."""
+    def aggregate_metrics(
+        cls,
+        eval_results: List[Dict[str, Any]],
+        k: int = 3,
+        nominal_windows: Optional[List[Dict[str, Any]]] = None,
+    ) -> Dict[str, Any]:
+        """Computes the aggregate evaluation summary across multiple experiments.
+
+        This is the single source of truth for the aggregate: anything that
+        prints or saves an aggregate must call this function with the same inputs.
+        """
         n = len(eval_results)
+        nominal = cls.nominal_metrics(nominal_windows or [])
         if n == 0:
-            return {
+            out = {
                 'total_experiments': 0, 'top1_accuracy': 0.0, f'top{k}_accuracy': 0.0,
                 'top3_accuracy': 0.0, 'mean_reciprocal_rank': 0.0,
                 'avg_detection_latency_sec': 0.0, 'avg_diagnosis_latency_sec': 0.0,
                 'avg_correct_diagnosis_latency_sec': 0.0, 'false_diagnosis_rate': 0.0,
                 'avg_chain_accuracy': 0.0, 'chain_order_accuracy': 0.0,
+                'avg_physical_chain_coverage': 0.0,
             }
+            out.update(nominal)
+            return out
 
         def _avg(key):
             vals = [r[key] for r in eval_results if r.get(key) is not None]
@@ -133,7 +190,7 @@ class RCAEvaluator:
         )
         chain_ok = [r for r in eval_results if 'chain_order_correct' in r]
 
-        return {
+        out = {
             'total_experiments': n,
             'top1_accuracy': round(top1 / n, 4),
             f'top{k}_accuracy': round(topk / n, 4),
@@ -143,7 +200,15 @@ class RCAEvaluator:
             'avg_diagnosis_latency_sec': _avg('diagnosis_latency_sec'),
             'avg_correct_diagnosis_latency_sec': _avg('correct_diagnosis_latency_sec'),
             'false_diagnosis_rate': round(tot_wrong / tot_diag, 4) if tot_diag else None,
+            'num_diagnoses_after_injection': tot_diag,
             'avg_chain_accuracy': _avg('chain_accuracy'),
             'chain_order_accuracy': (round(sum(1 for r in chain_ok if r['chain_order_correct']) / len(chain_ok), 4)
                                      if chain_ok else None),
+            'avg_physical_chain_coverage': _avg('physical_chain_coverage'),
+            'scenarios_with_unobserved_physical_nodes': sorted(
+                r.get('key', r.get('scenario', '?')) for r in eval_results
+                if r.get('physically_affected_unobserved')
+            ),
         }
+        out.update(nominal)
+        return out

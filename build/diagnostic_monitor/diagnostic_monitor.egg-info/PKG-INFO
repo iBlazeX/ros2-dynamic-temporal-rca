@@ -1,7 +1,0 @@
-Metadata-Version: 2.1
-Name: diagnostic-monitor
-Version: 0.1.0
-Summary: Dynamic dependency-aware temporal root-cause analysis for ROS 2
-Maintainer: lynx
-Maintainer-email: lynx@todo.todo
-License: Apache-2.0

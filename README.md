@@ -67,6 +67,7 @@ src/diagnostic_monitor/       RCA engine (no ground-truth access)
   baselines.py                5 comparison methods + ablation configs (offline, same evidence)
   monitor_node.py             ROS 2 node tying it together; rca_cli.py inspection CLI
 scripts/system.sh             start/stop/status helper for the full system
+scripts/verify_results.py     re-derives a run's reported numbers from its SQLite store (log == JSON == DB)
 runs/                         logs, archived DBs and results_*.json from real runs
 ```
 
@@ -90,7 +91,7 @@ cd ~/ros2_rca_ws
 source /opt/ros/jazzy/setup.bash
 colcon build --symlink-install
 source install/setup.bash
-python3 -m pytest src/diagnostic_monitor/tests src/rca_test_system/tests -q     # 38 tests
+python3 -m pytest src/diagnostic_monitor/tests src/rca_test_system/tests -q     # 43 tests
 ```
 
 ## Review 1 demo
@@ -137,9 +138,18 @@ anomaly / diagnosis timeline; `--action anomalies` lists raw evidence.
 With the system running (Terminal 1):
 
 ```bash
-ros2 run rca_test_system experiment_controller --warmup 15 --out runs/results.json
-ros2 run rca_test_system experiment_controller --warmup 15 --include-crash   # adds the destructive crash scenario last
+ros2 run rca_test_system experiment_controller --warmup 15 --soak 30 --out runs/results.json
+ros2 run rca_test_system experiment_controller --warmup 15 --soak 30 --include-crash   # adds the destructive crash scenario last
 ```
+
+The run starts with a fault-free **warm-up** (`--warmup`) and a fault-free **nominal soak** (`--soak`,
+default 30 s) in the same execution; every fault-free window (warm-up, soak, and the short pre-injection
+gaps) is recorded in the artifact with its duration, anomaly count and diagnosis count. Any diagnosis
+issued in a fault-free window is a false alarm (`nominal_false_alarms`, `nominal_false_alarms_per_min`).
+The printed aggregate and the saved `aggregate` in the JSON come from one function
+(`ExperimentController.compute_aggregate`); `tests/test_experiment_report.py` fails if they drift.
+`scripts/verify_results.py <bench.log> <results.json> <events.db>` re-derives every reported number
+from the SQLite store and checks the three agree.
 
 Scenarios: sensor latency, localization failure, sensor dropout, navigation failure, sensor degradation,
 perception processing delay, (perception crash). For each scenario the controller reports Top-1 /
@@ -150,22 +160,34 @@ recorded evidence* with the five baselines (independent diagnostics, temporal-on
 anomaly, static dependency + temporal, proposed dynamic + temporal + symptom + anomaly) and with each
 scoring term ablated. Results are written to JSON.
 
-## Results from a real run (`runs/results_run5.json`, live ROS 2 Jazzy on WSL2)
+## Results from a real run (`runs/results_run6.json`, live ROS 2 Jazzy on WSL2)
 
-Full transcript: `runs/bench_run5.log`. 15 s fault-free warm-up: 0 false alarms.
+Full transcript: `runs/bench_run6.log`; event store `runs/events_run6.db`; verified with
+`scripts/verify_results.py` (printed summary == JSON == DB recount).
 
-| Scenario | Truth | Predicted | Top-1 | Det. lat. | Diag. lat. | FDR | Chain acc. |
-|---|---|---|---|---|---|---|---|
-| 1 Sensor latency (0.4 s) | sensor_node | sensor_node | PASS | 0.53 s | 0.79 s | 0.0 | 1.0 |
-| 2 Localization failure | localization_node | localization_node | PASS | 0.11 s | 0.16 s | 0.0 | 1.0 |
-| 3 Sensor dropout | sensor_node | sensor_node | PASS | 0.54 s | 0.54 s | 0.0 | 1.0 |
-| 4 Navigation failure | navigation_node | navigation_node | PASS | 0.16 s | 0.42 s | 0.0 | 1.0 |
-| 5 Sensor degradation (NaNs) | sensor_node | sensor_node | PASS | 0.14 s | 0.30 s | 0.0 | 1.0 |
-| 6 Perception processing delay | perception_node | perception_node | PASS | 0.82 s | 1.18 s | 0.0 | 1.0 |
-| 7 Perception crash | perception_node | perception_node | PASS | 0.56 s | 0.56 s | 0.0 | 1.0 |
+Fault-free (nominal) observation in the same run: warm-up 15.0 s + soak 30.0 s + pre-injection gaps
+4.6 s = **49.6 s, 0 anomalies, 0 diagnoses → 0 false alarms (0.0 / min)**.
 
-Aggregate: Top-1 = Top-3 = 100 %, MRR = 1.0, mean detection latency 0.41 s, mean diagnosis latency
-0.56 s, false-diagnosis rate 0.0 (over 81 diagnoses issued after injection), chain accuracy 1.0.
+| Scenario | Truth | Predicted | Top-1 | Det. lat. | Diag. lat. | FDR | Chain acc. (observable) | Physical coverage |
+|---|---|---|---|---|---|---|---|---|
+| 1 Sensor latency (0.4 s) | sensor_node | sensor_node | PASS | 0.58 s | 0.67 s | 0.0 | 1.0 | 1.0 |
+| 2 Localization failure | localization_node | localization_node | PASS | 0.15 s | 0.54 s | 0.0 | 1.0 | 1.0 |
+| 3 Sensor dropout | sensor_node | sensor_node | PASS | 0.42 s | 0.42 s | 0.0 | 1.0 | 1.0 |
+| 4 Navigation failure | navigation_node | navigation_node | PASS | 0.11 s | 0.30 s | 0.0 | 1.0 | 1.0 |
+| 5 Sensor degradation (NaNs) | sensor_node | sensor_node | PASS | 0.19 s | 0.68 s | 0.0 | 1.0 | **0.67** (localization_node affected but unobserved) |
+| 6 Perception processing delay | perception_node | perception_node | PASS | 0.87 s | 1.06 s | 0.0 | 1.0 | 1.0 |
+| 7 Perception crash | perception_node | perception_node | PASS | 0.43 s | 0.43 s | 0.0 | 1.0 | 1.0 |
+
+Aggregate: Top-1 = Top-3 = 100 %, MRR = 1.0, mean detection latency 0.39 s, mean diagnosis latency
+0.59 s, false-diagnosis rate 0.0 (over 83 diagnoses issued after injection), observable chain accuracy
+1.0, physical chain coverage 0.95.
+
+**Observable vs physical chains.** Chain accuracy is scored against the *observable* affected set (nodes
+whose failure the monitor's metrics can see). Where the physically affected set is larger, it is declared
+separately as `physical_chain` in the scenario definition and reported as `physical_chain_coverage` with
+the unobserved nodes listed; the prediction is never credited for them. In scenario 5 localization's
+pose freezes but no monitored metric changes, so it is reported as *physically affected, unobserved*,
+not as detected.
 
 Baselines on identical evidence (Top-1): independent 2/7 (MRR 0.52) · temporal-only 7/7 ·
 static-dep+anomaly 7/7 · static-dep+temporal 7/7 · proposed 7/7. Ablation: every single-term removal
@@ -175,8 +197,8 @@ earliest, most upstream and most severe; see limitations).
 ## Known limitations
 
 * Only rate, end-to-end latency and simple payload-validity metrics are monitored; semantic symptoms
-  (e.g. a frozen pose after upstream loss) are invisible, so the chain for `sensor degradation` ends at
-  `perception_node`.
+  (e.g. a frozen pose after upstream loss) are invisible. This is made explicit through the
+  observable-vs-physical chain reporting (scenario 5: physical coverage 0.67).
 * Graph-level crash detection is bounded by the DDS liveliness lease (~20 s); the crash is diagnosed
   earlier through downstream starvation timeouts.
 * In the current 4-node chain the runtime graph equals the design-time graph, so the static-graph

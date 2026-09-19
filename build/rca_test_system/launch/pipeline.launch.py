@@ -1,1 +1,0 @@
-/home/lynx/ros2_rca_ws/src/rca_test_system/launch/pipeline.launch.py

@@ -1,3 +1,0 @@
-[console_scripts]
-monitor_node = diagnostic_monitor.monitor_node:main
-rca_cli = diagnostic_monitor.rca_cli:main

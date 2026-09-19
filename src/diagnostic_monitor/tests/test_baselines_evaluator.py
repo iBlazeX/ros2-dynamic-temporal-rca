@@ -105,3 +105,36 @@ def test_evaluator_extended_metrics():
 def test_rank_of_missing():
     assert RCAEvaluator.rank_of(['a', 'b'], 'c') == -1
     assert RCAEvaluator.rank_of(['a', 'b'], 'b') == 2
+
+
+def test_physical_vs_observable_chain_are_distinguished():
+    """Observable chain drives chain_accuracy; physically affected but unobserved
+    nodes are reported as uncovered and never credited."""
+    m = RCAEvaluator.chain_metrics(
+        predicted_chain=['sensor_node', 'perception_node'],
+        expected_chain=['sensor_node', 'perception_node'],
+        physical_chain=['sensor_node', 'perception_node', 'localization_node'],
+    )
+    assert m['chain_accuracy'] == 1.0 and m['chain_order_correct'] is True
+    assert abs(m['physical_chain_coverage'] - 2 / 3) < 1e-3
+    assert m['physically_affected_unobserved'] == ['localization_node']
+    # Without a separate physical chain the two coincide
+    m2 = RCAEvaluator.chain_metrics(['a', 'b'], ['a', 'b'])
+    assert m2['physical_chain'] == ['a', 'b'] and m2['physical_chain_coverage'] == 1.0
+    assert m2['physically_affected_unobserved'] == []
+
+
+def test_nominal_metrics_and_aggregate_include_nominal_fields():
+    windows = [
+        {'name': 'warmup', 'duration_sec': 15.0, 'anomalies': 0, 'diagnoses': 0},
+        {'name': 'nominal_soak', 'duration_sec': 45.0, 'anomalies': 2, 'diagnoses': 1},
+    ]
+    nm = RCAEvaluator.nominal_metrics(windows)
+    assert nm['nominal_fault_free_sec'] == 60.0
+    assert nm['nominal_anomalies'] == 2 and nm['nominal_diagnoses'] == 1
+    assert nm['nominal_false_alarms'] == 1 and nm['nominal_false_alarms_per_min'] == 1.0
+    agg = RCAEvaluator.aggregate_metrics([], k=3, nominal_windows=windows)
+    for key in nm:
+        assert agg[key] == nm[key]
+    assert RCAEvaluator.aggregate_metrics([], k=3)['nominal_false_alarms'] == 0
+    assert RCAEvaluator.aggregate_metrics([], k=3)['nominal_false_alarms_per_min'] is None
