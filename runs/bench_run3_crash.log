@@ -1,0 +1,94 @@
+[INFO] [1789853620.161219409] [experiment_controller]: ExperimentController ready with DB: events.db
+[INFO] [1789853632.365712992] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789853634.570454219] [experiment_controller]: >>> Injected crash on perception_node (param=0.0, dur=9.0s)
+[INFO] [1789853640.777672613] [experiment_controller]: >>> Cleared all faults.
+Waiting 12.0s for nominal system warm-up and graph discovery...
+Diagnoses issued during 12.0s fault-free warm-up (false alarms): 0
+Monitor's discovered graph: ['localization_node', 'navigation_node', 'perception_node', 'sensor_node']  edges: [('localization_node', 'navigation_node'), ('perception_node', 'localization_node'), ('sensor_node', 'perception_node')]
+
+========================================================================
+STARTING Scenario 7: Perception Node Crash
+Ground truth (evaluation layer only): target=perception_node fault=crash param=0.0
+========================================================================
+Observing fault propagation for 6.0s ...
+DIAGNOSIS: predicted root cause = [perception_node]  (ground truth = perception_node)  Top-1: PASS  rank=1
+  detection latency  : 0.436s  (first anomaly after injection)
+  diagnosis latency  : 0.767s  (correct root first named at 0.767s)
+  false diag. rate   : 0.0  over 11 diagnoses
+  chain accuracy     : 1.0  predicted=['perception_node', 'localization_node', 'navigation_node']
+  nominal false alarms before injection: 0 (in 0.0s fault-free window)
+
+============================================================
+ROOT CAUSE DIAGNOSIS: perception_node (Confidence: 1.000)
+============================================================
+Score Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:
+  R(perception_node) = 0.3·D(1.00) + 0.3·T(1.00) + 0.25·S(1.00) + 0.15·A(1.00) = 1.000
+  - Dependency D: 1.00 (reaches 2 downstream anomalous node(s); 0 anomalous upstream node(s))
+  - Temporal   T: 1.00 (first anomaly at t=1789853634.80s; earliest in window = supporting evidence, not proof of causality)
+  - Symptom    S: 1.00 (explains 3/3 anomalous nodes)
+  - Severity   A: 1.00 (max normalised severity on node, 11 direct anomaly event(s))
+
+Propagation Chain (evidence-ordered, via discovered graph edges):
+  perception_node (t=1789853634.80s: message_timeout, sev=0.93)
+    └─→ localization_node via /perception/obstacles (t=1789853634.80s, +0.00s after perception_node: message_timeout)
+      └─→ navigation_node via /localization/pose (t=1789853634.81s, +0.00s after localization_node: message_timeout)
+
+Candidate Ranking & Evidence Comparison:
+  #2 localization_node    R=0.717 (Δ -0.283) [first anomaly 0.00s after perception_node; downstream of perception_node in discovered graph; lower symptom coverage (67% vs 100%)]
+  #3 sensor_node          R=0.565 (Δ -0.435) [no direct anomaly observed]
+  #4 navigation_node      R=0.533 (Δ -0.467) [first anomaly 0.00s after perception_node; downstream of perception_node in discovered graph; lower symptom coverage (33% vs 100%)]
+============================================================
+
+Baseline comparison on identical recorded evidence:
+  independent      top1=FAIL rank=3   ranking=['localization_node', 'navigation_node', 'perception_node']
+  temporal_only    top1=PASS rank=1   ranking=['perception_node', 'localization_node', 'navigation_node']
+  static_dep_anom  top1=PASS rank=1   ranking=['perception_node', 'sensor_node', 'localization_node', 'navigation_node']
+  static_dep_temp  top1=PASS rank=1   ranking=['perception_node', 'localization_node', 'sensor_node', 'navigation_node']
+  proposed         top1=PASS rank=1   ranking=['perception_node', 'localization_node', 'sensor_node', 'navigation_node']
+Ablation (each scoring term disabled in turn):
+  full     top1=PASS rank=1   ranking=['perception_node', 'localization_node', 'sensor_node', 'navigation_node']
+  no_D     top1=PASS rank=1   ranking=['perception_node', 'localization_node', 'navigation_node', 'sensor_node']
+  no_T     top1=PASS rank=1   ranking=['perception_node', 'sensor_node', 'localization_node', 'navigation_node']
+  no_S     top1=PASS rank=1   ranking=['perception_node', 'localization_node', 'navigation_node', 'sensor_node']
+  no_A     top1=PASS rank=1   ranking=['perception_node', 'localization_node', 'sensor_node', 'navigation_node']
+
+====================================================================================================
+EXPERIMENT EVALUATION BENCHMARK RESULTS (proposed method, live ROS 2 run)
+====================================================================================================
+Scenario                                 Truth              Predicted          Top1  Rank Det.   Diag.  FDR    Chain
+----------------------------------------------------------------------------------------------------
+Scenario 7: Perception Node Crash        perception_node    perception_node    PASS  1    0.436  0.767  0.0    1.0
+----------------------------------------------------------------------------------------------------
+{
+  "total_experiments": 1,
+  "top1_accuracy": 1.0,
+  "top3_accuracy": 1.0,
+  "mean_reciprocal_rank": 1.0,
+  "avg_detection_latency_sec": 0.436,
+  "avg_diagnosis_latency_sec": 0.767,
+  "avg_correct_diagnosis_latency_sec": 0.767,
+  "false_diagnosis_rate": 0.0,
+  "avg_chain_accuracy": 1.0,
+  "chain_order_accuracy": 1.0,
+  "nominal_false_alarms": 0
+}
+
+====================================================================================================
+BASELINE COMPARISON (Top-1 accuracy across scenarios, identical evidence)
+====================================================================================================
+  independent      top1 = 0/1 (0%)   MRR = 0.333
+  temporal_only    top1 = 1/1 (100%)   MRR = 1.000
+  static_dep_anom  top1 = 1/1 (100%)   MRR = 1.000
+  static_dep_temp  top1 = 1/1 (100%)   MRR = 1.000
+  proposed         top1 = 1/1 (100%)   MRR = 1.000
+
+====================================================================================================
+ABLATION (Top-1 accuracy with each term disabled)
+====================================================================================================
+  full     {'wD': 0.3, 'wT': 0.3, 'wS': 0.25, 'wA': 0.15}  top1 = 1/1 (100%)
+  no_D     {'wD': 0.0, 'wT': 0.3, 'wS': 0.25, 'wA': 0.15}  top1 = 1/1 (100%)
+  no_T     {'wD': 0.3, 'wT': 0.0, 'wS': 0.25, 'wA': 0.15}  top1 = 1/1 (100%)
+  no_S     {'wD': 0.3, 'wT': 0.3, 'wS': 0.0, 'wA': 0.15}  top1 = 1/1 (100%)
+  no_A     {'wD': 0.3, 'wT': 0.3, 'wS': 0.25, 'wA': 0.0}  top1 = 1/1 (100%)
+
+Results written to runs/results_run3_crash.json

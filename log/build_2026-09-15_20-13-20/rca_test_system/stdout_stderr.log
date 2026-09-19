@@ -1,0 +1,32 @@
+running develop
+running egg_info
+creating rca_test_system.egg-info
+writing rca_test_system.egg-info/PKG-INFO
+writing dependency_links to rca_test_system.egg-info/dependency_links.txt
+writing entry points to rca_test_system.egg-info/entry_points.txt
+writing requirements to rca_test_system.egg-info/requires.txt
+writing top-level names to rca_test_system.egg-info/top_level.txt
+writing manifest file 'rca_test_system.egg-info/SOURCES.txt'
+reading manifest file 'rca_test_system.egg-info/SOURCES.txt'
+writing manifest file 'rca_test_system.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/lynx/ros2_rca_ws/install/rca_test_system/lib/python3.12/site-packages/rca-test-system.egg-link (link to .)
+Installing experiment_controller script to /home/lynx/ros2_rca_ws/install/rca_test_system/lib/rca_test_system
+Installing fault_injector script to /home/lynx/ros2_rca_ws/install/rca_test_system/lib/rca_test_system
+Installing localization_node script to /home/lynx/ros2_rca_ws/install/rca_test_system/lib/rca_test_system
+Installing navigation_node script to /home/lynx/ros2_rca_ws/install/rca_test_system/lib/rca_test_system
+Installing perception_node script to /home/lynx/ros2_rca_ws/install/rca_test_system/lib/rca_test_system
+Installing sensor_node script to /home/lynx/ros2_rca_ws/install/rca_test_system/lib/rca_test_system
+
+Installed /home/lynx/ros2_rca_ws/build/rca_test_system
+running symlink_data
+creating /home/lynx/ros2_rca_ws/install/rca_test_system/share/ament_index
+creating /home/lynx/ros2_rca_ws/install/rca_test_system/share/ament_index/resource_index
+creating /home/lynx/ros2_rca_ws/install/rca_test_system/share/ament_index/resource_index/packages
+symbolically linking /home/lynx/ros2_rca_ws/build/rca_test_system/resource/rca_test_system -> /home/lynx/ros2_rca_ws/install/rca_test_system/share/ament_index/resource_index/packages
+symbolically linking /home/lynx/ros2_rca_ws/build/rca_test_system/package.xml -> /home/lynx/ros2_rca_ws/install/rca_test_system/share/rca_test_system
+creating /home/lynx/ros2_rca_ws/install/rca_test_system/share/rca_test_system/launch
+symbolically linking /home/lynx/ros2_rca_ws/build/rca_test_system/launch/system.launch.py -> /home/lynx/ros2_rca_ws/install/rca_test_system/share/rca_test_system/launch
+symbolically linking /home/lynx/ros2_rca_ws/build/rca_test_system/launch/pipeline.launch.py -> /home/lynx/ros2_rca_ws/install/rca_test_system/share/rca_test_system/launch
+creating /home/lynx/ros2_rca_ws/install/rca_test_system/share/rca_test_system/config
+symbolically linking /home/lynx/ros2_rca_ws/build/rca_test_system/config/rca_params.yaml -> /home/lynx/ros2_rca_ws/install/rca_test_system/share/rca_test_system/config

@@ -1,0 +1,204 @@
+{
+  "generated_at": 1789853640.778255,
+  "db_path": "events.db",
+  "results": [
+    {
+      "ground_truth": "perception_node",
+      "predicted_root_cause": "perception_node",
+      "confidence": 1.0,
+      "fault_type": "crash",
+      "top1_correct": true,
+      "top3_correct": true,
+      "ground_truth_rank": 1,
+      "reciprocal_rank": 1.0,
+      "detection_latency_sec": 0.436,
+      "diagnosis_latency_sec": 0.767,
+      "correct_diagnosis_latency_sec": 0.767,
+      "false_diagnosis_rate": 0.0,
+      "num_diagnoses_after_injection": 11,
+      "ranking": [
+        "perception_node",
+        "localization_node",
+        "sensor_node",
+        "navigation_node"
+      ],
+      "chain_accuracy": 1.0,
+      "chain_order_correct": true,
+      "predicted_chain": [
+        "perception_node",
+        "localization_node",
+        "navigation_node"
+      ],
+      "expected_chain": [
+        "perception_node",
+        "localization_node",
+        "navigation_node"
+      ],
+      "scenario": "Scenario 7: Perception Node Crash",
+      "key": "perception_crash",
+      "num_anomalies": 33,
+      "nominal_false_alarms": 0,
+      "explanation": "============================================================\nROOT CAUSE DIAGNOSIS: perception_node (Confidence: 1.000)\n============================================================\nScore Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:\n  R(perception_node) = 0.3\u00b7D(1.00) + 0.3\u00b7T(1.00) + 0.25\u00b7S(1.00) + 0.15\u00b7A(1.00) = 1.000\n  - Dependency D: 1.00 (reaches 2 downstream anomalous node(s); 0 anomalous upstream node(s))\n  - Temporal   T: 1.00 (first anomaly at t=1789853634.80s; earliest in window = supporting evidence, not proof of causality)\n  - Symptom    S: 1.00 (explains 3/3 anomalous nodes)\n  - Severity   A: 1.00 (max normalised severity on node, 11 direct anomaly event(s))\n\nPropagation Chain (evidence-ordered, via discovered graph edges):\n  perception_node (t=1789853634.80s: message_timeout, sev=0.93)\n    \u2514\u2500\u2192 localization_node via /perception/obstacles (t=1789853634.80s, +0.00s after perception_node: message_timeout)\n      \u2514\u2500\u2192 navigation_node via /localization/pose (t=1789853634.81s, +0.00s after localization_node: message_timeout)\n\nCandidate Ranking & Evidence Comparison:\n  #2 localization_node    R=0.717 (\u0394 -0.283) [first anomaly 0.00s after perception_node; downstream of perception_node in discovered graph; lower symptom coverage (67% vs 100%)]\n  #3 sensor_node          R=0.565 (\u0394 -0.435) [no direct anomaly observed]\n  #4 navigation_node      R=0.533 (\u0394 -0.467) [first anomaly 0.00s after perception_node; downstream of perception_node in discovered graph; lower symptom coverage (33% vs 100%)]\n============================================================",
+      "anomalous_nodes_observed": [
+        "localization_node",
+        "navigation_node",
+        "perception_node"
+      ],
+      "discovered_graph": {
+        "nodes": [
+          "localization_node",
+          "navigation_node",
+          "perception_node",
+          "sensor_node"
+        ],
+        "edges": [
+          {
+            "from": "localization_node",
+            "to": "navigation_node",
+            "topics": [
+              "/localization/pose"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "localization_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "sensor_node",
+            "to": "perception_node",
+            "topics": [
+              "/sensor/scan"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "total_experiments": 1,
+    "top1_accuracy": 1.0,
+    "top3_accuracy": 1.0,
+    "mean_reciprocal_rank": 1.0,
+    "avg_detection_latency_sec": 0.436,
+    "avg_diagnosis_latency_sec": 0.767,
+    "avg_correct_diagnosis_latency_sec": 0.767,
+    "false_diagnosis_rate": 0.0,
+    "avg_chain_accuracy": 1.0,
+    "chain_order_accuracy": 1.0
+  },
+  "baselines": [
+    {
+      "scenario": "Scenario 7: Perception Node Crash",
+      "key": "perception_crash",
+      "ground_truth": "perception_node",
+      "independent": {
+        "ranking": [
+          "localization_node",
+          "navigation_node",
+          "perception_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "temporal_only": {
+        "ranking": [
+          "perception_node",
+          "localization_node",
+          "navigation_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "static_dep_anom": {
+        "ranking": [
+          "perception_node",
+          "sensor_node",
+          "localization_node",
+          "navigation_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "static_dep_temp": {
+        "ranking": [
+          "perception_node",
+          "localization_node",
+          "sensor_node",
+          "navigation_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "proposed": {
+        "ranking": [
+          "perception_node",
+          "localization_node",
+          "sensor_node",
+          "navigation_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    }
+  ],
+  "ablations": [
+    {
+      "scenario": "Scenario 7: Perception Node Crash",
+      "key": "perception_crash",
+      "ground_truth": "perception_node",
+      "full": {
+        "ranking": [
+          "perception_node",
+          "localization_node",
+          "sensor_node",
+          "navigation_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_D": {
+        "ranking": [
+          "perception_node",
+          "localization_node",
+          "navigation_node",
+          "sensor_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_T": {
+        "ranking": [
+          "perception_node",
+          "sensor_node",
+          "localization_node",
+          "navigation_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_S": {
+        "ranking": [
+          "perception_node",
+          "localization_node",
+          "navigation_node",
+          "sensor_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_A": {
+        "ranking": [
+          "perception_node",
+          "localization_node",
+          "sensor_node",
+          "navigation_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    }
+  ]
+}

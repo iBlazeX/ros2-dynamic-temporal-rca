@@ -1,0 +1,7 @@
+[console_scripts]
+experiment_controller = rca_test_system.experiment_controller:main
+fault_injector = rca_test_system.fault_injector:main
+localization_node = rca_test_system.localization_node:main
+navigation_node = rca_test_system.navigation_node:main
+perception_node = rca_test_system.perception_node:main
+sensor_node = rca_test_system.sensor_node:main

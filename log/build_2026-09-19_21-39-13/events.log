@@ -1,0 +1,103 @@
+[0.000000] (-) TimerEvent: {}
+[0.000186] (diagnostic_monitor) JobQueued: {'identifier': 'diagnostic_monitor', 'dependencies': OrderedDict()}
+[0.000243] (rca_test_system) JobQueued: {'identifier': 'rca_test_system', 'dependencies': OrderedDict()}
+[0.001339] (diagnostic_monitor) JobStarted: {'identifier': 'diagnostic_monitor'}
+[0.015565] (rca_test_system) JobStarted: {'identifier': 'rca_test_system'}
+[0.099676] (-) TimerEvent: {}
+[0.199963] (-) TimerEvent: {}
+[0.300457] (-) TimerEvent: {}
+[0.400725] (-) TimerEvent: {}
+[0.501036] (-) TimerEvent: {}
+[0.601452] (-) TimerEvent: {}
+[0.701716] (-) TimerEvent: {}
+[0.801993] (-) TimerEvent: {}
+[0.902259] (-) TimerEvent: {}
+[1.002535] (-) TimerEvent: {}
+[1.102892] (-) TimerEvent: {}
+[1.203180] (-) TimerEvent: {}
+[1.303449] (-) TimerEvent: {}
+[1.403737] (-) TimerEvent: {}
+[1.504055] (-) TimerEvent: {}
+[1.604310] (-) TimerEvent: {}
+[1.704566] (-) TimerEvent: {}
+[1.804816] (-) TimerEvent: {}
+[1.905105] (-) TimerEvent: {}
+[2.005427] (-) TimerEvent: {}
+[2.105715] (-) TimerEvent: {}
+[2.205995] (-) TimerEvent: {}
+[2.306267] (-) TimerEvent: {}
+[2.406594] (-) TimerEvent: {}
+[2.506974] (-) TimerEvent: {}
+[2.607310] (-) TimerEvent: {}
+[2.707601] (-) TimerEvent: {}
+[2.807880] (-) TimerEvent: {}
+[2.908163] (-) TimerEvent: {}
+[3.008447] (-) TimerEvent: {}
+[3.108754] (-) TimerEvent: {}
+[3.209204] (-) TimerEvent: {}
+[3.309592] (-) TimerEvent: {}
+[3.410077] (-) TimerEvent: {}
+[3.510364] (-) TimerEvent: {}
+[3.557707] (diagnostic_monitor) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'develop', '--editable', '--build-directory', '/home/lynx/ros2_rca_ws/build/diagnostic_monitor/build', '--no-deps', 'symlink_data'], 'cwd': '/home/lynx/ros2_rca_ws/build/diagnostic_monitor', 'env': {'GZ_SIM_RESOURCE_PATH': '/opt/ros/jazzy/share', 'USER': 'lynx', 'SSH_CLIENT': '172.31.224.1 58406 22', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'XDG_SESSION_TYPE': 'tty', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/lynx', 'OLDPWD': '/home/lynx', 'ROS_PYTHON_VERSION': '3', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'lynx', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'XDG_SESSION_ID': '70', 'PATH': '/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin', 'XDG_RUNTIME_DIR': '/run/user/1000', 'LANG': 'C.UTF-8', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'SHELL': '/bin/bash', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'PWD': '/home/lynx/ros2_rca_ws/build/diagnostic_monitor', 'SSH_CONNECTION': '172.31.224.1 58406 172.31.234.249 22', 'PYTHONPATH': '/home/lynx/ros2_rca_ws/build/diagnostic_monitor/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/lynx/ros2_rca_ws/install/diagnostic_monitor/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor'}, 'shell': False}
+[3.610569] (-) TimerEvent: {}
+[3.683035] (rca_test_system) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'develop', '--editable', '--build-directory', '/home/lynx/ros2_rca_ws/build/rca_test_system/build', '--no-deps', 'symlink_data'], 'cwd': '/home/lynx/ros2_rca_ws/build/rca_test_system', 'env': {'GZ_SIM_RESOURCE_PATH': '/opt/ros/jazzy/share', 'USER': 'lynx', 'SSH_CLIENT': '172.31.224.1 58406 22', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'XDG_SESSION_TYPE': 'tty', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/lynx', 'OLDPWD': '/home/lynx', 'ROS_PYTHON_VERSION': '3', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'lynx', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'XDG_SESSION_ID': '70', 'PATH': '/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin', 'XDG_RUNTIME_DIR': '/run/user/1000', 'LANG': 'C.UTF-8', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'SHELL': '/bin/bash', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'PWD': '/home/lynx/ros2_rca_ws/build/rca_test_system', 'SSH_CONNECTION': '172.31.224.1 58406 172.31.234.249 22', 'PYTHONPATH': '/home/lynx/ros2_rca_ws/build/rca_test_system/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/lynx/ros2_rca_ws/install/rca_test_system/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor'}, 'shell': False}
+[3.710729] (-) TimerEvent: {}
+[3.810991] (-) TimerEvent: {}
+[3.911265] (-) TimerEvent: {}
+[4.011630] (-) TimerEvent: {}
+[4.111983] (-) TimerEvent: {}
+[4.212276] (-) TimerEvent: {}
+[4.312601] (-) TimerEvent: {}
+[4.412949] (-) TimerEvent: {}
+[4.439852] (diagnostic_monitor) StdoutLine: {'line': b'running develop\n'}
+[4.513103] (-) TimerEvent: {}
+[4.560450] (rca_test_system) StdoutLine: {'line': b'running develop\n'}
+[4.615592] (-) TimerEvent: {}
+[4.715986] (-) TimerEvent: {}
+[4.816802] (-) TimerEvent: {}
+[4.917383] (-) TimerEvent: {}
+[5.017667] (-) TimerEvent: {}
+[5.027520] (diagnostic_monitor) StdoutLine: {'line': b'running egg_info\n'}
+[5.088167] (diagnostic_monitor) StdoutLine: {'line': b'writing diagnostic_monitor.egg-info/PKG-INFO\n'}
+[5.088962] (diagnostic_monitor) StdoutLine: {'line': b'writing dependency_links to diagnostic_monitor.egg-info/dependency_links.txt\n'}
+[5.089589] (diagnostic_monitor) StdoutLine: {'line': b'writing entry points to diagnostic_monitor.egg-info/entry_points.txt\n'}
+[5.090028] (diagnostic_monitor) StdoutLine: {'line': b'writing requirements to diagnostic_monitor.egg-info/requires.txt\n'}
+[5.090174] (diagnostic_monitor) StdoutLine: {'line': b'writing top-level names to diagnostic_monitor.egg-info/top_level.txt\n'}
+[5.117862] (-) TimerEvent: {}
+[5.147132] (rca_test_system) StdoutLine: {'line': b'running egg_info\n'}
+[5.209403] (diagnostic_monitor) StdoutLine: {'line': b"reading manifest file 'diagnostic_monitor.egg-info/SOURCES.txt'\n"}
+[5.211520] (diagnostic_monitor) StdoutLine: {'line': b"writing manifest file 'diagnostic_monitor.egg-info/SOURCES.txt'\n"}
+[5.213548] (rca_test_system) StdoutLine: {'line': b'writing rca_test_system.egg-info/PKG-INFO\n'}
+[5.214030] (rca_test_system) StdoutLine: {'line': b'writing dependency_links to rca_test_system.egg-info/dependency_links.txt\n'}
+[5.214454] (rca_test_system) StdoutLine: {'line': b'writing entry points to rca_test_system.egg-info/entry_points.txt\n'}
+[5.215608] (rca_test_system) StdoutLine: {'line': b'writing requirements to rca_test_system.egg-info/requires.txt\n'}
+[5.215980] (rca_test_system) StdoutLine: {'line': b'writing top-level names to rca_test_system.egg-info/top_level.txt\n'}
+[5.218044] (-) TimerEvent: {}
+[5.277501] (diagnostic_monitor) StdoutLine: {'line': b'running build_ext\n'}
+[5.278016] (diagnostic_monitor) StdoutLine: {'line': b'Creating /home/lynx/ros2_rca_ws/install/diagnostic_monitor/lib/python3.12/site-packages/diagnostic-monitor.egg-link (link to .)\n'}
+[5.282201] (diagnostic_monitor) StdoutLine: {'line': b'Installing monitor_node script to /home/lynx/ros2_rca_ws/install/diagnostic_monitor/lib/diagnostic_monitor\n'}
+[5.285276] (diagnostic_monitor) StdoutLine: {'line': b'Installing rca_cli script to /home/lynx/ros2_rca_ws/install/diagnostic_monitor/lib/diagnostic_monitor\n'}
+[5.285772] (diagnostic_monitor) StdoutLine: {'line': b'\n'}
+[5.285934] (diagnostic_monitor) StdoutLine: {'line': b'Installed /home/lynx/ros2_rca_ws/build/diagnostic_monitor\n'}
+[5.286020] (diagnostic_monitor) StdoutLine: {'line': b'running symlink_data\n'}
+[5.318227] (-) TimerEvent: {}
+[5.342365] (rca_test_system) StdoutLine: {'line': b"reading manifest file 'rca_test_system.egg-info/SOURCES.txt'\n"}
+[5.343711] (rca_test_system) StdoutLine: {'line': b"writing manifest file 'rca_test_system.egg-info/SOURCES.txt'\n"}
+[5.403273] (rca_test_system) StdoutLine: {'line': b'running build_ext\n'}
+[5.403520] (rca_test_system) StdoutLine: {'line': b'Creating /home/lynx/ros2_rca_ws/install/rca_test_system/lib/python3.12/site-packages/rca-test-system.egg-link (link to .)\n'}
+[5.406230] (diagnostic_monitor) CommandEnded: {'returncode': 0}
+[5.418790] (-) TimerEvent: {}
+[5.465495] (diagnostic_monitor) JobEnded: {'identifier': 'diagnostic_monitor', 'rc': 0}
+[5.467284] (rca_test_system) StdoutLine: {'line': b'Installing experiment_controller script to /home/lynx/ros2_rca_ws/install/rca_test_system/lib/rca_test_system\n'}
+[5.467576] (rca_test_system) StdoutLine: {'line': b'Installing fault_injector script to /home/lynx/ros2_rca_ws/install/rca_test_system/lib/rca_test_system\n'}
+[5.467712] (rca_test_system) StdoutLine: {'line': b'Installing localization_node script to /home/lynx/ros2_rca_ws/install/rca_test_system/lib/rca_test_system\n'}
+[5.467801] (rca_test_system) StdoutLine: {'line': b'Installing navigation_node script to /home/lynx/ros2_rca_ws/install/rca_test_system/lib/rca_test_system\n'}
+[5.467881] (rca_test_system) StdoutLine: {'line': b'Installing perception_node script to /home/lynx/ros2_rca_ws/install/rca_test_system/lib/rca_test_system\n'}
+[5.467962] (rca_test_system) StdoutLine: {'line': b'Installing sensor_node script to /home/lynx/ros2_rca_ws/install/rca_test_system/lib/rca_test_system\n'}
+[5.468124] (rca_test_system) StdoutLine: {'line': b'\n'}
+[5.468255] (rca_test_system) StdoutLine: {'line': b'Installed /home/lynx/ros2_rca_ws/build/rca_test_system\n'}
+[5.468343] (rca_test_system) StdoutLine: {'line': b'running symlink_data\n'}
+[5.512181] (rca_test_system) CommandEnded: {'returncode': 0}
+[5.519016] (-) TimerEvent: {}
+[5.535784] (rca_test_system) JobEnded: {'identifier': 'rca_test_system', 'rc': 0}
+[5.537060] (-) EventReactorShutdown: {}

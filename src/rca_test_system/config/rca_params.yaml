@@ -1,0 +1,16 @@
+sensor_node:
+  ros__parameters:
+    rate_hz: 10.0
+    num_readings: 60
+    range_min: 0.1
+    range_max: 10.0
+    nominal_distance: 3.0
+
+perception_node:
+  ros__parameters: {}
+
+localization_node:
+  ros__parameters: {}
+
+navigation_node:
+  ros__parameters: {}

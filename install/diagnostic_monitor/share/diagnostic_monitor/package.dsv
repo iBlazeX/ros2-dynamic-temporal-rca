@@ -1,0 +1,9 @@
+source;share/diagnostic_monitor/hook/pythonpath.ps1
+source;share/diagnostic_monitor/hook/pythonpath.dsv
+source;share/diagnostic_monitor/hook/pythonpath.sh
+source;share/diagnostic_monitor/hook/ament_prefix_path.ps1
+source;share/diagnostic_monitor/hook/ament_prefix_path.dsv
+source;share/diagnostic_monitor/hook/ament_prefix_path.sh
+source;../../build/diagnostic_monitor/share/diagnostic_monitor/hook/pythonpath_develop.ps1
+source;../../build/diagnostic_monitor/share/diagnostic_monitor/hook/pythonpath_develop.dsv
+source;../../build/diagnostic_monitor/share/diagnostic_monitor/hook/pythonpath_develop.sh

@@ -1,0 +1,116 @@
+[0.399s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'test', '--event-handlers', 'console_direct+']
+[0.399s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='test', build_base='build', install_base='install', merge_install=False, test_result_base=None, retest_until_fail=0, retest_until_pass=0, abort_on_error=False, return_code_on_test_failure=False, executor='parallel', parallel_workers=8, event_handlers=['console_direct+'], ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], ctest_args=None, python_testing=None, pytest_args=None, pytest_with_coverage=False, unittest_args=None, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0x7e60516c4950>, verb_extension=<colcon_core.verb.test.TestVerb object at 0x7e60516a3590>, main=<bound method TestVerb.main of <colcon_core.verb.test.TestVerb object at 0x7e60516a3590>>, mixin_verb=('test',))
+[0.447s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.447s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.447s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.447s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.447s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.447s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.447s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/lynx/ros2_rca_ws'
+[0.447s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.447s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.447s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.448s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.448s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.448s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.448s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.448s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.448s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[0.479s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[0.479s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[0.479s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[0.479s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[0.479s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[0.479s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[0.479s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[0.479s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[0.479s] Level 1:colcon.colcon_core.package_identification:_identify(src/diagnostic_monitor) by extensions ['ignore', 'ignore_ament_install']
+[0.479s] Level 1:colcon.colcon_core.package_identification:_identify(src/diagnostic_monitor) by extension 'ignore'
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(src/diagnostic_monitor) by extension 'ignore_ament_install'
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(src/diagnostic_monitor) by extensions ['colcon_pkg']
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(src/diagnostic_monitor) by extension 'colcon_pkg'
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(src/diagnostic_monitor) by extensions ['colcon_meta']
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(src/diagnostic_monitor) by extension 'colcon_meta'
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(src/diagnostic_monitor) by extensions ['ros']
+[0.480s] Level 1:colcon.colcon_core.package_identification:_identify(src/diagnostic_monitor) by extension 'ros'
+[0.483s] DEBUG:colcon.colcon_core.package_identification:Package 'src/diagnostic_monitor' with type 'ros.ament_python' and name 'diagnostic_monitor'
+[0.483s] Level 1:colcon.colcon_core.package_identification:_identify(src/rca_test_system) by extensions ['ignore', 'ignore_ament_install']
+[0.483s] Level 1:colcon.colcon_core.package_identification:_identify(src/rca_test_system) by extension 'ignore'
+[0.483s] Level 1:colcon.colcon_core.package_identification:_identify(src/rca_test_system) by extension 'ignore_ament_install'
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(src/rca_test_system) by extensions ['colcon_pkg']
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(src/rca_test_system) by extension 'colcon_pkg'
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(src/rca_test_system) by extensions ['colcon_meta']
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(src/rca_test_system) by extension 'colcon_meta'
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(src/rca_test_system) by extensions ['ros']
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(src/rca_test_system) by extension 'ros'
+[0.485s] DEBUG:colcon.colcon_core.package_identification:Package 'src/rca_test_system' with type 'ros.ament_python' and name 'rca_test_system'
+[0.485s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.485s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.485s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.485s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.485s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.488s] Level 5:colcon.colcon_core.verb:set package 'diagnostic_monitor' test argument 'ctest_args' from command line to 'None'
+[0.488s] Level 5:colcon.colcon_core.verb:set package 'diagnostic_monitor' test argument 'python_testing' from command line to 'None'
+[0.488s] Level 5:colcon.colcon_core.verb:set package 'diagnostic_monitor' test argument 'pytest_args' from command line to 'None'
+[0.488s] Level 5:colcon.colcon_core.verb:set package 'diagnostic_monitor' test argument 'pytest_with_coverage' from command line to 'False'
+[0.488s] Level 5:colcon.colcon_core.verb:set package 'diagnostic_monitor' test argument 'unittest_args' from command line to 'None'
+[0.488s] Level 5:colcon.colcon_core.verb:set package 'diagnostic_monitor' test argument 'retest_until_pass' from command line to '0'
+[0.488s] Level 5:colcon.colcon_core.verb:set package 'diagnostic_monitor' test argument 'retest_until_fail' from command line to '0'
+[0.488s] DEBUG:colcon.colcon_core.verb.test:Testing package 'diagnostic_monitor' with the following arguments: {'build_base': '/home/lynx/ros2_rca_ws/build/diagnostic_monitor', 'ctest_args': None, 'install_base': '/home/lynx/ros2_rca_ws/install/diagnostic_monitor', 'path': '/home/lynx/ros2_rca_ws/src/diagnostic_monitor', 'pytest_args': None, 'pytest_with_coverage': False, 'python_testing': None, 'retest_until_fail': 0, 'retest_until_pass': 0, 'test_result_base': None, 'unittest_args': None}
+[0.488s] Level 5:colcon.colcon_core.verb:set package 'rca_test_system' test argument 'ctest_args' from command line to 'None'
+[0.488s] Level 5:colcon.colcon_core.verb:set package 'rca_test_system' test argument 'python_testing' from command line to 'None'
+[0.488s] Level 5:colcon.colcon_core.verb:set package 'rca_test_system' test argument 'pytest_args' from command line to 'None'
+[0.488s] Level 5:colcon.colcon_core.verb:set package 'rca_test_system' test argument 'pytest_with_coverage' from command line to 'False'
+[0.488s] Level 5:colcon.colcon_core.verb:set package 'rca_test_system' test argument 'unittest_args' from command line to 'None'
+[0.489s] Level 5:colcon.colcon_core.verb:set package 'rca_test_system' test argument 'retest_until_pass' from command line to '0'
+[0.489s] Level 5:colcon.colcon_core.verb:set package 'rca_test_system' test argument 'retest_until_fail' from command line to '0'
+[0.489s] DEBUG:colcon.colcon_core.verb.test:Testing package 'rca_test_system' with the following arguments: {'build_base': '/home/lynx/ros2_rca_ws/build/rca_test_system', 'ctest_args': None, 'install_base': '/home/lynx/ros2_rca_ws/install/rca_test_system', 'path': '/home/lynx/ros2_rca_ws/src/rca_test_system', 'pytest_args': None, 'pytest_with_coverage': False, 'python_testing': None, 'retest_until_fail': 0, 'retest_until_pass': 0, 'test_result_base': None, 'unittest_args': None}
+[0.489s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.490s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.490s] INFO:colcon.colcon_ros.task.ament_python.test:Testing ROS package in '/home/lynx/ros2_rca_ws/src/diagnostic_monitor' with build type'ament_python'
+[0.490s] INFO:colcon.colcon_core.task.python.test:Testing Python package in '/home/lynx/ros2_rca_ws/src/diagnostic_monitor'
+[0.493s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.493s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.493s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.501s] INFO:colcon.colcon_ros.task.ament_python.test:Testing ROS package in '/home/lynx/ros2_rca_ws/src/rca_test_system' with build type'ament_python'
+[0.501s] INFO:colcon.colcon_core.task.python.test:Testing Python package in '/home/lynx/ros2_rca_ws/src/rca_test_system'
+[0.501s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.501s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.028s] Level 1:colcon.colcon_core.task.python.test:test() by extension 'pytest'
+[1.028s] Level 1:colcon.colcon_core.task.python.test:test.step() by extension 'pytest'
+[1.033s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/lynx/ros2_rca_ws/src/rca_test_system': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTEST_ADDOPTS=--tb=short --junit-xml=/home/lynx/ros2_rca_ws/build/rca_test_system/pytest.xml --junit-prefix=rca_test_system -o cache_dir=/home/lynx/ros2_rca_ws/build/rca_test_system/.pytest_cache PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 -m pytest
+[1.372s] Level 1:colcon.colcon_core.task.python.test:test() by extension 'pytest'
+[1.372s] Level 1:colcon.colcon_core.task.python.test:test.step() by extension 'pytest'
+[1.375s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/lynx/ros2_rca_ws/src/diagnostic_monitor': AMENT_PREFIX_PATH=/home/lynx/ros2_rca_ws/install/diagnostic_monitor:/home/lynx/ros2_rca_ws/install/rca_test_system:/home/lynx/ros2_ws/install/diagnostic_monitor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTEST_ADDOPTS=--tb=short --junit-xml=/home/lynx/ros2_rca_ws/build/diagnostic_monitor/pytest.xml --junit-prefix=diagnostic_monitor -o cache_dir=/home/lynx/ros2_rca_ws/build/diagnostic_monitor/.pytest_cache PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/home/lynx/ros2_rca_ws/build/diagnostic_monitor:/home/lynx/ros2_rca_ws/install/diagnostic_monitor/lib/python3.12/site-packages:/home/lynx/ros2_rca_ws/build/rca_test_system:/home/lynx/ros2_rca_ws/install/rca_test_system/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages /usr/bin/python3 -m pytest
+[2.000s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/lynx/ros2_rca_ws/src/diagnostic_monitor' returned '0': AMENT_PREFIX_PATH=/home/lynx/ros2_rca_ws/install/diagnostic_monitor:/home/lynx/ros2_rca_ws/install/rca_test_system:/home/lynx/ros2_ws/install/diagnostic_monitor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTEST_ADDOPTS=--tb=short --junit-xml=/home/lynx/ros2_rca_ws/build/diagnostic_monitor/pytest.xml --junit-prefix=diagnostic_monitor -o cache_dir=/home/lynx/ros2_rca_ws/build/diagnostic_monitor/.pytest_cache PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/home/lynx/ros2_rca_ws/build/diagnostic_monitor:/home/lynx/ros2_rca_ws/install/diagnostic_monitor/lib/python3.12/site-packages:/home/lynx/ros2_rca_ws/build/rca_test_system:/home/lynx/ros2_rca_ws/install/rca_test_system/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages /usr/bin/python3 -m pytest
+[2.450s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[2.451s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/lynx/ros2_rca_ws/src/rca_test_system' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTEST_ADDOPTS=--tb=short --junit-xml=/home/lynx/ros2_rca_ws/build/rca_test_system/pytest.xml --junit-prefix=rca_test_system -o cache_dir=/home/lynx/ros2_rca_ws/build/rca_test_system/.pytest_cache PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 -m pytest
+[2.451s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[2.452s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[2.452s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[2.536s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.notify_send': Could not find 'notify-send'
+[2.537s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[2.537s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[2.537s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[2.538s] DEBUG:colcon.colcon_notification.desktop_notification.notify2:Failed to initialize notify2: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.Notifications was not provided by any .service files
+[2.538s] DEBUG:colcon.colcon_core.event_reactor:joined thread

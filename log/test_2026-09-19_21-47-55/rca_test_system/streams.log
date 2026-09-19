@@ -1,0 +1,13 @@
+[1.035s] Invoking command in '/home/lynx/ros2_rca_ws/src/rca_test_system': PYTEST_ADDOPTS=--tb=short --junit-xml=/home/lynx/ros2_rca_ws/build/rca_test_system/pytest.xml --junit-prefix=rca_test_system -o cache_dir=/home/lynx/ros2_rca_ws/build/rca_test_system/.pytest_cache PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 -m pytest
+[2.507s] ============================= test session starts ==============================
+[2.507s] platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+[2.507s] cachedir: /home/lynx/ros2_rca_ws/build/rca_test_system/.pytest_cache
+[2.507s] rootdir: /home/lynx/ros2_rca_ws/src/rca_test_system
+[2.507s] plugins: launch-testing-3.4.11, ament-lint-0.17.5, ament-xmllint-0.17.5, ament-pep257-0.17.5, ament-flake8-0.17.5, ament-copyright-0.17.5, launch-testing-ros-0.26.12, typeguard-4.1.5, cov-4.1.0, colcon-core-0.21.0
+[2.507s] collected 4 items
+[2.507s] 
+[2.747s] tests/test_pipeline_nodes.py ....                                        [100%]
+[2.748s] 
+[2.748s] - generated xml file: /home/lynx/ros2_rca_ws/build/rca_test_system/pytest.xml --
+[2.748s] ============================== 4 passed in 0.97s ===============================
+[3.032s] Invoked command in '/home/lynx/ros2_rca_ws/src/rca_test_system' returned '0': PYTEST_ADDOPTS=--tb=short --junit-xml=/home/lynx/ros2_rca_ws/build/rca_test_system/pytest.xml --junit-prefix=rca_test_system -o cache_dir=/home/lynx/ros2_rca_ws/build/rca_test_system/.pytest_cache PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 -m pytest

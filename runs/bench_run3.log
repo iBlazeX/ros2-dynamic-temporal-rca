@@ -1,0 +1,338 @@
+[INFO] [1789853491.702053713] [experiment_controller]: ExperimentController ready with DB: events.db
+[INFO] [1789853493.905500592] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789853496.110587846] [experiment_controller]: >>> Injected latency on sensor_node (param=0.4, dur=9.0s)
+[INFO] [1789853502.319013858] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789853502.522365936] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789853510.236362670] [experiment_controller]: >>> Injected localization_failure on localization_node (param=50.0, dur=9.0s)
+[INFO] [1789853516.443161052] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789853516.647334655] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789853524.359931958] [experiment_controller]: >>> Injected dropout on sensor_node (param=1.0, dur=9.0s)
+Waiting 2.0s for nominal system warm-up and graph discovery...
+Monitor's discovered graph: ['localization_node', 'navigation_node', 'perception_node', 'sensor_node']  edges: [('localization_node', 'navigation_node'), ('perception_node', 'localization_node'), ('sensor_node', 'perception_node')]
+
+========================================================================
+STARTING Scenario 1: Sensor Latency
+Ground truth (evaluation layer only): target=sensor_node fault=latency param=0.4
+========================================================================
+Observing fault propagation for 6.0s ...
+DIAGNOSIS: predicted root cause = [sensor_node]  (ground truth = sensor_node)  Top-1: PASS  rank=1
+  detection latency  : 0.647s  (first anomaly after injection)
+  diagnosis latency  : 0.727s  (correct root first named at 0.727s)
+  false diag. rate   : 0.0  over 11 diagnoses
+  chain accuracy     : 1.0  predicted=['sensor_node', 'perception_node', 'localization_node', 'navigation_node']
+  nominal false alarms before injection: 0
+
+============================================================
+ROOT CAUSE DIAGNOSIS: sensor_node (Confidence: 1.000)
+============================================================
+Score Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:
+  R(sensor_node) = 0.3·D(1.00) + 0.3·T(1.00) + 0.25·S(1.00) + 0.15·A(1.00) = 1.000
+  - Dependency D: 1.00 (reaches 3 downstream anomalous node(s); 0 anomalous upstream node(s))
+  - Temporal   T: 1.00 (first anomaly at t=1789853496.55s; earliest in window = supporting evidence, not proof of causality)
+  - Symptom    S: 1.00 (explains 4/4 anomalous nodes)
+  - Severity   A: 1.00 (max normalised severity on node, 52 direct anomaly event(s))
+
+Propagation Chain (evidence-ordered, via discovered graph edges):
+  sensor_node (t=1789853496.55s: /sensor/scan:latency, sev=1.00)
+    └─→ perception_node via /sensor/scan (t=1789853496.56s, +0.01s after sensor_node: /perception/obstacles:latency)
+      └─→ localization_node via /perception/obstacles (t=1789853496.56s, -0.00s after perception_node: /localization/pose:latency)
+        └─→ navigation_node via /localization/pose (t=1789853496.56s, +0.00s after localization_node: /navigation/cmd_vel:latency)
+
+Candidate Ranking & Evidence Comparison:
+  #2 perception_node      R=0.787 (Δ -0.213) [first anomaly 0.01s after sensor_node; downstream of sensor_node in discovered graph; lower symptom coverage (75% vs 100%)]
+  #3 localization_node    R=0.625 (Δ -0.375) [first anomaly 0.00s after sensor_node; downstream of sensor_node in discovered graph; lower symptom coverage (50% vs 100%)]
+  #4 navigation_node      R=0.512 (Δ -0.488) [first anomaly 0.01s after sensor_node; downstream of sensor_node in discovered graph; lower symptom coverage (25% vs 100%)]
+============================================================
+
+Baseline comparison on identical recorded evidence:
+  independent      top1=FAIL rank=4   ranking=['localization_node', 'navigation_node', 'perception_node', 'sensor_node']
+  temporal_only    top1=PASS rank=1   ranking=['sensor_node', 'localization_node', 'navigation_node', 'perception_node']
+  static_dep_anom  top1=PASS rank=1   ranking=['sensor_node', 'perception_node', 'localization_node', 'navigation_node']
+  static_dep_temp  top1=PASS rank=1   ranking=['sensor_node', 'perception_node', 'localization_node', 'navigation_node']
+  proposed         top1=PASS rank=1   ranking=['sensor_node', 'perception_node', 'localization_node', 'navigation_node']
+Ablation (each scoring term disabled in turn):
+  full     top1=PASS rank=1   ranking=['sensor_node', 'perception_node', 'localization_node', 'navigation_node']
+  no_D     top1=PASS rank=1   ranking=['sensor_node', 'perception_node', 'localization_node', 'navigation_node']
+  no_T     top1=PASS rank=1   ranking=['sensor_node', 'perception_node', 'localization_node', 'navigation_node']
+  no_S     top1=PASS rank=1   ranking=['sensor_node', 'perception_node', 'localization_node', 'navigation_node']
+  no_A     top1=PASS rank=1   ranking=['sensor_node', 'perception_node', 'localization_node', 'navigation_node']
+
+========================================================================
+STARTING Scenario 2: Localization Failure
+Ground truth (evaluation layer only): target=localization_node fault=localization_failure param=50.0
+========================================================================
+Observing fault propagation for 6.0s ...
+DIAGNOSIS: predicted root cause = [localization_node]  (ground truth = localization_node)  Top-1: PASS  rank=1
+  detection latency  : 0.124s  (first anomaly after injection)
+  diagnosis latency  : 0.601s  (correct root first named at 0.601s)
+  false diag. rate   : 0.0  over 12 diagnoses
+  chain accuracy     : 1.0  predicted=['localization_node', 'navigation_node']
+  nominal false alarms before injection: 5
+
+============================================================
+ROOT CAUSE DIAGNOSIS: localization_node (Confidence: 1.000)
+============================================================
+Score Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:
+  R(localization_node) = 0.3·D(1.00) + 0.3·T(1.00) + 0.25·S(1.00) + 0.15·A(1.00) = 1.000
+  - Dependency D: 1.00 (reaches 1 downstream anomalous node(s); 0 anomalous upstream node(s))
+  - Temporal   T: 1.00 (first anomaly at t=1789853510.16s; earliest in window = supporting evidence, not proof of causality)
+  - Symptom    S: 1.00 (explains 2/2 anomalous nodes)
+  - Severity   A: 1.00 (max normalised severity on node, 60 direct anomaly event(s))
+
+Propagation Chain (evidence-ordered, via discovered graph edges):
+  localization_node (t=1789853510.16s: /localization/pose:z_pos, sev=1.00)
+    └─→ navigation_node via /localization/pose (t=1789853510.16s, +0.00s after localization_node: /navigation/cmd_vel:linear_vel)
+
+Candidate Ranking & Evidence Comparison:
+  #2 navigation_node      R=0.575 (Δ -0.425) [first anomaly 0.00s after localization_node; downstream of localization_node in discovered graph; lower symptom coverage (50% vs 100%)]
+  #3 perception_node      R=0.565 (Δ -0.435) [no direct anomaly observed]
+  #4 sensor_node          R=0.565 (Δ -0.435) [no direct anomaly observed]
+============================================================
+
+Baseline comparison on identical recorded evidence:
+  independent      top1=PASS rank=1   ranking=['localization_node', 'navigation_node']
+  temporal_only    top1=PASS rank=1   ranking=['localization_node', 'navigation_node']
+  static_dep_anom  top1=PASS rank=1   ranking=['localization_node', 'perception_node', 'sensor_node', 'navigation_node']
+  static_dep_temp  top1=PASS rank=1   ranking=['localization_node', 'perception_node', 'sensor_node', 'navigation_node']
+  proposed         top1=PASS rank=1   ranking=['localization_node', 'navigation_node', 'perception_node', 'sensor_node']
+Ablation (each scoring term disabled in turn):
+  full     top1=PASS rank=1   ranking=['localization_node', 'navigation_node', 'perception_node', 'sensor_node']
+  no_D     top1=PASS rank=1   ranking=['localization_node', 'navigation_node', 'perception_node', 'sensor_node']
+  no_T     top1=PASS rank=1   ranking=['localization_node', 'perception_node', 'sensor_node', 'navigation_node']
+  no_S     top1=PASS rank=1   ranking=['localization_node', 'navigation_node', 'perception_node', 'sensor_node']
+  no_A     top1=PASS rank=1   ranking=['localization_node', 'perception_node', 'sensor_node', 'navigation_node']
+
+========================================================================
+STARTING Scenario 3: Sensor Dropout
+Ground truth (evaluation layer only): target=sensor_node fault=dropout param=1.0
+========================================================================
+Observing fault propagation for 6.0s ...
+DIAGNOSIS: predicted root cause = [sensor_node]  (ground truth = sensor_node)  Top-1: PASS  rank=1
+  detection latency  : 0.447s  (first anomaly after injection)
+  diagnosis latency  : 0.477s  (correct root first named at 0.477s)
+  false diag. rate   : 0.0  over 12 diagnoses
+  chain accuracy     : 1.0  predicted=['sensor_node', 'perception_node', 'localization_node', 'navigation_node']
+  nominal false alarms before injection: 5[INFO] [1789853530.565923855] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789853530.769317979] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789853532.976221732] [experiment_controller]: >>> Injected navigation_failure on navigation_node (param=1.0, dur=9.0s)
+[INFO] [1789853539.184936959] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789853539.388520467] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789853547.103568451] [experiment_controller]: >>> Injected degradation on sensor_node (param=0.0, dur=9.0s)
+
+
+============================================================
+ROOT CAUSE DIAGNOSIS: sensor_node (Confidence: 1.000)
+============================================================
+Score Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:
+  R(sensor_node) = 0.3·D(1.00) + 0.3·T(1.00) + 0.25·S(1.00) + 0.15·A(1.00) = 1.000
+  - Dependency D: 1.00 (reaches 3 downstream anomalous node(s); 0 anomalous upstream node(s))
+  - Temporal   T: 1.00 (first anomaly at t=1789853524.60s; earliest in window = supporting evidence, not proof of causality)
+  - Symptom    S: 1.00 (explains 4/4 anomalous nodes)
+  - Severity   A: 1.00 (max normalised severity on node, 12 direct anomaly event(s))
+
+Propagation Chain (evidence-ordered, via discovered graph edges):
+  sensor_node (t=1789853524.60s: message_timeout, sev=0.77)
+    └─→ perception_node via /sensor/scan (t=1789853524.60s, +0.00s after sensor_node: message_timeout)
+      └─→ localization_node via /perception/obstacles (t=1789853524.61s, +0.00s after perception_node: message_timeout)
+        └─→ navigation_node via /localization/pose (t=1789853524.61s, +0.00s after localization_node: message_timeout)
+
+Candidate Ranking & Evidence Comparison:
+  #2 perception_node      R=0.787 (Δ -0.213) [first anomaly 0.00s after sensor_node; downstream of sensor_node in discovered graph; lower symptom coverage (75% vs 100%)]
+  #3 localization_node    R=0.625 (Δ -0.375) [first anomaly 0.00s after sensor_node; downstream of sensor_node in discovered graph; lower symptom coverage (50% vs 100%)]
+  #4 navigation_node      R=0.512 (Δ -0.488) [first anomaly 0.00s after sensor_node; downstream of sensor_node in discovered graph; lower symptom coverage (25% vs 100%)]
+============================================================
+
+Baseline comparison on identical recorded evidence:
+  independent      top1=FAIL rank=4   ranking=['localization_node', 'navigation_node', 'perception_node', 'sensor_node']
+  temporal_only    top1=PASS rank=1   ranking=['sensor_node', 'perception_node', 'localization_node', 'navigation_node']
+  static_dep_anom  top1=PASS rank=1   ranking=['sensor_node', 'perception_node', 'localization_node', 'navigation_node']
+  static_dep_temp  top1=PASS rank=1   ranking=['sensor_node', 'perception_node', 'localization_node', 'navigation_node']
+  proposed         top1=PASS rank=1   ranking=['sensor_node', 'perception_node', 'localization_node', 'navigation_node']
+Ablation (each scoring term disabled in turn):
+  full     top1=PASS rank=1   ranking=['sensor_node', 'perception_node', 'localization_node', 'navigation_node']
+  no_D     top1=PASS rank=1   ranking=['sensor_node', 'perception_node', 'localization_node', 'navigation_node']
+  no_T     top1=PASS rank=1   ranking=['sensor_node', 'perception_node', 'localization_node', 'navigation_node']
+  no_S     top1=PASS rank=1   ranking=['sensor_node', 'perception_node', 'localization_node', 'navigation_node']
+  no_A     top1=PASS rank=1   ranking=['sensor_node', 'perception_node', 'localization_node', 'navigation_node']
+
+========================================================================
+STARTING Scenario 4: Navigation Failure
+Ground truth (evaluation layer only): target=navigation_node fault=navigation_failure param=1.0
+========================================================================
+Observing fault propagation for 6.0s ...
+DIAGNOSIS: predicted root cause = [navigation_node]  (ground truth = navigation_node)  Top-1: PASS  rank=1
+  detection latency  : 0.185s  (first anomaly after injection)
+  diagnosis latency  : 0.364s  (correct root first named at 0.364s)
+  false diag. rate   : 0.0  over 12 diagnoses
+  chain accuracy     : 1.0  predicted=['navigation_node']
+  nominal false alarms before injection: 0
+
+============================================================
+ROOT CAUSE DIAGNOSIS: navigation_node (Confidence: 1.000)
+============================================================
+Score Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:
+  R(navigation_node) = 0.3·D(1.00) + 0.3·T(1.00) + 0.25·S(1.00) + 0.15·A(1.00) = 1.000
+  - Dependency D: 1.00 (reaches 0 downstream anomalous node(s); 0 anomalous upstream node(s))
+  - Temporal   T: 1.00 (first anomaly at t=1789853532.96s; earliest in window = supporting evidence, not proof of causality)
+  - Symptom    S: 1.00 (explains 1/1 anomalous nodes)
+  - Severity   A: 1.00 (max normalised severity on node, 57 direct anomaly event(s))
+
+Propagation Chain (evidence-ordered, via discovered graph edges):
+  navigation_node (t=1789853532.96s: /navigation/cmd_vel:linear_vel, sev=1.00)
+
+Candidate Ranking & Evidence Comparison:
+  #2 localization_node    R=0.415 (Δ -0.585) [no direct anomaly observed; does not reach observed symptoms via dependency edges]
+  #3 perception_node      R=0.415 (Δ -0.585) [no direct anomaly observed; does not reach observed symptoms via dependency edges]
+  #4 sensor_node          R=0.415 (Δ -0.585) [no direct anomaly observed; does not reach observed symptoms via dependency edges]
+============================================================
+
+Baseline comparison on identical recorded evidence:
+  independent      top1=PASS rank=1   ranking=['navigation_node']
+  temporal_only    top1=PASS rank=1   ranking=['navigation_node']
+  static_dep_anom  top1=PASS rank=1   ranking=['navigation_node', 'localization_node', 'perception_node', 'sensor_node']
+  static_dep_temp  top1=PASS rank=1   ranking=['navigation_node', 'localization_node', 'perception_node', 'sensor_node']
+  proposed         top1=PASS rank=1   ranking=['navigation_node', 'localization_node', 'perception_node', 'sensor_node']
+Ablation (each scoring term disabled in turn):
+  full     top1=PASS rank=1   ranking=['navigation_node', 'localization_node', 'perception_node', 'sensor_node']
+  no_D     top1=PASS rank=1   ranking=['navigation_node', 'localization_node', 'perception_node', 'sensor_node']
+  no_T     top1=PASS rank=1   ranking=['navigation_node', 'localization_node', 'perception_node', 'sensor_node']
+  no_S     top1=PASS rank=1   ranking=['navigation_node', 'localization_node', 'perception_node', 'sensor_node']
+  no_A     top1=PASS rank=1   ranking=['navigation_node', 'localization_node', 'perception_node', 'sensor_node']
+
+========================================================================
+STARTING Scenario 5: Sensor Degradation (NaNs)
+Ground truth (evaluation layer only): target=sensor_node fault=degradation param=0.0
+========================================================================
+Observing fault propagation for 6.0s ...
+DIAGNOSIS: predicted root cause = [sensor_node]  (ground truth = sensor_node)  Top-1: PASS  rank=1
+  detection latency  : 0.157s  (first anomaly after injection)
+  diagnosis latency  : 0.236s  (correct root first named at 0.236s)
+  false diag. rate   : 0.0  over 12 diagnoses
+  chain accuracy     : 1.0  predicted=['sensor_node', 'perception_node']
+  nominal false alarms before injection: 5
+
+============================================================
+ROOT CAUSE DIAGNOSIS: sensor_node (Confidence: 1.000)
+============================================================
+Score Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:
+  R(sensor_node) = 0.3·D(1.00) + 0.3·T(1.00) + 0.25·S(1.00) + 0.15·A(1.00) = 1.000
+  - Dependency D: 1.00 (reaches 1 downstream anomalous node(s); 0 anomalous upstream node(s))
+  - Temporal   T: 1.00 (first anomaly at t=1789853547.06s; earliest in window = supporting evidence, not proof of causality)
+  - Symptom    S: 1.00 (explains 2/2 anomalous nodes)
+  - Severity   A: 1.00 (max normalised severity on node, 56 direct anomaly event(s))
+
+Propagation Chain (evidence-ordered, via discovered graph edges):
+  sensor_node (t=1789853547.06s: /sensor/scan:nan_ratio, sev=1.00)
+    └─→ perception_node via /sensor/scan (t=1789853547.06s, +0.00s after sensor_node: /perception/obstacles:obstacle_count)
+
+Candidate Ranking & Evidence Comparison:
+  #2 perception_node      R=0.575 (Δ -0.425) [first anomaly 0.00s after sensor_node; downstream of sensor_node in discovered graph; lower symptom coverage (50% vs 100%)]
+============================================================
+
+Baseline comparison on identical recorded evidence:[INFO] [1789853553.310846862] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789853553.514109892] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789853561.226934767] [experiment_controller]: >>> Injected processing_delay on perception_node (param=0.4, dur=9.0s)
+[INFO] [1789853567.432602971] [experiment_controller]: >>> Cleared all faults.
+
+  independent      top1=FAIL rank=2   ranking=['perception_node', 'sensor_node']
+  temporal_only    top1=PASS rank=1   ranking=['sensor_node', 'perception_node']
+  static_dep_anom  top1=PASS rank=1   ranking=['sensor_node', 'perception_node']
+  static_dep_temp  top1=PASS rank=1   ranking=['sensor_node', 'perception_node']
+  proposed         top1=PASS rank=1   ranking=['sensor_node', 'perception_node']
+Ablation (each scoring term disabled in turn):
+  full     top1=PASS rank=1   ranking=['sensor_node', 'perception_node']
+  no_D     top1=PASS rank=1   ranking=['sensor_node', 'perception_node']
+  no_T     top1=PASS rank=1   ranking=['sensor_node', 'perception_node']
+  no_S     top1=PASS rank=1   ranking=['sensor_node', 'perception_node']
+  no_A     top1=PASS rank=1   ranking=['sensor_node', 'perception_node']
+
+========================================================================
+STARTING Scenario 6: Perception Processing Delay
+Ground truth (evaluation layer only): target=perception_node fault=processing_delay param=0.4
+========================================================================
+Observing fault propagation for 6.0s ...
+DIAGNOSIS: predicted root cause = [perception_node]  (ground truth = perception_node)  Top-1: PASS  rank=1
+  detection latency  : 0.832s  (first anomaly after injection)
+  diagnosis latency  : 1.112s  (correct root first named at 1.112s)
+  false diag. rate   : 0.0  over 11 diagnoses
+  chain accuracy     : 1.0  predicted=['perception_node', 'localization_node', 'navigation_node']
+  nominal false alarms before injection: 5
+
+============================================================
+ROOT CAUSE DIAGNOSIS: perception_node (Confidence: 1.000)
+============================================================
+Score Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:
+  R(perception_node) = 0.3·D(1.00) + 0.3·T(1.00) + 0.25·S(1.00) + 0.15·A(1.00) = 1.000
+  - Dependency D: 1.00 (reaches 2 downstream anomalous node(s); 0 anomalous upstream node(s))
+  - Temporal   T: 1.00 (first anomaly at t=1789853561.86s; earliest in window = supporting evidence, not proof of causality)
+  - Symptom    S: 1.00 (explains 3/3 anomalous nodes)
+  - Severity   A: 1.00 (max normalised severity on node, 28 direct anomaly event(s))
+
+Propagation Chain (evidence-ordered, via discovered graph edges):
+  perception_node (t=1789853561.86s: /perception/obstacles:inter_arrival, sev=1.00)
+    └─→ localization_node via /perception/obstacles (t=1789853561.86s, +0.00s after perception_node: /localization/pose:inter_arrival)
+      └─→ navigation_node via /localization/pose (t=1789853561.86s, +0.00s after localization_node: /navigation/cmd_vel:inter_arrival)
+
+Candidate Ranking & Evidence Comparison:
+  #2 localization_node    R=0.717 (Δ -0.283) [first anomaly 0.00s after perception_node; downstream of perception_node in discovered graph; lower symptom coverage (67% vs 100%)]
+  #3 sensor_node          R=0.565 (Δ -0.435) [no direct anomaly observed]
+  #4 navigation_node      R=0.533 (Δ -0.467) [first anomaly 0.00s after perception_node; downstream of perception_node in discovered graph; lower symptom coverage (33% vs 100%)]
+============================================================
+
+Baseline comparison on identical recorded evidence:
+  independent      top1=FAIL rank=3   ranking=['localization_node', 'navigation_node', 'perception_node']
+  temporal_only    top1=PASS rank=1   ranking=['perception_node', 'localization_node', 'navigation_node']
+  static_dep_anom  top1=PASS rank=1   ranking=['perception_node', 'sensor_node', 'localization_node', 'navigation_node']
+  static_dep_temp  top1=PASS rank=1   ranking=['perception_node', 'localization_node', 'sensor_node', 'navigation_node']
+  proposed         top1=PASS rank=1   ranking=['perception_node', 'localization_node', 'sensor_node', 'navigation_node']
+Ablation (each scoring term disabled in turn):
+  full     top1=PASS rank=1   ranking=['perception_node', 'localization_node', 'sensor_node', 'navigation_node']
+  no_D     top1=PASS rank=1   ranking=['perception_node', 'localization_node', 'navigation_node', 'sensor_node']
+  no_T     top1=PASS rank=1   ranking=['perception_node', 'sensor_node', 'localization_node', 'navigation_node']
+  no_S     top1=PASS rank=1   ranking=['perception_node', 'localization_node', 'navigation_node', 'sensor_node']
+  no_A     top1=PASS rank=1   ranking=['perception_node', 'localization_node', 'sensor_node', 'navigation_node']
+
+====================================================================================================
+EXPERIMENT EVALUATION BENCHMARK RESULTS (proposed method, live ROS 2 run)
+====================================================================================================
+Scenario                                 Truth              Predicted          Top1  Rank Det.   Diag.  FDR    Chain
+----------------------------------------------------------------------------------------------------
+Scenario 1: Sensor Latency               sensor_node        sensor_node        PASS  1    0.647  0.727  0.0    1.0
+Scenario 2: Localization Failure         localization_node  localization_node  PASS  1    0.124  0.601  0.0    1.0
+Scenario 3: Sensor Dropout               sensor_node        sensor_node        PASS  1    0.447  0.477  0.0    1.0
+Scenario 4: Navigation Failure           navigation_node    navigation_node    PASS  1    0.185  0.364  0.0    1.0
+Scenario 5: Sensor Degradation (NaNs)    sensor_node        sensor_node        PASS  1    0.157  0.236  0.0    1.0
+Scenario 6: Perception Processing Delay  perception_node    perception_node    PASS  1    0.832  1.112  0.0    1.0
+----------------------------------------------------------------------------------------------------
+{
+  "total_experiments": 6,
+  "top1_accuracy": 1.0,
+  "top3_accuracy": 1.0,
+  "mean_reciprocal_rank": 1.0,
+  "avg_detection_latency_sec": 0.399,
+  "avg_diagnosis_latency_sec": 0.586,
+  "avg_correct_diagnosis_latency_sec": 0.586,
+  "false_diagnosis_rate": 0.0,
+  "avg_chain_accuracy": 1.0,
+  "chain_order_accuracy": 1.0
+}
+
+====================================================================================================
+BASELINE COMPARISON (Top-1 accuracy across scenarios, identical evidence)
+====================================================================================================
+  independent      top1 = 2/6 (33%)   MRR = 0.556
+  temporal_only    top1 = 6/6 (100%)   MRR = 1.000
+  static_dep_anom  top1 = 6/6 (100%)   MRR = 1.000
+  static_dep_temp  top1 = 6/6 (100%)   MRR = 1.000
+  proposed         top1 = 6/6 (100%)   MRR = 1.000
+
+====================================================================================================
+ABLATION (Top-1 accuracy with each term disabled)
+====================================================================================================
+  full     {'wD': 0.3, 'wT': 0.3, 'wS': 0.25, 'wA': 0.15}  top1 = 6/6 (100%)
+  no_D     {'wD': 0.0, 'wT': 0.3, 'wS': 0.25, 'wA': 0.15}  top1 = 6/6 (100%)
+  no_T     {'wD': 0.3, 'wT': 0.0, 'wS': 0.25, 'wA': 0.15}  top1 = 6/6 (100%)
+  no_S     {'wD': 0.3, 'wT': 0.3, 'wS': 0.0, 'wA': 0.15}  top1 = 6/6 (100%)
+  no_A     {'wD': 0.3, 'wT': 0.3, 'wS': 0.25, 'wA': 0.0}  top1 = 6/6 (100%)
+
+Results written to runs/results_run3.json

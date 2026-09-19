@@ -1,0 +1,146 @@
+[INFO] [1789851775.566752837] [experiment_controller]: ExperimentController ready with DB: events.db
+[INFO] [1789851779.769398128] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789851785.972358796] [experiment_controller]: >>> Injected latency on sensor_node (param=0.4, dur=8.0s)
+[INFO] [1789851791.175494124] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789851798.378173464] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789851804.580643871] [experiment_controller]: >>> Injected localization_failure on localization_node (param=50.0, dur=8.0s)
+[INFO] [1789851809.783868941] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789851816.988770880] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789851823.191225567] [experiment_controller]: >>> Injected dropout on sensor_node (param=1.0, dur=8.0s)
+[INFO] [1789851828.393659471] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789851835.597917769] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789851841.800507284] [experiment_controller]: >>> Injected navigation_failure on navigation_node (param=1.0, dur=8.0s)
+[INFO] [1789851847.003133808] [experiment_controller]: >>> Cleared all faults.
+Waiting 4.0 seconds for nominal system warm-up and graph discovery...
+
+======================================================================
+STARTING EXPERIMENT SCENARIO: Scenario 1: Sensor Latency
+Ground Truth Target: sensor_node | Fault Type: latency
+======================================================================
+Observing fault propagation for 5.0 seconds...
+DIAGNOSIS RESULT: Predicted Root Cause = [sensor_node]
+Top-1 Correct: True | Ground Truth Rank: 1
+Detection Latency: 4.80s
+
+============================================================
+ROOT CAUSE DIAGNOSIS: sensor_node (Confidence: 1.000)
+============================================================
+Mathematical Score Breakdown:
+  R(sensor_node) = 0.3·D(1.00) + 0.3·T(1.00) + 0.25·S(1.00) + 0.15·A(1.00) = 1.000
+  - Dependency Score D: 1.00 (Reaches 3 downstream symptoms, 0 upstream parents)
+  - Temporal Score T:   1.00 (Earliest anomaly detected at t=1789851786.07s)
+  - Symptom Coverage S: 1.00 (Explains 100.0% of observed anomalous nodes)
+  - Anomaly Severity A: 1.00 (Max severity on node)
+
+Propagation Chain:
+  sensor_node (t=1789851786.07s: message_timeout, sev=0.77)
+    └─→ perception_node via /sensor/scan (t=1789851786.07s, +0.00s: message_timeout)
+    └─→ localization_node via /perception/obstacles (t=1789851786.07s, +0.00s: message_timeout)
+    └─→ navigation_node via /localization/pose (t=1789851786.07s, +0.00s: message_timeout)
+
+Candidate Ranking & Evidence Comparison:
+  #2 perception_node      Score: 0.787 (Δ -0.213) [Ruled out: topologically downstream of sensor_node in dynamic graph; lower symptom coverage (75% vs 100%)]
+  #3 localization_node    Score: 0.625 (Δ -0.375) [Ruled out: topologically downstream of sensor_node in dynamic graph; lower symptom coverage (50% vs 100%)]
+  #4 navigation_node      Score: 0.512 (Δ -0.488) [Ruled out: topologically downstream of sensor_node in dynamic graph; lower symptom coverage (25% vs 100%)]
+============================================================
+
+======================================================================
+STARTING EXPERIMENT SCENARIO: Scenario 2: Localization Failure
+Ground Truth Target: localization_node | Fault Type: localization_failure
+======================================================================
+Observing fault propagation for 5.0 seconds...
+DIAGNOSIS RESULT: Predicted Root Cause = [localization_node]
+Top-1 Correct: True | Ground Truth Rank: 1
+Detection Latency: 4.69s
+
+============================================================
+ROOT CAUSE DIAGNOSIS: localization_node (Confidence: 1.000)
+============================================================
+Mathematical Score Breakdown:
+  R(localization_node) = 0.3·D(1.00) + 0.3·T(1.00) + 0.25·S(1.00) + 0.15·A(1.00) = 1.000
+  - Dependency Score D: 1.00 (Reaches 1 downstream symptoms, 0 upstream parents)
+  - Temporal Score T:   1.00 (Earliest anomaly detected at t=1789851804.40s)
+  - Symptom Coverage S: 1.00 (Explains 100.0% of observed anomalous nodes)
+  - Anomaly Severity A: 1.00 (Max severity on node)
+
+Propagation Chain:
+  localization_node (t=1789851804.40s: /localization/pose:z_pos, sev=1.00)
+    └─→ navigation_node via /localization/pose (t=1789851804.42s, +0.01s: /navigation/cmd_vel:linear_vel)
+
+Candidate Ranking & Evidence Comparison:
+  #2 navigation_node      Score: 0.574 (Δ -0.426) [Ruled out: failed 0.01s after localization_node; topologically downstream of localization_node in dynamic graph; lower symptom coverage (50% vs 100%)]
+  #3 perception_node      Score: 0.565 (Δ -0.435) [Ruled out: lower temporal precedence]
+  #4 sensor_node          Score: 0.565 (Δ -0.435) [Ruled out: lower temporal precedence]
+============================================================
+
+======================================================================
+STARTING EXPERIMENT SCENARIO: Scenario 3: Sensor Dropout
+Ground Truth Target: sensor_node | Fault Type: dropout
+======================================================================
+Observing fault propagation for 5.0 seconds...
+DIAGNOSIS RESULT: Predicted Root Cause = [sensor_node]
+Top-1 Correct: True | Ground Truth Rank: 1
+Detection Latency: 5.08s
+
+============================================================
+ROOT CAUSE DIAGNOSIS: sensor_node (Confidence: 1.000)
+============================================================
+Mathematical Score Breakdown:
+  R(sensor_node) = 0.3·D(1.00) + 0.3·T(1.00) + 0.25·S(1.00) + 0.15·A(1.00) = 1.000
+  - Dependency Score D: 1.00 (Reaches 3 downstream symptoms, 0 upstream parents)
+  - Temporal Score T:   1.00 (Earliest anomaly detected at t=1789851823.57s)
+  - Symptom Coverage S: 1.00 (Explains 100.0% of observed anomalous nodes)
+  - Anomaly Severity A: 1.00 (Max severity on node)
+
+Propagation Chain:
+  sensor_node (t=1789851823.57s: message_timeout, sev=0.92)
+    └─→ perception_node via /sensor/scan (t=1789851823.57s, +0.00s: message_timeout)
+    └─→ localization_node via /perception/obstacles (t=1789851823.57s, +0.00s: message_timeout)
+    └─→ navigation_node via /localization/pose (t=1789851823.57s, +0.00s: message_timeout)
+
+Candidate Ranking & Evidence Comparison:
+  #2 perception_node      Score: 0.787 (Δ -0.213) [Ruled out: topologically downstream of sensor_node in dynamic graph; lower symptom coverage (75% vs 100%)]
+  #3 localization_node    Score: 0.625 (Δ -0.375) [Ruled out: topologically downstream of sensor_node in dynamic graph; lower symptom coverage (50% vs 100%)]
+  #4 navigation_node      Score: 0.512 (Δ -0.488) [Ruled out: topologically downstream of sensor_node in dynamic graph; lower symptom coverage (25% vs 100%)]
+============================================================
+
+======================================================================
+STARTING EXPERIMENT SCENARIO: Scenario 4: Navigation Failure
+Ground Truth Target: navigation_node | Fault Type: navigation_failure
+======================================================================
+Observing fault propagation for 5.0 seconds...
+DIAGNOSIS RESULT: Predicted Root Cause = [navigation_node]
+Top-1 Correct: True | Ground Truth Rank: 1
+Detection Latency: 4.97s
+
+============================================================
+ROOT CAUSE DIAGNOSIS: navigation_node (Confidence: 1.000)
+============================================================
+Mathematical Score Breakdown:
+  R(navigation_node) = 0.3·D(1.00) + 0.3·T(1.00) + 0.25·S(1.00) + 0.15·A(1.00) = 1.000
+  - Dependency Score D: 1.00 (Reaches 0 downstream symptoms, 0 upstream parents)
+  - Temporal Score T:   1.00 (Earliest anomaly detected at t=1789851841.71s)
+  - Symptom Coverage S: 1.00 (Explains 100.0% of observed anomalous nodes)
+  - Anomaly Severity A: 1.00 (Max severity on node)
+
+Propagation Chain:
+  navigation_node (t=1789851841.71s: /navigation/cmd_vel:linear_vel, sev=1.00)
+
+Candidate Ranking & Evidence Comparison:
+  #2 sensor_node          Score: 0.415 (Δ -0.585) [Ruled out: lower temporal precedence; topologically downstream of navigation_node in dynamic graph]
+  #3 perception_node      Score: 0.415 (Δ -0.585) [Ruled out: lower temporal precedence; topologically downstream of navigation_node in dynamic graph]
+  #4 localization_node    Score: 0.415 (Δ -0.585) [Ruled out: lower temporal precedence; topologically downstream of navigation_node in dynamic graph]
+============================================================
+
+================================================================================
+EXPERIMENT EVALUATION BENCHMARK RESULTS
+================================================================================
+Scenario                     Ground Truth       Predicted          Top-1  Rank  Latency
+--------------------------------------------------------------------------------
+Scenario 1: Sensor Latency   sensor_node        sensor_node        PASS   1     4.80s
+Scenario 2: Localization Failure localization_node  localization_node  PASS   1     4.69s
+Scenario 3: Sensor Dropout   sensor_node        sensor_node        PASS   1     5.08s
+Scenario 4: Navigation Failure navigation_node    navigation_node    PASS   1     4.97s
+--------------------------------------------------------------------------------
+Total Runs: 4 | Top-1 Accuracy: 100.0% | Top-3 Accuracy: 100.0% | MRR: 1.000 | Avg Latency: 4.89s
+================================================================================

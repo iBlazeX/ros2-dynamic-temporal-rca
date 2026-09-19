@@ -1,0 +1,770 @@
+[INFO] [launch]: All log files can be found below /home/lynx/.ros/log/2026-09-19-21-01-10-574591-WINDOWS-FIRE-5908
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [sensor_node-1]: process started with pid [5911]
+[INFO] [perception_node-2]: process started with pid [5912]
+[INFO] [localization_node-3]: process started with pid [5913]
+[INFO] [navigation_node-4]: process started with pid [5914]
+[INFO] [monitor_node-5]: process started with pid [5915]
+[localization_node-3] [INFO] [1789851671.381677838] [localization_node]: LocalizationNode initialized, listening to /perception/obstacles
+[navigation_node-4] [INFO] [1789851671.388146604] [navigation_node]: NavigationNode initialized, listening to /localization/pose
+[sensor_node-1] [INFO] [1789851671.404391709] [sensor_node]: SensorNode initialized at 10.0 Hz
+[perception_node-2] [INFO] [1789851671.476123169] [perception_node]: PerceptionNode initialized, listening to /sensor/scan
+[monitor_node-5] [INFO] [1789851671.588670579] [diagnostic_monitor]: DiagnosticMonitorNode started. DB: events.db, Weights: (wD=0.3, wT=0.3, wS=0.25, wA=0.15)
+[monitor_node-5] [INFO] [1789851672.578796871] [diagnostic_monitor]: Dynamically subscribed to monitor topic: /localization/pose [geometry_msgs/msg/PoseStamped]
+[monitor_node-5] [INFO] [1789851672.581428659] [diagnostic_monitor]: Dynamically subscribed to monitor topic: /navigation/cmd_vel [geometry_msgs/msg/Twist]
+[monitor_node-5] [INFO] [1789851672.583743998] [diagnostic_monitor]: Dynamically subscribed to monitor topic: /perception/obstacles [geometry_msgs/msg/PoseArray]
+[monitor_node-5] [INFO] [1789851672.591424557] [diagnostic_monitor]: Dynamically subscribed to monitor topic: /sensor/scan [sensor_msgs/msg/LaserScan]
+[monitor_node-5] [WARN] [1789851680.001746136] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:inter_arrival: Value 0.3955 deviated from baseline 0.1000±0.0656 (z=4.5) (sev=0.50)
+[monitor_node-5] [INFO] [1789851680.095592653] [diagnostic_monitor]: 
+[monitor_node-5] ============================================================
+[monitor_node-5] ROOT CAUSE DIAGNOSIS: sensor_node (Confidence: 0.925)
+[monitor_node-5] ============================================================
+[monitor_node-5] Mathematical Score Breakdown:
+[monitor_node-5]   R(sensor_node) = 0.3·D(1.00) + 0.3·T(1.00) + 0.25·S(1.00) + 0.15·A(0.50) = 0.925
+[monitor_node-5]   - Dependency Score D: 1.00 (Reaches 0 downstream symptoms, 0 upstream parents)
+[monitor_node-5]   - Temporal Score T:   1.00 (Earliest anomaly detected at t=1789851679.99s)
+[monitor_node-5]   - Symptom Coverage S: 1.00 (Explains 100.0% of observed anomalous nodes)
+[monitor_node-5]   - Anomaly Severity A: 0.50 (Max severity on node)
+[monitor_node-5] 
+[monitor_node-5] Propagation Chain:
+[monitor_node-5]   sensor_node (t=1789851679.99s: /sensor/scan:inter_arrival, sev=0.50)
+[monitor_node-5] 
+[monitor_node-5] ============================================================
+[navigation_node-4] [INFO] [1789851779.568536017] [navigation_node]: NavigationNode: Fault cleared.
+[localization_node-3] [INFO] [1789851779.568653965] [localization_node]: LocalizationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851779.568654410] [perception_node]: PerceptionNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851779.568830064] [sensor_node]: SensorNode: Fault cleared.
+[localization_node-3] [INFO] [1789851779.618747098] [localization_node]: LocalizationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851779.618747317] [perception_node]: PerceptionNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851779.618751571] [navigation_node]: NavigationNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851779.618755539] [sensor_node]: SensorNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851779.668949397] [sensor_node]: SensorNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851779.669140186] [navigation_node]: NavigationNode: Fault cleared.
+[localization_node-3] [INFO] [1789851779.669206588] [localization_node]: LocalizationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851779.669206278] [perception_node]: PerceptionNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851779.719311872] [sensor_node]: SensorNode: Fault cleared.
+[perception_node-2] [INFO] [1789851779.719487254] [perception_node]: PerceptionNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851779.719561831] [navigation_node]: NavigationNode: Fault cleared.
+[localization_node-3] [INFO] [1789851779.719561815] [localization_node]: LocalizationNode: Fault cleared.
+[sensor_node-1] [WARN] [1789851785.770971125] [sensor_node]: SensorNode: Injected fault "latency" (param=0.4, duration=8.0s)
+[sensor_node-1] [WARN] [1789851785.821758069] [sensor_node]: SensorNode: Injected fault "latency" (param=0.4, duration=8.0s)
+[sensor_node-1] [WARN] [1789851785.871871067] [sensor_node]: SensorNode: Injected fault "latency" (param=0.4, duration=8.0s)
+[sensor_node-1] [WARN] [1789851785.922424417] [sensor_node]: SensorNode: Injected fault "latency" (param=0.4, duration=8.0s)
+[monitor_node-5] [WARN] [1789851786.076873034] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] message_timeout: Message timeout on /localization/pose: no message for 0.37s (expected ~0.100s) (sev=0.77)
+[monitor_node-5] [WARN] [1789851786.080954396] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] message_timeout: Message timeout on /perception/obstacles: no message for 0.36s (expected ~0.100s) (sev=0.76)
+[monitor_node-5] [WARN] [1789851786.084267088] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] message_timeout: Message timeout on /navigation/cmd_vel: no message for 0.36s (expected ~0.100s) (sev=0.76)
+[monitor_node-5] [WARN] [1789851786.087201912] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] message_timeout: Message timeout on /sensor/scan: no message for 0.38s (expected ~0.100s) (sev=0.77)
+[monitor_node-5] [WARN] [1789851786.198905356] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:inter_arrival: Value 0.5002 deviated from baseline 0.0997±0.0174 (z=23.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851786.204976111] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4009 deviated from baseline 0.0066±0.0354 (z=11.1) (sev=1.00)
+[monitor_node-5] [WARN] [1789851786.213489492] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:inter_arrival: Value 0.5075 deviated from baseline 0.1000±0.0133 (z=30.6) (sev=1.00)
+[monitor_node-5] [WARN] [1789851786.225492990] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:inter_arrival: Value 0.5116 deviated from baseline 0.1000±0.0151 (z=27.2) (sev=1.00)
+[monitor_node-5] [WARN] [1789851786.234382407] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:inter_arrival: Value 0.5155 deviated from baseline 0.1000±0.0160 (z=25.9) (sev=1.00)
+[monitor_node-5] [WARN] [1789851786.300879135] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4007 deviated from baseline 0.0066±0.0354 (z=11.1) (sev=1.00)
+[monitor_node-5] [WARN] [1789851786.399886991] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4010 deviated from baseline 0.0066±0.0354 (z=11.2) (sev=1.00)
+[monitor_node-5] [WARN] [1789851786.500960753] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4009 deviated from baseline 0.0066±0.0354 (z=11.2) (sev=1.00)
+[monitor_node-5] [WARN] [1789851786.700450230] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5007 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851786.801814915] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5009 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851786.901218992] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5007 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851786.999758857] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5008 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851787.039695732] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4394 deviated from baseline 0.0066±0.0354 (z=12.2) (sev=1.00)
+[monitor_node-5] [WARN] [1789851787.097787161] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4008 deviated from baseline 0.0066±0.0354 (z=11.1) (sev=1.00)
+[monitor_node-5] [WARN] [1789851787.198621962] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4009 deviated from baseline 0.0066±0.0354 (z=11.2) (sev=1.00)
+[monitor_node-5] [WARN] [1789851787.300483462] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4008 deviated from baseline 0.0066±0.0354 (z=11.1) (sev=1.00)
+[monitor_node-5] [WARN] [1789851787.400757258] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4009 deviated from baseline 0.0066±0.0354 (z=11.1) (sev=1.00)
+[monitor_node-5] [WARN] [1789851787.499835352] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4007 deviated from baseline 0.0066±0.0354 (z=11.1) (sev=1.00)
+[monitor_node-5] [WARN] [1789851787.700398648] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5006 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851787.800757072] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5008 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851787.832963384] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4363 deviated from baseline 0.0066±0.0354 (z=12.2) (sev=1.00)
+[monitor_node-5] [WARN] [1789851788.001413090] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5008 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851788.034979928] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4375 deviated from baseline 0.0066±0.0354 (z=12.2) (sev=1.00)
+[monitor_node-5] [WARN] [1789851788.198419926] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5005 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851788.299649664] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5007 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851788.334738386] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4383 deviated from baseline 0.0066±0.0354 (z=12.2) (sev=1.00)
+[monitor_node-5] [WARN] [1789851788.414177386] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4008 deviated from baseline 0.0066±0.0354 (z=11.1) (sev=1.00)
+[monitor_node-5] [WARN] [1789851788.612922050] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5005 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851788.713676000] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5009 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851788.759072786] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4500 deviated from baseline 0.0066±0.0354 (z=12.5) (sev=1.00)
+[monitor_node-5] [WARN] [1789851788.913008246] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5008 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851788.956021989] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4474 deviated from baseline 0.0066±0.0354 (z=12.5) (sev=1.00)
+[monitor_node-5] [WARN] [1789851789.014132764] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4007 deviated from baseline 0.0066±0.0354 (z=11.1) (sev=1.00)
+[monitor_node-5] [WARN] [1789851789.198012458] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5006 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851789.241900761] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4454 deviated from baseline 0.0066±0.0354 (z=12.4) (sev=1.00)
+[monitor_node-5] [WARN] [1789851789.400060191] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5008 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851789.438329392] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4428 deviated from baseline 0.0066±0.0354 (z=12.3) (sev=1.00)
+[monitor_node-5] [WARN] [1789851789.597031165] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5005 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851789.699761117] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5006 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851789.730593890] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4335 deviated from baseline 0.0066±0.0354 (z=12.1) (sev=1.00)
+[monitor_node-5] [WARN] [1789851789.899611555] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5007 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851789.999671491] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5009 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851790.032905395] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4363 deviated from baseline 0.0066±0.0354 (z=12.2) (sev=1.00)
+[monitor_node-5] [WARN] [1789851790.198372002] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5007 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851790.231261508] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4332 deviated from baseline 0.0066±0.0354 (z=12.1) (sev=1.00)
+[monitor_node-5] [WARN] [1789851790.298933641] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4007 deviated from baseline 0.0066±0.0354 (z=11.1) (sev=1.00)
+[monitor_node-5] [WARN] [1789851790.500285322] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5008 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851790.533104183] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4363 deviated from baseline 0.0066±0.0354 (z=12.2) (sev=1.00)
+[monitor_node-5] [WARN] [1789851790.598185970] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4007 deviated from baseline 0.0066±0.0354 (z=11.1) (sev=1.00)
+[monitor_node-5] [WARN] [1789851790.799690531] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5007 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851790.900690347] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5007 deviated from baseline 0.0066±0.0354 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851790.933300655] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4366 deviated from baseline 0.0066±0.0354 (z=12.2) (sev=1.00)
+[perception_node-2] [INFO] [1789851790.973850839] [perception_node]: PerceptionNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851790.974097307] [navigation_node]: NavigationNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851790.974164722] [sensor_node]: SensorNode: Fault cleared.
+[localization_node-3] [INFO] [1789851790.974169809] [localization_node]: LocalizationNode: Fault cleared.
+[localization_node-3] [INFO] [1789851791.024412185] [localization_node]: LocalizationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851791.024442312] [perception_node]: PerceptionNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851791.024443940] [sensor_node]: SensorNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851791.024507933] [navigation_node]: NavigationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851791.074958433] [perception_node]: PerceptionNode: Fault cleared.
+[localization_node-3] [INFO] [1789851791.074959018] [localization_node]: LocalizationNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851791.075031524] [sensor_node]: SensorNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851791.075120825] [navigation_node]: NavigationNode: Fault cleared.
+[localization_node-3] [INFO] [1789851791.125291793] [localization_node]: LocalizationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851791.125397922] [perception_node]: PerceptionNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851791.125436833] [sensor_node]: SensorNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851791.125443552] [navigation_node]: NavigationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851798.176878097] [perception_node]: PerceptionNode: Fault cleared.
+[localization_node-3] [INFO] [1789851798.176939147] [localization_node]: LocalizationNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851798.177018669] [navigation_node]: NavigationNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851798.177295510] [sensor_node]: SensorNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851798.227233345] [navigation_node]: NavigationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851798.227411263] [perception_node]: PerceptionNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851798.227429738] [sensor_node]: SensorNode: Fault cleared.
+[localization_node-3] [INFO] [1789851798.227484899] [localization_node]: LocalizationNode: Fault cleared.
+[localization_node-3] [INFO] [1789851798.277722180] [localization_node]: LocalizationNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851798.277723410] [navigation_node]: NavigationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851798.277996234] [perception_node]: PerceptionNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851798.277995732] [sensor_node]: SensorNode: Fault cleared.
+[perception_node-2] [INFO] [1789851798.328215032] [perception_node]: PerceptionNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851798.328266176] [navigation_node]: NavigationNode: Fault cleared.
+[localization_node-3] [INFO] [1789851798.328347367] [localization_node]: LocalizationNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851798.328365571] [sensor_node]: SensorNode: Fault cleared.
+[localization_node-3] [WARN] [1789851804.379872348] [localization_node]: LocalizationNode: Injected fault "localization_failure" (param=50.0, duration=8.0s)
+[localization_node-3] [WARN] [1789851804.390644061] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851804.391695099] [navigation_node]: NavigationNode: Detected invalid pose (jump=70.75m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851804.415069505] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851804.423846150] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851804.430156374] [localization_node]: LocalizationNode: Injected fault "localization_failure" (param=50.0, duration=8.0s)
+[localization_node-3] [WARN] [1789851804.480849472] [localization_node]: LocalizationNode: Injected fault "localization_failure" (param=50.0, duration=8.0s)
+[localization_node-3] [WARN] [1789851804.490884082] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851804.491916936] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851804.511825508] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851804.519307368] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851804.530882979] [localization_node]: LocalizationNode: Injected fault "localization_failure" (param=50.0, duration=8.0s)
+[monitor_node-5] [INFO] [1789851804.578864854] [diagnostic_monitor]: 
+[monitor_node-5] ============================================================
+[monitor_node-5] ROOT CAUSE DIAGNOSIS: localization_node (Confidence: 1.000)
+[monitor_node-5] ============================================================
+[monitor_node-5] Mathematical Score Breakdown:
+[monitor_node-5]   R(localization_node) = 0.3·D(1.00) + 0.3·T(1.00) + 0.25·S(1.00) + 0.15·A(1.00) = 1.000
+[monitor_node-5]   - Dependency Score D: 1.00 (Reaches 1 downstream symptoms, 0 upstream parents)
+[monitor_node-5]   - Temporal Score T:   1.00 (Earliest anomaly detected at t=1789851804.40s)
+[monitor_node-5]   - Symptom Coverage S: 1.00 (Explains 100.0% of observed anomalous nodes)
+[monitor_node-5]   - Anomaly Severity A: 1.00 (Max severity on node)
+[monitor_node-5] 
+[monitor_node-5] Propagation Chain:
+[monitor_node-5]   localization_node (t=1789851804.40s: /localization/pose:z_pos, sev=1.00)
+[monitor_node-5]     └─→ navigation_node via /localization/pose (t=1789851804.42s, +0.01s: /navigation/cmd_vel:linear_vel)
+[monitor_node-5] 
+[monitor_node-5] Candidate Ranking & Evidence Comparison:
+[monitor_node-5]   #2 navigation_node      Score: 0.574 (Δ -0.426) [Ruled out: failed 0.01s after localization_node; topologically downstream of localization_node in dynamic graph; lower symptom coverage (50% vs 100%)]
+[monitor_node-5]   #3 perception_node      Score: 0.565 (Δ -0.435) [Ruled out: lower temporal precedence]
+[monitor_node-5]   #4 sensor_node          Score: 0.565 (Δ -0.435) [Ruled out: lower temporal precedence]
+[monitor_node-5] ============================================================
+[localization_node-3] [WARN] [1789851804.590857726] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851804.591996344] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851804.610023558] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851804.618338062] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851804.690879013] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851804.692074376] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851804.711221922] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851804.720333633] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851804.790658303] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851804.792136466] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851804.813933171] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851804.823694390] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851804.890660007] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851804.891716405] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851804.910511861] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851804.919308845] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851804.990967331] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851804.992545110] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851805.017469089] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851805.028208037] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851805.090467729] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851805.091871028] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851805.111408352] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851805.123507447] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851805.190946119] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851805.192103412] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851805.217407330] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851805.225432370] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851805.290701752] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851805.291803883] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851805.323054284] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851805.344974962] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851805.390655008] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851805.391813359] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851805.413483671] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851805.435273848] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851805.490774089] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851805.492000504] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851805.514453369] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851805.536672684] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851805.590591378] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851805.591694818] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851805.622955016] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851805.632080728] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851805.690515888] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851805.691514742] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851805.726565906] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851805.736087713] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851805.790769569] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851805.791808187] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851805.814098744] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851805.822768183] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851805.890543884] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851805.891920544] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851805.911452639] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851805.933375915] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851805.991469105] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851805.992974938] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851806.031962787] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851806.040941700] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851806.090726096] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851806.092112840] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851806.124521170] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851806.133105355] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851806.190568429] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851806.191898299] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851806.225986426] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851806.235064054] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851806.290674659] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851806.291876991] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851806.314230541] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851806.335692938] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851806.390848575] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851806.391951424] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851806.428418584] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851806.437103378] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851806.490673626] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851806.491727011] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851806.535431420] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851806.552204757] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851806.590666377] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851806.591818368] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851806.612737777] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851806.620981198] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851806.690733331] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851806.691724350] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851806.711960653] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851806.721325541] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851806.790627138] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851806.791859657] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851806.814507086] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851806.823017565] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851806.890764074] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851806.891843667] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851806.912120266] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851806.921173647] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851806.991103811] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851806.992348323] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851807.012274333] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851807.020214620] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851807.090352281] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851807.091396580] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851807.112837847] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851807.121419953] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851807.191102444] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851807.192388552] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851807.213162973] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851807.223723534] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851807.290886145] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851807.292005541] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851807.308348848] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851807.316350769] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851807.390926847] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851807.392093825] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851807.413312491] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851807.424444341] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851807.490566220] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851807.491701675] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851807.511032973] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851807.520754671] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851807.590947238] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851807.592147511] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851807.616976514] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851807.626411848] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851807.690646909] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851807.692165098] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851807.712055197] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851807.720413019] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851807.791036321] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851807.792475624] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851807.813805945] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851807.823646573] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851807.891088485] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851807.892682968] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851807.918084069] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851807.927923069] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851807.991187536] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851807.992608307] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851808.009894942] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851808.022362541] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851808.091052725] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851808.092293144] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851808.109567482] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851808.117594543] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851808.191446384] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851808.193312201] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851808.252785621] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851808.277970185] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851808.291994963] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851808.294294144] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851808.332982450] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851808.347576149] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851808.392291567] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851808.394523700] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851808.440908059] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851808.476771241] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851808.491897791] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851808.494733726] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[localization_node-3] [WARN] [1789851808.592929335] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851808.595592761] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851808.611974100] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851808.633644021] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851808.693482608] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851808.696246015] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851808.713070358] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851808.728185169] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851808.791657649] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851808.794017127] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851808.801419970] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851808.819157691] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851808.870150172] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851808.885325379] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851808.892331586] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851808.894253151] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851808.933230538] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851808.950422318] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851808.992192961] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851808.994594669] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851809.037343751] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851809.052752026] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851809.092144159] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851809.093952833] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851809.126698757] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851809.144333429] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851809.194027190] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851809.196473850] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851809.271058716] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851809.293422129] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851809.296217830] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851809.310280843] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851809.364790832] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851809.392533193] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851809.394488125] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851809.415019817] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [WARN] [1789851809.491836221] [localization_node]: LocalizationNode: Emitting FAULT pose with jump 50.0m
+[navigation_node-4] [WARN] [1789851809.494466396] [navigation_node]: NavigationNode: Detected invalid pose (jump=0.05m, z=99.90)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851809.515590488] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851809.532854193] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851809.582164089] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:z_pos: Value 99.9000 deviated from baseline 0.0000±0.0001 (z=999000.0) (sev=1.00)
+[perception_node-2] [INFO] [1789851809.582461497] [perception_node]: PerceptionNode: Fault cleared.
+[localization_node-3] [INFO] [1789851809.582485718] [localization_node]: LocalizationNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851809.582497833] [sensor_node]: SensorNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851809.582569529] [navigation_node]: NavigationNode: Fault cleared.
+[navigation_node-4] [WARN] [1789851809.592909408] [navigation_node]: NavigationNode: Detected invalid pose (jump=70.67m, z=0.00)! Emergency stop triggered.
+[monitor_node-5] [WARN] [1789851809.600704584] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[localization_node-3] [INFO] [1789851809.633216669] [localization_node]: LocalizationNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851809.633308361] [sensor_node]: SensorNode: Fault cleared.
+[perception_node-2] [INFO] [1789851809.633310618] [perception_node]: PerceptionNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851809.633861534] [navigation_node]: NavigationNode: Fault cleared.
+[monitor_node-5] [WARN] [1789851809.657465734] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 0.0000 deviated from baseline 0.5000±0.0001 (z=5000.0) (sev=1.00)
+[perception_node-2] [INFO] [1789851809.683608155] [perception_node]: PerceptionNode: Fault cleared.
+[localization_node-3] [INFO] [1789851809.683617897] [localization_node]: LocalizationNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851809.683625944] [navigation_node]: NavigationNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851809.683685403] [sensor_node]: SensorNode: Fault cleared.
+[localization_node-3] [INFO] [1789851809.734290536] [localization_node]: LocalizationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851809.734304516] [perception_node]: PerceptionNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851809.734313106] [sensor_node]: SensorNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851809.734476884] [navigation_node]: NavigationNode: Fault cleared.
+[monitor_node-5] [INFO] [1789851815.580791430] [diagnostic_monitor]: 
+[monitor_node-5] ============================================================
+[monitor_node-5] ROOT CAUSE DIAGNOSIS: navigation_node (Confidence: 1.000)
+[monitor_node-5] ============================================================
+[monitor_node-5] Mathematical Score Breakdown:
+[monitor_node-5]   R(navigation_node) = 0.3·D(1.00) + 0.3·T(1.00) + 0.25·S(1.00) + 0.15·A(1.00) = 1.000
+[monitor_node-5]   - Dependency Score D: 1.00 (Reaches 0 downstream symptoms, 0 upstream parents)
+[monitor_node-5]   - Temporal Score T:   1.00 (Earliest anomaly detected at t=1789851809.58s)
+[monitor_node-5]   - Symptom Coverage S: 1.00 (Explains 100.0% of observed anomalous nodes)
+[monitor_node-5]   - Anomaly Severity A: 1.00 (Max severity on node)
+[monitor_node-5] 
+[monitor_node-5] Propagation Chain:
+[monitor_node-5]   navigation_node (t=1789851809.58s: /navigation/cmd_vel:linear_vel, sev=1.00)
+[monitor_node-5] 
+[monitor_node-5] Candidate Ranking & Evidence Comparison:
+[monitor_node-5]   #2 sensor_node          Score: 0.415 (Δ -0.585) [Ruled out: lower temporal precedence; topologically downstream of navigation_node in dynamic graph]
+[monitor_node-5]   #3 perception_node      Score: 0.415 (Δ -0.585) [Ruled out: lower temporal precedence; topologically downstream of navigation_node in dynamic graph]
+[monitor_node-5]   #4 localization_node    Score: 0.415 (Δ -0.585) [Ruled out: lower temporal precedence; topologically downstream of navigation_node in dynamic graph]
+[monitor_node-5] ============================================================
+[navigation_node-4] [INFO] [1789851816.785804792] [navigation_node]: NavigationNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851816.785788531] [sensor_node]: SensorNode: Fault cleared.
+[localization_node-3] [INFO] [1789851816.785825536] [localization_node]: LocalizationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851816.785987585] [perception_node]: PerceptionNode: Fault cleared.
+[perception_node-2] [INFO] [1789851816.836344754] [perception_node]: PerceptionNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851816.836392722] [navigation_node]: NavigationNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851816.836396229] [sensor_node]: SensorNode: Fault cleared.
+[localization_node-3] [INFO] [1789851816.836392734] [localization_node]: LocalizationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851816.887772567] [perception_node]: PerceptionNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851816.887800362] [sensor_node]: SensorNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851816.887825820] [navigation_node]: NavigationNode: Fault cleared.
+[localization_node-3] [INFO] [1789851816.887846084] [localization_node]: LocalizationNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851816.938561818] [sensor_node]: SensorNode: Fault cleared.
+[perception_node-2] [INFO] [1789851816.938560028] [perception_node]: PerceptionNode: Fault cleared.
+[localization_node-3] [INFO] [1789851816.938564746] [localization_node]: LocalizationNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851816.938714501] [navigation_node]: NavigationNode: Fault cleared.
+[monitor_node-5] [WARN] [1789851817.737731691] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.2165 deviated from baseline 0.0076±0.0359 (z=5.8) (sev=0.65)
+[monitor_node-5] [WARN] [1789851817.866733125] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.2566 deviated from baseline 0.0076±0.0359 (z=6.9) (sev=0.77)
+[monitor_node-5] [WARN] [1789851817.967970242] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.2406 deviated from baseline 0.0383±0.0316 (z=6.4) (sev=0.71)
+[monitor_node-5] [WARN] [1789851818.018024383] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.3051 deviated from baseline 0.0076±0.0359 (z=8.3) (sev=0.92)
+[monitor_node-5] [WARN] [1789851818.119121281] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.2343 deviated from baseline 0.0169±0.0261 (z=8.3) (sev=0.93)
+[monitor_node-5] [WARN] [1789851818.198036354] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.3706 deviated from baseline 0.0383±0.0316 (z=10.5) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.265476409] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4336 deviated from baseline 0.0076±0.0359 (z=11.9) (sev=1.00)
+[monitor_node-5] [INFO] [1789851818.280443491] [diagnostic_monitor]: 
+[monitor_node-5] ============================================================
+[monitor_node-5] ROOT CAUSE DIAGNOSIS: sensor_node (Confidence: 1.000)
+[monitor_node-5] ============================================================
+[monitor_node-5] Mathematical Score Breakdown:
+[monitor_node-5]   R(sensor_node) = 0.3·D(1.00) + 0.3·T(1.00) + 0.25·S(1.00) + 0.15·A(1.00) = 1.000
+[monitor_node-5]   - Dependency Score D: 1.00 (Reaches 2 downstream symptoms, 0 upstream parents)
+[monitor_node-5]   - Temporal Score T:   1.00 (Earliest anomaly detected at t=1789851817.71s)
+[monitor_node-5]   - Symptom Coverage S: 1.00 (Explains 100.0% of observed anomalous nodes)
+[monitor_node-5]   - Anomaly Severity A: 1.00 (Max severity on node)
+[monitor_node-5] 
+[monitor_node-5] Propagation Chain:
+[monitor_node-5]   sensor_node (t=1789851817.71s: /sensor/scan:latency, sev=0.65)
+[monitor_node-5]     └─→ perception_node via /sensor/scan (t=1789851817.93s, +0.23s: /perception/obstacles:latency)
+[monitor_node-5]     └─→ localization_node via /perception/obstacles (t=1789851818.03s, +0.09s: /localization/pose:latency)
+[monitor_node-5] 
+[monitor_node-5] Candidate Ranking & Evidence Comparison:
+[monitor_node-5]   #2 perception_node      Score: 0.705 (Δ -0.295) [Ruled out: failed 0.23s after sensor_node; topologically downstream of sensor_node in dynamic graph; lower symptom coverage (67% vs 100%)]
+[monitor_node-5]   #3 localization_node    Score: 0.506 (Δ -0.494) [Ruled out: failed 0.32s after sensor_node; topologically downstream of sensor_node in dynamic graph; lower symptom coverage (33% vs 100%)]
+[monitor_node-5] ============================================================
+[monitor_node-5] [WARN] [1789851818.316133850] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.3894 deviated from baseline 0.0169±0.0261 (z=14.3) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.354321702] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.4504 deviated from baseline 0.0383±0.0316 (z=13.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.383214107] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4810 deviated from baseline 0.0076±0.0359 (z=13.2) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.414835765] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.3977 deviated from baseline 0.0169±0.0261 (z=14.6) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.451024034] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.4467 deviated from baseline 0.0383±0.0316 (z=12.9) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.475049038] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4662 deviated from baseline 0.0076±0.0359 (z=12.8) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.503749539] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.3877 deviated from baseline 0.0169±0.0261 (z=14.2) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.542185916] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.4281 deviated from baseline 0.0383±0.0316 (z=12.3) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.582327944] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4584 deviated from baseline 0.0076±0.0359 (z=12.6) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.652139736] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.4139 deviated from baseline 0.0169±0.0261 (z=15.2) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.699525450] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.4891 deviated from baseline 0.0383±0.0316 (z=14.3) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.721607713] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5158 deviated from baseline 0.0076±0.0359 (z=14.1) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.741166499] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.4348 deviated from baseline 0.0169±0.0261 (z=16.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.785978052] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.4674 deviated from baseline 0.0383±0.0316 (z=13.6) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.811378152] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5028 deviated from baseline 0.0076±0.0359 (z=13.8) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.833201936] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.4263 deviated from baseline 0.0169±0.0261 (z=15.7) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.882752725] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.4766 deviated from baseline 0.0383±0.0316 (z=13.9) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.924677318] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4997 deviated from baseline 0.0076±0.0359 (z=13.7) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.945892256] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.4409 deviated from baseline 0.0169±0.0261 (z=16.3) (sev=1.00)
+[monitor_node-5] [WARN] [1789851818.989184737] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.4820 deviated from baseline 0.0383±0.0316 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.013017748] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.5095 deviated from baseline 0.0076±0.0359 (z=14.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.032398820] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.4272 deviated from baseline 0.0169±0.0261 (z=15.7) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.075441817] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.4702 deviated from baseline 0.0383±0.0316 (z=13.7) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.112490049] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4915 deviated from baseline 0.0076±0.0359 (z=13.5) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.141577604] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.4359 deviated from baseline 0.0169±0.0261 (z=16.1) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.178404630] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.4772 deviated from baseline 0.0383±0.0316 (z=13.9) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.194827528] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4926 deviated from baseline 0.0076±0.0359 (z=13.5) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.238573008] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.4223 deviated from baseline 0.0169±0.0261 (z=15.6) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.265291826] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.4619 deviated from baseline 0.0383±0.0316 (z=13.4) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.293181681] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4802 deviated from baseline 0.0076±0.0359 (z=13.2) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.328878852] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.4206 deviated from baseline 0.0169±0.0261 (z=15.5) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.352020597] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.4523 deviated from baseline 0.0383±0.0316 (z=13.1) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.388517363] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4794 deviated from baseline 0.0076±0.0359 (z=13.1) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.413632862] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.4036 deviated from baseline 0.0169±0.0261 (z=14.8) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.456218611] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.4312 deviated from baseline 0.0383±0.0316 (z=12.4) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.471495152] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4675 deviated from baseline 0.0076±0.0359 (z=12.8) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.486093790] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.3852 deviated from baseline 0.0169±0.0261 (z=14.1) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.528099241] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.4252 deviated from baseline 0.0383±0.0316 (z=12.2) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.552851835] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4438 deviated from baseline 0.0076±0.0359 (z=12.1) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.585926951] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.3667 deviated from baseline 0.0169±0.0261 (z=13.4) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.612746693] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.4106 deviated from baseline 0.0383±0.0316 (z=11.8) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.627894788] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.4280 deviated from baseline 0.0076±0.0359 (z=11.7) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.649906830] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.3491 deviated from baseline 0.0169±0.0261 (z=12.7) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.674023354] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.3735 deviated from baseline 0.0383±0.0316 (z=10.6) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.688686259] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.3892 deviated from baseline 0.0076±0.0359 (z=10.6) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.705429641] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.3033 deviated from baseline 0.0169±0.0261 (z=11.0) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.729213743] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.3277 deviated from baseline 0.0383±0.0316 (z=9.2) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.748016660] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.3473 deviated from baseline 0.0076±0.0359 (z=9.5) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.763769073] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.2619 deviated from baseline 0.0169±0.0261 (z=9.4) (sev=1.00)
+[monitor_node-5] [WARN] [1789851819.793265450] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.2875 deviated from baseline 0.0383±0.0316 (z=7.9) (sev=0.88)
+[monitor_node-5] [WARN] [1789851819.830609897] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.3176 deviated from baseline 0.0076±0.0359 (z=8.6) (sev=0.96)
+[monitor_node-5] [WARN] [1789851819.848824795] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.2452 deviated from baseline 0.0169±0.0261 (z=8.8) (sev=0.97)
+[monitor_node-5] [WARN] [1789851819.880059847] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.2718 deviated from baseline 0.0383±0.0316 (z=7.4) (sev=0.82)
+[monitor_node-5] [WARN] [1789851819.897069814] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.2965 deviated from baseline 0.0076±0.0359 (z=8.0) (sev=0.89)
+[monitor_node-5] [WARN] [1789851819.948910801] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.2394 deviated from baseline 0.0383±0.0316 (z=6.4) (sev=0.71)
+[monitor_node-5] [WARN] [1789851819.965794400] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.2644 deviated from baseline 0.0076±0.0359 (z=7.2) (sev=0.79)
+[monitor_node-5] [WARN] [1789851820.010536595] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.2123 deviated from baseline 0.0076±0.0359 (z=5.7) (sev=0.63)
+[sensor_node-1] [WARN] [1789851822.990285369] [sensor_node]: SensorNode: Injected fault "dropout" (param=1.0, duration=8.0s)
+[sensor_node-1] [WARN] [1789851823.040987737] [sensor_node]: SensorNode: Injected fault "dropout" (param=1.0, duration=8.0s)
+[sensor_node-1] [WARN] [1789851823.091243415] [sensor_node]: SensorNode: Injected fault "dropout" (param=1.0, duration=8.0s)
+[sensor_node-1] [WARN] [1789851823.141588597] [sensor_node]: SensorNode: Injected fault "dropout" (param=1.0, duration=8.0s)
+[monitor_node-5] [WARN] [1789851823.577263955] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] message_timeout: Message timeout on /localization/pose: no message for 0.57s (expected ~0.100s) (sev=0.91)
+[monitor_node-5] [WARN] [1789851823.580432407] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] message_timeout: Message timeout on /perception/obstacles: no message for 0.55s (expected ~0.100s) (sev=0.89)
+[monitor_node-5] [WARN] [1789851823.583242147] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] message_timeout: Message timeout on /navigation/cmd_vel: no message for 0.56s (expected ~0.100s) (sev=0.90)
+[monitor_node-5] [WARN] [1789851823.586280011] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] message_timeout: Message timeout on /sensor/scan: no message for 0.58s (expected ~0.100s) (sev=0.92)
+[monitor_node-5] [WARN] [1789851824.076486201] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] message_timeout: Message timeout on /localization/pose: no message for 1.07s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851824.079835706] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] message_timeout: Message timeout on /perception/obstacles: no message for 1.05s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851824.082716389] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] message_timeout: Message timeout on /navigation/cmd_vel: no message for 1.06s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851824.085546582] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] message_timeout: Message timeout on /sensor/scan: no message for 1.08s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851824.578302667] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] message_timeout: Message timeout on /localization/pose: no message for 1.57s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851824.582513090] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] message_timeout: Message timeout on /perception/obstacles: no message for 1.55s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851824.587492673] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] message_timeout: Message timeout on /navigation/cmd_vel: no message for 1.56s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851824.591408834] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] message_timeout: Message timeout on /sensor/scan: no message for 1.58s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851825.076531186] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] message_timeout: Message timeout on /localization/pose: no message for 2.07s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851825.079833865] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] message_timeout: Message timeout on /perception/obstacles: no message for 2.05s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851825.083228187] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] message_timeout: Message timeout on /navigation/cmd_vel: no message for 2.06s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851825.086460356] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] message_timeout: Message timeout on /sensor/scan: no message for 2.08s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851825.577459701] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] message_timeout: Message timeout on /localization/pose: no message for 2.57s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851825.581322014] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] message_timeout: Message timeout on /perception/obstacles: no message for 2.55s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851825.585359083] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] message_timeout: Message timeout on /navigation/cmd_vel: no message for 2.56s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851825.589160958] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] message_timeout: Message timeout on /sensor/scan: no message for 2.58s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851826.076692602] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] message_timeout: Message timeout on /localization/pose: no message for 3.07s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851826.080206650] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] message_timeout: Message timeout on /perception/obstacles: no message for 3.05s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851826.084373834] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] message_timeout: Message timeout on /navigation/cmd_vel: no message for 3.06s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851826.087547697] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] message_timeout: Message timeout on /sensor/scan: no message for 3.08s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851826.577372096] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] message_timeout: Message timeout on /localization/pose: no message for 3.57s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851826.580649644] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] message_timeout: Message timeout on /perception/obstacles: no message for 3.55s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851826.583919550] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] message_timeout: Message timeout on /navigation/cmd_vel: no message for 3.56s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851826.586973591] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] message_timeout: Message timeout on /sensor/scan: no message for 3.58s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851827.076268772] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] message_timeout: Message timeout on /localization/pose: no message for 4.07s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851827.079602443] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] message_timeout: Message timeout on /perception/obstacles: no message for 4.05s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851827.084718532] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] message_timeout: Message timeout on /navigation/cmd_vel: no message for 4.06s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851827.101195286] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] message_timeout: Message timeout on /sensor/scan: no message for 4.08s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851827.579028229] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] message_timeout: Message timeout on /localization/pose: no message for 4.57s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851827.583185999] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] message_timeout: Message timeout on /perception/obstacles: no message for 4.55s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851827.586788025] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] message_timeout: Message timeout on /navigation/cmd_vel: no message for 4.56s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851827.591484549] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] message_timeout: Message timeout on /sensor/scan: no message for 4.58s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851828.077193767] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] message_timeout: Message timeout on /localization/pose: no message for 5.07s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851828.082169628] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] message_timeout: Message timeout on /perception/obstacles: no message for 5.05s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851828.086218209] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] message_timeout: Message timeout on /navigation/cmd_vel: no message for 5.06s (expected ~0.100s) (sev=1.00)
+[monitor_node-5] [WARN] [1789851828.089612849] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] message_timeout: Message timeout on /sensor/scan: no message for 5.08s (expected ~0.100s) (sev=1.00)
+[navigation_node-4] [INFO] [1789851828.192646418] [navigation_node]: NavigationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851828.192648706] [perception_node]: PerceptionNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851828.192647820] [sensor_node]: SensorNode: Fault cleared.
+[localization_node-3] [INFO] [1789851828.192675017] [localization_node]: LocalizationNode: Fault cleared.
+[localization_node-3] [INFO] [1789851828.243117358] [localization_node]: LocalizationNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851828.243267541] [sensor_node]: SensorNode: Fault cleared.
+[perception_node-2] [INFO] [1789851828.243377917] [perception_node]: PerceptionNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851828.243378198] [navigation_node]: NavigationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851828.293493881] [perception_node]: PerceptionNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851828.293514039] [navigation_node]: NavigationNode: Fault cleared.
+[localization_node-3] [INFO] [1789851828.293628407] [localization_node]: LocalizationNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851828.293690045] [sensor_node]: SensorNode: Fault cleared.
+[monitor_node-5] [WARN] [1789851828.298945031] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:inter_arrival: Value 5.3003 deviated from baseline 0.0998±0.0208 (z=249.7) (sev=1.00)
+[monitor_node-5] [WARN] [1789851828.311889361] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:inter_arrival: Value 5.3038 deviated from baseline 0.1000±0.0169 (z=308.7) (sev=1.00)
+[monitor_node-5] [WARN] [1789851828.327718358] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:inter_arrival: Value 5.3023 deviated from baseline 0.1000±0.0182 (z=285.7) (sev=1.00)
+[monitor_node-5] [WARN] [1789851828.335967678] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:inter_arrival: Value 5.3052 deviated from baseline 0.1000±0.0191 (z=272.8) (sev=1.00)
+[navigation_node-4] [INFO] [1789851828.343838886] [navigation_node]: NavigationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851828.343867225] [perception_node]: PerceptionNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851828.344111053] [sensor_node]: SensorNode: Fault cleared.
+[localization_node-3] [INFO] [1789851828.344141190] [localization_node]: LocalizationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851835.395126990] [perception_node]: PerceptionNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851835.395136594] [sensor_node]: SensorNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851835.395133768] [navigation_node]: NavigationNode: Fault cleared.
+[localization_node-3] [INFO] [1789851835.395157645] [localization_node]: LocalizationNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851835.446573418] [sensor_node]: SensorNode: Fault cleared.
+[localization_node-3] [INFO] [1789851835.446577331] [localization_node]: LocalizationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851835.446584003] [perception_node]: PerceptionNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851835.450314814] [navigation_node]: NavigationNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851835.496720025] [navigation_node]: NavigationNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851835.496710892] [sensor_node]: SensorNode: Fault cleared.
+[localization_node-3] [INFO] [1789851835.496823066] [localization_node]: LocalizationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851835.496980248] [perception_node]: PerceptionNode: Fault cleared.
+[perception_node-2] [INFO] [1789851835.547729444] [perception_node]: PerceptionNode: Fault cleared.
+[localization_node-3] [INFO] [1789851835.547736848] [localization_node]: LocalizationNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851835.547769401] [navigation_node]: NavigationNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851835.547833798] [sensor_node]: SensorNode: Fault cleared.
+[navigation_node-4] [WARN] [1789851841.599513779] [navigation_node]: NavigationNode: Injected fault "navigation_failure" (param=1.0, duration=8.0s)
+[navigation_node-4] [WARN] [1789851841.650110597] [navigation_node]: NavigationNode: Injected fault "navigation_failure" (param=1.0, duration=8.0s)
+[navigation_node-4] [WARN] [1789851841.691207364] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[navigation_node-4] [WARN] [1789851841.700553361] [navigation_node]: NavigationNode: Injected fault "navigation_failure" (param=1.0, duration=8.0s)
+[monitor_node-5] [WARN] [1789851841.719868059] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851841.750838197] [navigation_node]: NavigationNode: Injected fault "navigation_failure" (param=1.0, duration=8.0s)
+[navigation_node-4] [WARN] [1789851841.791480336] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851841.819065244] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851841.891052567] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851841.921272554] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851841.991293676] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851842.023423388] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[monitor_node-5] [INFO] [1789851842.077288969] [diagnostic_monitor]: 
+[monitor_node-5] ============================================================
+[monitor_node-5] ROOT CAUSE DIAGNOSIS: navigation_node (Confidence: 1.000)
+[monitor_node-5] ============================================================
+[monitor_node-5] Mathematical Score Breakdown:
+[monitor_node-5]   R(navigation_node) = 0.3·D(1.00) + 0.3·T(1.00) + 0.25·S(1.00) + 0.15·A(1.00) = 1.000
+[monitor_node-5]   - Dependency Score D: 1.00 (Reaches 0 downstream symptoms, 0 upstream parents)
+[monitor_node-5]   - Temporal Score T:   1.00 (Earliest anomaly detected at t=1789851841.71s)
+[monitor_node-5]   - Symptom Coverage S: 1.00 (Explains 100.0% of observed anomalous nodes)
+[monitor_node-5]   - Anomaly Severity A: 1.00 (Max severity on node)
+[monitor_node-5] 
+[monitor_node-5] Propagation Chain:
+[monitor_node-5]   navigation_node (t=1789851841.71s: /navigation/cmd_vel:linear_vel, sev=1.00)
+[monitor_node-5] 
+[monitor_node-5] Candidate Ranking & Evidence Comparison:
+[monitor_node-5]   #2 sensor_node          Score: 0.415 (Δ -0.585) [Ruled out: lower temporal precedence; topologically downstream of navigation_node in dynamic graph]
+[monitor_node-5]   #3 perception_node      Score: 0.415 (Δ -0.585) [Ruled out: lower temporal precedence; topologically downstream of navigation_node in dynamic graph]
+[monitor_node-5]   #4 localization_node    Score: 0.415 (Δ -0.585) [Ruled out: lower temporal precedence; topologically downstream of navigation_node in dynamic graph]
+[monitor_node-5] ============================================================
+[navigation_node-4] [WARN] [1789851842.090993593] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851842.117384668] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851842.190977944] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851842.218920133] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851842.291652819] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851842.320495830] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851842.390935054] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851842.418870138] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851842.491038988] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851842.515136713] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851842.591483119] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851842.619924463] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851842.691520057] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851842.721237707] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851842.792072778] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851842.821447817] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851842.891461741] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851842.918657851] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851842.991278314] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851843.021954064] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851843.090863936] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851843.114405537] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851843.191119253] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851843.215571309] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851843.291828939] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851843.322958909] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851843.390997503] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851843.424200740] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851843.491277628] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851843.516929380] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851843.590923918] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851843.621600187] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851843.691923692] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851843.734895939] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851843.791143874] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851843.838874471] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851843.892066364] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851843.922374873] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851843.993195849] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851844.040098207] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851844.092650307] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851844.149286087] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851844.193439015] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851844.244270543] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851844.291753775] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851844.347485341] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851844.391829821] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851844.428852917] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851844.491948184] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851844.534379916] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851844.591725846] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851844.635318596] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851844.691703442] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851844.727445451] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851844.791207094] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851844.831910526] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851844.890912067] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851844.929052313] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851844.991177168] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851845.029188272] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851845.091175678] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851845.128794018] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851845.191263458] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851845.219008618] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851845.291044238] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851845.324268959] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851845.391299667] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851845.418810809] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851845.491361672] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851845.516714920] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851845.590951342] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851845.615594033] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851845.691281062] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851845.717599123] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851845.791558164] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851845.822362109] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851845.890888497] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851845.915294490] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851845.991528451] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851846.017167333] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851846.091078070] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851846.123461436] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851846.191104060] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851846.216105472] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851846.291028569] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851846.318593372] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851846.391309468] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851846.419014236] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851846.491013503] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851846.520778885] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851846.590733074] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851846.619573873] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851846.691157896] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[monitor_node-5] [WARN] [1789851846.717266891] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[navigation_node-4] [WARN] [1789851846.791195905] [navigation_node]: NavigationNode: Emitting erratic velocity due to navigation_failure!
+[navigation_node-4] [INFO] [1789851846.801933618] [navigation_node]: NavigationNode: Fault cleared.
+[localization_node-3] [INFO] [1789851846.801954793] [localization_node]: LocalizationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851846.802105875] [perception_node]: PerceptionNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851846.802106648] [sensor_node]: SensorNode: Fault cleared.
+[monitor_node-5] [WARN] [1789851846.819790939] [diagnostic_monitor]: ANOMALY DETECTED on [navigation_node] /navigation/cmd_vel:linear_vel: Value 9.9900 deviated from baseline 0.5000±0.0001 (z=94900.0) (sev=1.00)
+[localization_node-3] [INFO] [1789851846.852352021] [localization_node]: LocalizationNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851846.852350216] [navigation_node]: NavigationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851846.852648472] [perception_node]: PerceptionNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851846.852651335] [sensor_node]: SensorNode: Fault cleared.
+[perception_node-2] [INFO] [1789851846.902904652] [perception_node]: PerceptionNode: Fault cleared.
+[localization_node-3] [INFO] [1789851846.902972518] [localization_node]: LocalizationNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851846.902976229] [sensor_node]: SensorNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851846.903047424] [navigation_node]: NavigationNode: Fault cleared.
+[localization_node-3] [INFO] [1789851846.953250917] [localization_node]: LocalizationNode: Fault cleared.
+[perception_node-2] [INFO] [1789851846.953402578] [perception_node]: PerceptionNode: Fault cleared.
+[navigation_node-4] [INFO] [1789851846.953428362] [navigation_node]: NavigationNode: Fault cleared.
+[sensor_node-1] [INFO] [1789851846.953431222] [sensor_node]: SensorNode: Fault cleared.
+[monitor_node-5] [WARN] [1789851866.748208808] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:inter_arrival: Value 0.3408 deviated from baseline 0.0998±0.0195 (z=12.4) (sev=1.00)
+[monitor_node-5] [WARN] [1789851866.762653086] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.2417 deviated from baseline 0.0067±0.0325 (z=7.2) (sev=0.80)
+[monitor_node-5] [WARN] [1789851866.874070449] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.2512 deviated from baseline 0.0375±0.0297 (z=7.2) (sev=0.80)
+[monitor_node-5] [WARN] [1789851866.905599845] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.2923 deviated from baseline 0.0067±0.0325 (z=8.8) (sev=0.98)
+[monitor_node-5] [WARN] [1789851866.944402978] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.2242 deviated from baseline 0.0166±0.0248 (z=8.4) (sev=0.93)
+[monitor_node-5] [WARN] [1789851866.996592864] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.2780 deviated from baseline 0.0375±0.0297 (z=8.1) (sev=0.90)
+[monitor_node-5] [WARN] [1789851867.030251578] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.3134 deviated from baseline 0.0067±0.0325 (z=9.4) (sev=1.00)
+[monitor_node-5] [WARN] [1789851867.065467915] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.2450 deviated from baseline 0.0166±0.0248 (z=9.2) (sev=1.00)
+[monitor_node-5] [WARN] [1789851867.144601335] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.3101 deviated from baseline 0.0375±0.0297 (z=9.2) (sev=1.00)
+[monitor_node-5] [WARN] [1789851867.174745898] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.3636 deviated from baseline 0.0067±0.0325 (z=11.0) (sev=1.00)
+[monitor_node-5] [INFO] [1789851867.188341585] [diagnostic_monitor]: 
+[monitor_node-5] ============================================================
+[monitor_node-5] ROOT CAUSE DIAGNOSIS: sensor_node (Confidence: 1.000)
+[monitor_node-5] ============================================================
+[monitor_node-5] Mathematical Score Breakdown:
+[monitor_node-5]   R(sensor_node) = 0.3·D(1.00) + 0.3·T(1.00) + 0.25·S(1.00) + 0.15·A(1.00) = 1.000
+[monitor_node-5]   - Dependency Score D: 1.00 (Reaches 2 downstream symptoms, 0 upstream parents)
+[monitor_node-5]   - Temporal Score T:   1.00 (Earliest anomaly detected at t=1789851866.73s)
+[monitor_node-5]   - Symptom Coverage S: 1.00 (Explains 100.0% of observed anomalous nodes)
+[monitor_node-5]   - Anomaly Severity A: 1.00 (Max severity on node)
+[monitor_node-5] 
+[monitor_node-5] Propagation Chain:
+[monitor_node-5]   sensor_node (t=1789851866.73s: /sensor/scan:inter_arrival, sev=1.00)
+[monitor_node-5]     └─→ perception_node via /sensor/scan (t=1789851866.84s, +0.11s: /perception/obstacles:latency)
+[monitor_node-5]     └─→ localization_node via /perception/obstacles (t=1789851866.92s, +0.07s: /localization/pose:latency)
+[monitor_node-5] 
+[monitor_node-5] Candidate Ranking & Evidence Comparison:
+[monitor_node-5]   #2 perception_node      Score: 0.711 (Δ -0.289) [Ruled out: failed 0.11s after sensor_node; topologically downstream of sensor_node in dynamic graph; lower symptom coverage (67% vs 100%)]
+[monitor_node-5]   #3 localization_node    Score: 0.524 (Δ -0.476) [Ruled out: failed 0.19s after sensor_node; topologically downstream of sensor_node in dynamic graph; lower symptom coverage (33% vs 100%)]
+[monitor_node-5] ============================================================
+[monitor_node-5] [WARN] [1789851867.205108158] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.2974 deviated from baseline 0.0166±0.0248 (z=11.3) (sev=1.00)
+[monitor_node-5] [WARN] [1789851867.234538847] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.3301 deviated from baseline 0.0375±0.0297 (z=9.9) (sev=1.00)
+[monitor_node-5] [WARN] [1789851867.249967129] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.3501 deviated from baseline 0.0067±0.0325 (z=10.6) (sev=1.00)
+[monitor_node-5] [WARN] [1789851867.267890074] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.2620 deviated from baseline 0.0166±0.0248 (z=9.9) (sev=1.00)
+[monitor_node-5] [WARN] [1789851867.295494886] [diagnostic_monitor]: ANOMALY DETECTED on [perception_node] /perception/obstacles:latency: Value 0.2934 deviated from baseline 0.0375±0.0297 (z=8.6) (sev=0.96)
+[monitor_node-5] [WARN] [1789851867.307241267] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.3092 deviated from baseline 0.0067±0.0325 (z=9.3) (sev=1.00)
+[monitor_node-5] [WARN] [1789851867.319200240] [diagnostic_monitor]: ANOMALY DETECTED on [localization_node] /localization/pose:latency: Value 0.2175 deviated from baseline 0.0166±0.0248 (z=8.1) (sev=0.90)
+[monitor_node-5] [WARN] [1789851867.346017319] [diagnostic_monitor]: ANOMALY DETECTED on [sensor_node] /sensor/scan:latency: Value 0.2475 deviated from baseline 0.0067±0.0325 (z=7.4) (sev=0.82)

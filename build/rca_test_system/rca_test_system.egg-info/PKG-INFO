@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: rca-test-system
+Version: 0.1.0
+Summary: Robotic pipeline test system and fault injection for dynamic temporal RCA research
+Maintainer: lynx
+Maintainer-email: lynx@todo.todo
+License: Apache-2.0

@@ -1,0 +1,1 @@
+/home/lynx/ros2_rca_ws/src/diagnostic_monitor/launch/monitor.launch.py
