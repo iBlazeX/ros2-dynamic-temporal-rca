@@ -1,0 +1,5466 @@
+{
+  "generated_at": 1790110127.079706,
+  "simulator": "gazebo",
+  "environment": {
+    "name": "rca_gazebo",
+    "simulator": "gazebo",
+    "description": "Gazebo Harmonic (gz sim 8) world rca_arena.sdf with a differential-drive robot (gpu_lidar 10 Hz, camera 5 Hz, IMU 20 Hz, DiffDrive odometry 20 Hz), bridged to ROS 2 through ros_gz_bridge into the /gz namespace, then driven by the rca_gazebo sensor drivers and the rca_sim processing pipeline.",
+    "static_design_graph": {
+      "nodes": [
+        "lidar_node",
+        "camera_node",
+        "imu_node",
+        "odometry_node",
+        "perception_node",
+        "localization_node",
+        "planning_node",
+        "control_node",
+        "sim_world"
+      ],
+      "edges": [
+        {
+          "from": "lidar_node",
+          "to": "perception_node",
+          "topics": [
+            "/sim/lidar/scan"
+          ]
+        },
+        {
+          "from": "camera_node",
+          "to": "perception_node",
+          "topics": [
+            "/sim/camera/image"
+          ]
+        },
+        {
+          "from": "imu_node",
+          "to": "localization_node",
+          "topics": [
+            "/sim/imu/data"
+          ]
+        },
+        {
+          "from": "odometry_node",
+          "to": "localization_node",
+          "topics": [
+            "/sim/odom"
+          ]
+        },
+        {
+          "from": "perception_node",
+          "to": "localization_node",
+          "topics": [
+            "/perception/obstacles"
+          ]
+        },
+        {
+          "from": "perception_node",
+          "to": "planning_node",
+          "topics": [
+            "/perception/obstacles"
+          ]
+        },
+        {
+          "from": "localization_node",
+          "to": "planning_node",
+          "topics": [
+            "/localization/pose"
+          ]
+        },
+        {
+          "from": "planning_node",
+          "to": "control_node",
+          "topics": [
+            "/planning/path"
+          ]
+        },
+        {
+          "from": "control_node",
+          "to": "sim_world",
+          "topics": [
+            "/cmd_vel"
+          ]
+        }
+      ]
+    }
+  },
+  "launch_seed": 7,
+  "db_path": "/home/lynx/ros2_rca_ws/events.db",
+  "results": [
+    {
+      "scenario": "G01 LiDAR latency: scan publication delayed 0.4 s",
+      "key": "lidar_latency",
+      "group": "communication",
+      "rep": 0,
+      "launch_seed": 7,
+      "faults": [
+        {
+          "target": "lidar_node",
+          "type": "latency",
+          "param": 0.4,
+          "onset": 0.0,
+          "duration": 10.0
+        }
+      ],
+      "ground_truth": "lidar_node",
+      "accepted_roots": [
+        "lidar_node"
+      ],
+      "expect_no_diagnosis": false,
+      "t_inject": 1790109642.2249613,
+      "t_end": 1790109650.2250838,
+      "num_anomalies": 228,
+      "num_diagnoses_after_injection": 16,
+      "anomalous_nodes_observed": [
+        "control_node",
+        "lidar_node",
+        "perception_node",
+        "planning_node"
+      ],
+      "nominal_false_alarms": 37,
+      "nominal_window_sec": 18.044,
+      "discovered_graph": {
+        "nodes": [
+          "camera_node",
+          "control_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "sim_world"
+        ],
+        "edges": [
+          {
+            "from": "camera_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/camera/image"
+            ]
+          },
+          {
+            "from": "control_node",
+            "to": "sim_world",
+            "topics": [
+              "/cmd_vel"
+            ]
+          },
+          {
+            "from": "imu_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/imu/data"
+            ]
+          },
+          {
+            "from": "lidar_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/lidar/scan"
+            ]
+          },
+          {
+            "from": "localization_node",
+            "to": "planning_node",
+            "topics": [
+              "/localization/pose"
+            ]
+          },
+          {
+            "from": "odometry_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/odom"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "localization_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "planning_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "planning_node",
+            "to": "control_node",
+            "topics": [
+              "/planning/path"
+            ]
+          }
+        ]
+      },
+      "predicted_root_cause": "lidar_node",
+      "confidence": 0.7,
+      "fault_type": "latency",
+      "top1_correct": true,
+      "top3_correct": true,
+      "ground_truth_rank": 1,
+      "reciprocal_rank": 1.0,
+      "detection_latency_sec": 0.027,
+      "diagnosis_latency_sec": 0.469,
+      "correct_diagnosis_latency_sec": 0.469,
+      "false_diagnosis_rate": 0.0,
+      "num_false_diagnoses_after_injection": 0,
+      "ranking": [
+        "lidar_node",
+        "planning_node",
+        "control_node",
+        "perception_node",
+        "camera_node",
+        "imu_node",
+        "odometry_node",
+        "localization_node"
+      ],
+      "chain_accuracy": 0.5,
+      "chain_accuracy_numerator": 2,
+      "chain_accuracy_denominator": 4,
+      "chain_order_correct": true,
+      "predicted_chain": [
+        "lidar_node",
+        "perception_node",
+        "planning_node",
+        "control_node"
+      ],
+      "expected_chain": [
+        "lidar_node",
+        "perception_node"
+      ],
+      "physical_chain": [
+        "lidar_node",
+        "perception_node",
+        "localization_node",
+        "planning_node",
+        "control_node"
+      ],
+      "physical_chain_coverage": 0.8,
+      "physical_chain_numerator": 4,
+      "physical_chain_denominator": 5,
+      "physically_affected_unobserved": [
+        "localization_node"
+      ],
+      "explanation": "============================================================\nROOT CAUSE DIAGNOSIS: lidar_node (Confidence: 0.700)\n============================================================\nScore Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:\n  R(lidar_node) = 0.3\u00b7D(1.00) + 0.3\u00b7T(0.00) + 0.25\u00b7S(1.00) + 0.15\u00b7A(1.00) = 0.700\n  - Dependency D: 1.00 (reaches 3 downstream anomalous node(s); 0 anomalous upstream node(s))\n  - Temporal   T: 0.00 (first anomaly at t=1790109642.71s; earliest in window = supporting evidence, not proof of causality)\n  - Symptom    S: 1.00 (explains 4/4 anomalous nodes)\n  - Severity   A: 1.00 (max normalised severity on node, 59 direct anomaly event(s))\n\nPropagation Chain (evidence-ordered, via discovered graph edges):\n  lidar_node (t=1790109642.71s: /sim/lidar/scan:latency, sev=1.00)\n    \u2514\u2500\u2192 perception_node via /sim/lidar/scan (t=1790109642.72s, +0.01s after lidar_node: /perception/obstacles:latency)\n      \u2514\u2500\u2192 planning_node via /perception/obstacles (t=1790109352.05s, -290.67s after perception_node: /planning/path:path_empty)\n        \u2514\u2500\u2192 control_node via /planning/path (t=1790109352.06s, +0.01s after planning_node: /cmd_vel:cmd_zero)\n\nCandidate Ranking & Evidence Comparison:\n  #2 planning_node        R=0.625 (\u0394 -0.075) [downstream of lidar_node in discovered graph; lower symptom coverage (50% vs 100%)]\n  #3 control_node         R=0.512 (\u0394 -0.188) [downstream of lidar_node in discovered graph; lower symptom coverage (25% vs 100%)]\n  #4 perception_node      R=0.488 (\u0394 -0.213) [downstream of lidar_node in discovered graph; lower symptom coverage (75% vs 100%)]\n============================================================",
+      "evaluated_offline": true
+    },
+    {
+      "scenario": "G02 LiDAR dropout: the scan stops entirely",
+      "key": "lidar_dropout",
+      "group": "single",
+      "rep": 0,
+      "launch_seed": 7,
+      "faults": [
+        {
+          "target": "lidar_node",
+          "type": "dropout",
+          "param": 1.0,
+          "onset": 0.0,
+          "duration": 10.0
+        }
+      ],
+      "ground_truth": "lidar_node",
+      "accepted_roots": [
+        "lidar_node"
+      ],
+      "expect_no_diagnosis": false,
+      "t_inject": 1790109675.69368,
+      "t_end": 1790109683.6937923,
+      "num_anomalies": 221,
+      "num_diagnoses_after_injection": 16,
+      "anomalous_nodes_observed": [
+        "control_node",
+        "lidar_node",
+        "localization_node",
+        "perception_node",
+        "planning_node"
+      ],
+      "nominal_false_alarms": 36,
+      "nominal_window_sec": 18.047,
+      "discovered_graph": {
+        "nodes": [
+          "camera_node",
+          "control_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "sim_world"
+        ],
+        "edges": [
+          {
+            "from": "camera_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/camera/image"
+            ]
+          },
+          {
+            "from": "control_node",
+            "to": "sim_world",
+            "topics": [
+              "/cmd_vel"
+            ]
+          },
+          {
+            "from": "imu_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/imu/data"
+            ]
+          },
+          {
+            "from": "lidar_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/lidar/scan"
+            ]
+          },
+          {
+            "from": "localization_node",
+            "to": "planning_node",
+            "topics": [
+              "/localization/pose"
+            ]
+          },
+          {
+            "from": "odometry_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/odom"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "localization_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "planning_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "planning_node",
+            "to": "control_node",
+            "topics": [
+              "/planning/path"
+            ]
+          }
+        ]
+      },
+      "predicted_root_cause": "lidar_node",
+      "confidence": 0.7,
+      "fault_type": "dropout",
+      "top1_correct": true,
+      "top3_correct": true,
+      "ground_truth_rank": 1,
+      "reciprocal_rank": 1.0,
+      "detection_latency_sec": 0.159,
+      "diagnosis_latency_sec": 0.0,
+      "correct_diagnosis_latency_sec": 0.514,
+      "false_diagnosis_rate": 0.0625,
+      "num_false_diagnoses_after_injection": 1,
+      "ranking": [
+        "lidar_node",
+        "planning_node",
+        "perception_node",
+        "control_node",
+        "camera_node",
+        "localization_node",
+        "imu_node",
+        "odometry_node"
+      ],
+      "chain_accuracy": 0.6,
+      "chain_accuracy_numerator": 3,
+      "chain_accuracy_denominator": 5,
+      "chain_order_correct": true,
+      "predicted_chain": [
+        "lidar_node",
+        "perception_node",
+        "localization_node",
+        "planning_node",
+        "control_node"
+      ],
+      "expected_chain": [
+        "lidar_node",
+        "perception_node",
+        "localization_node"
+      ],
+      "physical_chain": [
+        "lidar_node",
+        "perception_node",
+        "localization_node",
+        "planning_node",
+        "control_node"
+      ],
+      "physical_chain_coverage": 1.0,
+      "physical_chain_numerator": 5,
+      "physical_chain_denominator": 5,
+      "physically_affected_unobserved": [],
+      "explanation": "============================================================\nROOT CAUSE DIAGNOSIS: lidar_node (Confidence: 0.700)\n============================================================\nScore Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:\n  R(lidar_node) = 0.3\u00b7D(1.00) + 0.3\u00b7T(0.00) + 0.25\u00b7S(1.00) + 0.15\u00b7A(1.00) = 0.700\n  - Dependency D: 1.00 (reaches 4 downstream anomalous node(s); 0 anomalous upstream node(s))\n  - Temporal   T: 0.00 (first anomaly at t=1790109676.12s; earliest in window = supporting evidence, not proof of causality)\n  - Symptom    S: 1.00 (explains 5/5 anomalous nodes)\n  - Severity   A: 1.00 (max normalised severity on node, 12 direct anomaly event(s))\n\nPropagation Chain (evidence-ordered, via discovered graph edges):\n  lidar_node (t=1790109676.12s: message_timeout, sev=1.00)\n    \u2514\u2500\u2192 perception_node via /sim/lidar/scan (t=1790109676.12s, +0.01s after lidar_node: message_timeout)\n      \u2514\u2500\u2192 localization_node via /perception/obstacles (t=1790109677.79s, +1.66s after perception_node: /localization/pose:pose_uncertainty)\n      \u2514\u2500\u2192 planning_node via /perception/obstacles (t=1790109352.05s, -324.07s after perception_node: /planning/path:path_empty)\n        \u2514\u2500\u2192 control_node via /planning/path (t=1790109352.06s, +0.01s after planning_node: /cmd_vel:cmd_zero)\n\nCandidate Ranking & Evidence Comparison:\n  #2 planning_node        R=0.580 (\u0394 -0.120) [downstream of lidar_node in discovered graph; lower symptom coverage (40% vs 100%)]\n  #3 perception_node      R=0.530 (\u0394 -0.170) [downstream of lidar_node in discovered graph; lower symptom coverage (80% vs 100%)]\n  #4 control_node         R=0.499 (\u0394 -0.201) [downstream of lidar_node in discovered graph; lower symptom coverage (20% vs 100%)]\n============================================================",
+      "evaluated_offline": true
+    },
+    {
+      "scenario": "G03 LiDAR degradation: heavy noise and invalid returns",
+      "key": "lidar_noise",
+      "group": "single",
+      "rep": 0,
+      "launch_seed": 7,
+      "faults": [
+        {
+          "target": "lidar_node",
+          "type": "noise",
+          "param": 8.0,
+          "onset": 0.0,
+          "duration": 10.0
+        }
+      ],
+      "ground_truth": "lidar_node",
+      "accepted_roots": [
+        "lidar_node"
+      ],
+      "expect_no_diagnosis": false,
+      "t_inject": 1790109709.1565309,
+      "t_end": 1790109717.1566727,
+      "num_anomalies": 180,
+      "num_diagnoses_after_injection": 16,
+      "anomalous_nodes_observed": [
+        "control_node",
+        "lidar_node",
+        "perception_node",
+        "planning_node"
+      ],
+      "nominal_false_alarms": 36,
+      "nominal_window_sec": 18.042,
+      "discovered_graph": {
+        "nodes": [
+          "camera_node",
+          "control_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "sim_world"
+        ],
+        "edges": [
+          {
+            "from": "camera_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/camera/image"
+            ]
+          },
+          {
+            "from": "control_node",
+            "to": "sim_world",
+            "topics": [
+              "/cmd_vel"
+            ]
+          },
+          {
+            "from": "imu_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/imu/data"
+            ]
+          },
+          {
+            "from": "lidar_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/lidar/scan"
+            ]
+          },
+          {
+            "from": "localization_node",
+            "to": "planning_node",
+            "topics": [
+              "/localization/pose"
+            ]
+          },
+          {
+            "from": "odometry_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/odom"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "localization_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "planning_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "planning_node",
+            "to": "control_node",
+            "topics": [
+              "/planning/path"
+            ]
+          }
+        ]
+      },
+      "predicted_root_cause": "lidar_node",
+      "confidence": 0.7,
+      "fault_type": "noise",
+      "top1_correct": true,
+      "top3_correct": true,
+      "ground_truth_rank": 1,
+      "reciprocal_rank": 1.0,
+      "detection_latency_sec": 0.097,
+      "diagnosis_latency_sec": 0.039,
+      "correct_diagnosis_latency_sec": 1.04,
+      "false_diagnosis_rate": 0.125,
+      "num_false_diagnoses_after_injection": 2,
+      "ranking": [
+        "lidar_node",
+        "planning_node",
+        "control_node",
+        "perception_node",
+        "camera_node",
+        "imu_node",
+        "odometry_node",
+        "localization_node"
+      ],
+      "chain_accuracy": 0.5,
+      "chain_accuracy_numerator": 2,
+      "chain_accuracy_denominator": 4,
+      "chain_order_correct": true,
+      "predicted_chain": [
+        "lidar_node",
+        "perception_node",
+        "planning_node",
+        "control_node"
+      ],
+      "expected_chain": [
+        "lidar_node",
+        "perception_node"
+      ],
+      "physical_chain": [
+        "lidar_node",
+        "perception_node",
+        "localization_node",
+        "planning_node",
+        "control_node"
+      ],
+      "physical_chain_coverage": 0.8,
+      "physical_chain_numerator": 4,
+      "physical_chain_denominator": 5,
+      "physically_affected_unobserved": [
+        "localization_node"
+      ],
+      "explanation": "============================================================\nROOT CAUSE DIAGNOSIS: lidar_node (Confidence: 0.700)\n============================================================\nScore Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:\n  R(lidar_node) = 0.3\u00b7D(1.00) + 0.3\u00b7T(0.00) + 0.25\u00b7S(1.00) + 0.15\u00b7A(1.00) = 0.700\n  - Dependency D: 1.00 (reaches 3 downstream anomalous node(s); 0 anomalous upstream node(s))\n  - Temporal   T: 0.00 (first anomaly at t=1790109709.23s; earliest in window = supporting evidence, not proof of causality)\n  - Symptom    S: 1.00 (explains 4/4 anomalous nodes)\n  - Severity   A: 1.00 (max normalised severity on node, 56 direct anomaly event(s))\n\nPropagation Chain (evidence-ordered, via discovered graph edges):\n  lidar_node (t=1790109709.23s: /sim/lidar/scan:nan_ratio, sev=1.00)\n    \u2514\u2500\u2192 perception_node via /sim/lidar/scan (t=1790109710.45s, +1.23s after lidar_node: /perception/obstacles:obstacle_empty)\n      \u2514\u2500\u2192 planning_node via /perception/obstacles (t=1790109352.05s, -358.40s after perception_node: /planning/path:path_empty)\n        \u2514\u2500\u2192 control_node via /planning/path (t=1790109352.06s, +0.01s after planning_node: /cmd_vel:cmd_zero)\n\nCandidate Ranking & Evidence Comparison:\n  #2 planning_node        R=0.625 (\u0394 -0.075) [downstream of lidar_node in discovered graph; lower symptom coverage (50% vs 100%)]\n  #3 control_node         R=0.512 (\u0394 -0.188) [downstream of lidar_node in discovered graph; lower symptom coverage (25% vs 100%)]\n  #4 perception_node      R=0.488 (\u0394 -0.213) [downstream of lidar_node in discovered graph; lower symptom coverage (75% vs 100%)]\n============================================================",
+      "evaluated_offline": true
+    },
+    {
+      "scenario": "G04 camera dropout: the image stream stops (perception gating opens downstream first)",
+      "key": "camera_dropout",
+      "group": "ambiguous",
+      "rep": 0,
+      "launch_seed": 7,
+      "faults": [
+        {
+          "target": "camera_node",
+          "type": "dropout",
+          "param": 1.0,
+          "onset": 0.0,
+          "duration": 10.0
+        }
+      ],
+      "ground_truth": "camera_node",
+      "accepted_roots": [
+        "camera_node"
+      ],
+      "expect_no_diagnosis": false,
+      "t_inject": 1790109742.6211743,
+      "t_end": 1790109752.6212862,
+      "num_anomalies": 341,
+      "num_diagnoses_after_injection": 20,
+      "anomalous_nodes_observed": [
+        "camera_node",
+        "control_node",
+        "localization_node",
+        "perception_node",
+        "planning_node"
+      ],
+      "nominal_false_alarms": 36,
+      "nominal_window_sec": 18.042,
+      "discovered_graph": {
+        "nodes": [
+          "camera_node",
+          "control_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "sim_world"
+        ],
+        "edges": [
+          {
+            "from": "camera_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/camera/image"
+            ]
+          },
+          {
+            "from": "control_node",
+            "to": "sim_world",
+            "topics": [
+              "/cmd_vel"
+            ]
+          },
+          {
+            "from": "imu_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/imu/data"
+            ]
+          },
+          {
+            "from": "lidar_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/lidar/scan"
+            ]
+          },
+          {
+            "from": "localization_node",
+            "to": "planning_node",
+            "topics": [
+              "/localization/pose"
+            ]
+          },
+          {
+            "from": "odometry_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/odom"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "localization_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "planning_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "planning_node",
+            "to": "control_node",
+            "topics": [
+              "/planning/path"
+            ]
+          }
+        ]
+      },
+      "predicted_root_cause": "camera_node",
+      "confidence": 0.7,
+      "fault_type": "dropout",
+      "top1_correct": true,
+      "top3_correct": true,
+      "ground_truth_rank": 1,
+      "reciprocal_rank": 1.0,
+      "detection_latency_sec": 0.037,
+      "diagnosis_latency_sec": 0.073,
+      "correct_diagnosis_latency_sec": 0.574,
+      "false_diagnosis_rate": 0.05,
+      "num_false_diagnoses_after_injection": 1,
+      "ranking": [
+        "camera_node",
+        "planning_node",
+        "perception_node",
+        "control_node",
+        "lidar_node",
+        "localization_node",
+        "imu_node",
+        "odometry_node"
+      ],
+      "chain_accuracy": 0.6,
+      "chain_accuracy_numerator": 3,
+      "chain_accuracy_denominator": 5,
+      "chain_order_correct": true,
+      "predicted_chain": [
+        "camera_node",
+        "perception_node",
+        "localization_node",
+        "planning_node",
+        "control_node"
+      ],
+      "expected_chain": [
+        "camera_node",
+        "perception_node",
+        "localization_node"
+      ],
+      "physical_chain": [
+        "camera_node",
+        "perception_node",
+        "localization_node",
+        "planning_node",
+        "control_node"
+      ],
+      "physical_chain_coverage": 1.0,
+      "physical_chain_numerator": 5,
+      "physical_chain_denominator": 5,
+      "physically_affected_unobserved": [],
+      "explanation": "============================================================\nROOT CAUSE DIAGNOSIS: camera_node (Confidence: 0.700)\n============================================================\nScore Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:\n  R(camera_node) = 0.3\u00b7D(1.00) + 0.3\u00b7T(0.00) + 0.25\u00b7S(1.00) + 0.15\u00b7A(1.00) = 0.700\n  - Dependency D: 1.00 (reaches 4 downstream anomalous node(s); 0 anomalous upstream node(s))\n  - Temporal   T: 0.00 (first anomaly at t=1790109743.06s; earliest in window = supporting evidence, not proof of causality)\n  - Symptom    S: 1.00 (explains 5/5 anomalous nodes)\n  - Severity   A: 1.00 (max normalised severity on node, 7 direct anomaly event(s))\n\nPropagation Chain (evidence-ordered, via discovered graph edges):\n  camera_node (t=1790109743.06s: message_timeout, sev=1.00)\n    \u2514\u2500\u2192 perception_node via /sim/camera/image (t=1790109742.96s, -0.09s after camera_node: /perception/obstacles:obstacle_empty)\n      \u2514\u2500\u2192 localization_node via /perception/obstacles (t=1790109744.99s, +2.02s after perception_node: /localization/pose:pose_uncertainty)\n      \u2514\u2500\u2192 planning_node via /perception/obstacles (t=1790109352.05s, -390.91s after perception_node: /planning/path:path_empty)\n        \u2514\u2500\u2192 control_node via /planning/path (t=1790109352.06s, +0.01s after planning_node: /cmd_vel:cmd_zero)\n\nCandidate Ranking & Evidence Comparison:\n  #2 planning_node        R=0.580 (\u0394 -0.120) [downstream of camera_node in discovered graph; lower symptom coverage (40% vs 100%)]\n  #3 perception_node      R=0.530 (\u0394 -0.170) [downstream of camera_node in discovered graph; lower symptom coverage (80% vs 100%)]\n  #4 control_node         R=0.499 (\u0394 -0.201) [downstream of camera_node in discovered graph; lower symptom coverage (20% vs 100%)]\n============================================================",
+      "evaluated_offline": true
+    },
+    {
+      "scenario": "G05 stale/repeated sensor data: odometry repeats its last measurement",
+      "key": "odometry_stale",
+      "group": "ambiguous",
+      "rep": 0,
+      "launch_seed": 7,
+      "faults": [
+        {
+          "target": "odometry_node",
+          "type": "stale",
+          "param": 1.0,
+          "onset": 0.0,
+          "duration": 10.0
+        }
+      ],
+      "ground_truth": "odometry_node",
+      "accepted_roots": [
+        "odometry_node"
+      ],
+      "expect_no_diagnosis": false,
+      "t_inject": 1790109778.0877275,
+      "t_end": 1790109788.0878382,
+      "num_anomalies": 424,
+      "num_diagnoses_after_injection": 20,
+      "anomalous_nodes_observed": [
+        "control_node",
+        "localization_node",
+        "odometry_node",
+        "planning_node"
+      ],
+      "nominal_false_alarms": 36,
+      "nominal_window_sec": 18.044,
+      "discovered_graph": {
+        "nodes": [
+          "camera_node",
+          "control_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "sim_world"
+        ],
+        "edges": [
+          {
+            "from": "camera_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/camera/image"
+            ]
+          },
+          {
+            "from": "control_node",
+            "to": "sim_world",
+            "topics": [
+              "/cmd_vel"
+            ]
+          },
+          {
+            "from": "imu_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/imu/data"
+            ]
+          },
+          {
+            "from": "lidar_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/lidar/scan"
+            ]
+          },
+          {
+            "from": "localization_node",
+            "to": "planning_node",
+            "topics": [
+              "/localization/pose"
+            ]
+          },
+          {
+            "from": "odometry_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/odom"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "localization_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "planning_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "planning_node",
+            "to": "control_node",
+            "topics": [
+              "/planning/path"
+            ]
+          }
+        ]
+      },
+      "predicted_root_cause": "odometry_node",
+      "confidence": 1.0,
+      "fault_type": "stale",
+      "top1_correct": true,
+      "top3_correct": true,
+      "ground_truth_rank": 1,
+      "reciprocal_rank": 1.0,
+      "detection_latency_sec": 0.074,
+      "diagnosis_latency_sec": 0.108,
+      "correct_diagnosis_latency_sec": 0.108,
+      "false_diagnosis_rate": 0.0,
+      "num_false_diagnoses_after_injection": 0,
+      "ranking": [
+        "odometry_node",
+        "localization_node",
+        "planning_node",
+        "camera_node",
+        "imu_node",
+        "lidar_node",
+        "perception_node"
+      ],
+      "chain_accuracy": 1.0,
+      "chain_accuracy_numerator": 3,
+      "chain_accuracy_denominator": 3,
+      "chain_order_correct": true,
+      "predicted_chain": [
+        "odometry_node",
+        "localization_node",
+        "planning_node"
+      ],
+      "expected_chain": [
+        "odometry_node",
+        "localization_node",
+        "planning_node"
+      ],
+      "physical_chain": [
+        "odometry_node",
+        "localization_node",
+        "planning_node",
+        "control_node"
+      ],
+      "physical_chain_coverage": 0.75,
+      "physical_chain_numerator": 3,
+      "physical_chain_denominator": 4,
+      "physically_affected_unobserved": [
+        "control_node"
+      ],
+      "explanation": "============================================================\nROOT CAUSE DIAGNOSIS: odometry_node (Confidence: 1.000)\n============================================================\nScore Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:\n  R(odometry_node) = 0.3\u00b7D(1.00) + 0.3\u00b7T(1.00) + 0.25\u00b7S(1.00) + 0.15\u00b7A(1.00) = 1.000\n  - Dependency D: 1.00 (reaches 2 downstream anomalous node(s); 0 anomalous upstream node(s))\n  - Temporal   T: 1.00 (first anomaly at t=1790109778.11s; earliest in window = supporting evidence, not proof of causality)\n  - Symptom    S: 1.00 (explains 3/3 anomalous nodes)\n  - Severity   A: 1.00 (max normalised severity on node, 113 direct anomaly event(s))\n\nPropagation Chain (evidence-ordered, via discovered graph edges):\n  odometry_node (t=1790109778.11s: /sim/odom:stale_repeat, sev=1.00)\n    \u2514\u2500\u2192 localization_node via /sim/odom (t=1790109778.12s, +0.00s after odometry_node: /localization/pose:stale_repeat)\n      \u2514\u2500\u2192 planning_node via /localization/pose (t=1790109778.45s, +0.34s after localization_node: /planning/path:stale_repeat)\n\nCandidate Ranking & Evidence Comparison:\n  #2 localization_node    R=0.716 (\u0394 -0.284) [first anomaly 0.00s after odometry_node; downstream of odometry_node in discovered graph; lower symptom coverage (67% vs 100%)]\n  #3 planning_node        R=0.516 (\u0394 -0.484) [first anomaly 0.34s after odometry_node; downstream of odometry_node in discovered graph; lower symptom coverage (33% vs 100%)]\n  #4 camera_node          R=0.382 (\u0394 -0.618) [no direct anomaly observed; does not reach observed symptoms via dependency edges; lower symptom coverage (67% vs 100%)]\n============================================================",
+      "evaluated_offline": true
+    },
+    {
+      "scenario": "G06 sensor rate reduction: IMU publishes at a quarter of its rate",
+      "key": "imu_rate_drop",
+      "group": "single",
+      "rep": 0,
+      "launch_seed": 7,
+      "faults": [
+        {
+          "target": "imu_node",
+          "type": "rate",
+          "param": 0.25,
+          "onset": 0.0,
+          "duration": 10.0
+        }
+      ],
+      "ground_truth": "imu_node",
+      "accepted_roots": [
+        "imu_node"
+      ],
+      "expect_no_diagnosis": false,
+      "t_inject": 1790109813.5707202,
+      "t_end": 1790109821.5708215,
+      "num_anomalies": 80,
+      "num_diagnoses_after_injection": 16,
+      "anomalous_nodes_observed": [
+        "control_node",
+        "planning_node"
+      ],
+      "nominal_false_alarms": 36,
+      "nominal_window_sec": 18.057,
+      "discovered_graph": {
+        "nodes": [
+          "camera_node",
+          "control_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "sim_world"
+        ],
+        "edges": [
+          {
+            "from": "camera_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/camera/image"
+            ]
+          },
+          {
+            "from": "control_node",
+            "to": "sim_world",
+            "topics": [
+              "/cmd_vel"
+            ]
+          },
+          {
+            "from": "imu_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/imu/data"
+            ]
+          },
+          {
+            "from": "lidar_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/lidar/scan"
+            ]
+          },
+          {
+            "from": "localization_node",
+            "to": "planning_node",
+            "topics": [
+              "/localization/pose"
+            ]
+          },
+          {
+            "from": "odometry_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/odom"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "localization_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "planning_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "planning_node",
+            "to": "control_node",
+            "topics": [
+              "/planning/path"
+            ]
+          }
+        ]
+      },
+      "predicted_root_cause": "planning_node",
+      "confidence": 1.0,
+      "fault_type": "rate",
+      "top1_correct": false,
+      "top3_correct": false,
+      "ground_truth_rank": 4,
+      "reciprocal_rank": 0.25,
+      "detection_latency_sec": 0.081,
+      "diagnosis_latency_sec": 0.125,
+      "correct_diagnosis_latency_sec": null,
+      "false_diagnosis_rate": 1.0,
+      "num_false_diagnoses_after_injection": 16,
+      "ranking": [
+        "planning_node",
+        "control_node",
+        "camera_node",
+        "imu_node",
+        "lidar_node",
+        "localization_node",
+        "odometry_node",
+        "perception_node"
+      ],
+      "chain_accuracy": 0.0,
+      "chain_accuracy_numerator": 0,
+      "chain_accuracy_denominator": 3,
+      "chain_order_correct": false,
+      "predicted_chain": [
+        "planning_node",
+        "control_node"
+      ],
+      "expected_chain": [
+        "imu_node"
+      ],
+      "physical_chain": [
+        "imu_node",
+        "localization_node"
+      ],
+      "physical_chain_coverage": 0.0,
+      "physical_chain_numerator": 0,
+      "physical_chain_denominator": 2,
+      "physically_affected_unobserved": [
+        "imu_node",
+        "localization_node"
+      ],
+      "explanation": "============================================================\nROOT CAUSE DIAGNOSIS: planning_node (Confidence: 1.000)\n============================================================\nScore Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:\n  R(planning_node) = 0.3\u00b7D(1.00) + 0.3\u00b7T(1.00) + 0.25\u00b7S(1.00) + 0.15\u00b7A(1.00) = 1.000\n  - Dependency D: 1.00 (reaches 1 downstream anomalous node(s); 0 anomalous upstream node(s))\n  - Temporal   T: 1.00 (first anomaly at t=1790109753.06s; earliest in window = supporting evidence, not proof of causality)\n  - Symptom    S: 1.00 (explains 2/2 anomalous nodes)\n  - Severity   A: 1.00 (max normalised severity on node, 30 direct anomaly event(s))\n\nPropagation Chain (evidence-ordered, via discovered graph edges):\n  planning_node (t=1790109753.06s: /planning/path:path_empty, sev=1.00)\n    \u2514\u2500\u2192 control_node via /planning/path (t=1790109753.06s, +0.01s after planning_node: /cmd_vel:cmd_zero)\n\nCandidate Ranking & Evidence Comparison:\n  #2 control_node         R=0.575 (\u0394 -0.425) [first anomaly 0.01s after planning_node; downstream of planning_node in discovered graph; lower symptom coverage (50% vs 100%)]\n  #3 camera_node          R=0.565 (\u0394 -0.435) [no direct anomaly observed]\n  #4 imu_node             R=0.565 (\u0394 -0.435) [no direct anomaly observed]\n============================================================",
+      "evaluated_offline": true
+    },
+    {
+      "scenario": "G07 perception processing delay: 0.4 s of real work per scan",
+      "key": "perception_delay",
+      "group": "single",
+      "rep": 0,
+      "launch_seed": 7,
+      "faults": [
+        {
+          "target": "perception_node",
+          "type": "processing_delay",
+          "param": 0.4,
+          "onset": 0.0,
+          "duration": 10.0
+        }
+      ],
+      "ground_truth": "perception_node",
+      "accepted_roots": [
+        "perception_node"
+      ],
+      "expect_no_diagnosis": false,
+      "t_inject": 1790109847.034274,
+      "t_end": 1790109855.034382,
+      "num_anomalies": 103,
+      "num_diagnoses_after_injection": 16,
+      "anomalous_nodes_observed": [
+        "control_node",
+        "perception_node",
+        "planning_node"
+      ],
+      "nominal_false_alarms": 36,
+      "nominal_window_sec": 18.045,
+      "discovered_graph": {
+        "nodes": [
+          "camera_node",
+          "control_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "sim_world"
+        ],
+        "edges": [
+          {
+            "from": "camera_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/camera/image"
+            ]
+          },
+          {
+            "from": "control_node",
+            "to": "sim_world",
+            "topics": [
+              "/cmd_vel"
+            ]
+          },
+          {
+            "from": "imu_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/imu/data"
+            ]
+          },
+          {
+            "from": "lidar_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/lidar/scan"
+            ]
+          },
+          {
+            "from": "localization_node",
+            "to": "planning_node",
+            "topics": [
+              "/localization/pose"
+            ]
+          },
+          {
+            "from": "odometry_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/odom"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "localization_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "planning_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "planning_node",
+            "to": "control_node",
+            "topics": [
+              "/planning/path"
+            ]
+          }
+        ]
+      },
+      "predicted_root_cause": "planning_node",
+      "confidence": 0.7167,
+      "fault_type": "processing_delay",
+      "top1_correct": false,
+      "top3_correct": true,
+      "ground_truth_rank": 2,
+      "reciprocal_rank": 0.5,
+      "detection_latency_sec": 0.017,
+      "diagnosis_latency_sec": 0.161,
+      "correct_diagnosis_latency_sec": null,
+      "false_diagnosis_rate": 1.0,
+      "num_false_diagnoses_after_injection": 16,
+      "ranking": [
+        "planning_node",
+        "perception_node",
+        "camera_node",
+        "lidar_node",
+        "control_node",
+        "imu_node",
+        "odometry_node",
+        "localization_node"
+      ],
+      "chain_accuracy": 0.0,
+      "chain_accuracy_numerator": 0,
+      "chain_accuracy_denominator": 3,
+      "chain_order_correct": false,
+      "predicted_chain": [
+        "planning_node",
+        "control_node"
+      ],
+      "expected_chain": [
+        "perception_node"
+      ],
+      "physical_chain": [
+        "perception_node",
+        "localization_node",
+        "planning_node",
+        "control_node"
+      ],
+      "physical_chain_coverage": 0.5,
+      "physical_chain_numerator": 2,
+      "physical_chain_denominator": 4,
+      "physically_affected_unobserved": [
+        "perception_node",
+        "localization_node"
+      ],
+      "explanation": "============================================================\nROOT CAUSE DIAGNOSIS: planning_node (Confidence: 0.717)\n============================================================\nScore Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:\n  R(planning_node) = 0.3\u00b7D(0.33) + 0.3\u00b7T(1.00) + 0.25\u00b7S(0.67) + 0.15\u00b7A(1.00) = 0.717\n  - Dependency D: 0.33 (reaches 1 downstream anomalous node(s); 1 anomalous upstream node(s))\n  - Temporal   T: 1.00 (first anomaly at t=1790109753.06s; earliest in window = supporting evidence, not proof of causality)\n  - Symptom    S: 0.67 (explains 2/3 anomalous nodes)\n  - Severity   A: 1.00 (max normalised severity on node, 30 direct anomaly event(s))\n\nPropagation Chain (evidence-ordered, via discovered graph edges):\n  planning_node (t=1790109753.06s: /planning/path:path_empty, sev=1.00)\n    \u2514\u2500\u2192 control_node via /planning/path (t=1790109753.06s, +0.01s after planning_node: /cmd_vel:cmd_zero)\n  (anomalous but not reachable from planning_node: perception_node)\n\nCandidate Ranking & Evidence Comparison:\n  #2 perception_node      R=0.700 (\u0394 -0.017) [first anomaly 95.31s after planning_node]\n  #3 camera_node          R=0.565 (\u0394 -0.152) [no direct anomaly observed]\n  #4 lidar_node           R=0.565 (\u0394 -0.152) [no direct anomaly observed]\n============================================================",
+      "evaluated_offline": true
+    },
+    {
+      "scenario": "G08 perception degradation: empty obstacle sets",
+      "key": "perception_degradation",
+      "group": "single",
+      "rep": 0,
+      "launch_seed": 7,
+      "faults": [
+        {
+          "target": "perception_node",
+          "type": "degradation",
+          "param": 0.0,
+          "onset": 0.0,
+          "duration": 10.0
+        }
+      ],
+      "ground_truth": "perception_node",
+      "accepted_roots": [
+        "perception_node"
+      ],
+      "expect_no_diagnosis": false,
+      "t_inject": 1790109880.5021424,
+      "t_end": 1790109888.502254,
+      "num_anomalies": 265,
+      "num_diagnoses_after_injection": 16,
+      "anomalous_nodes_observed": [
+        "control_node",
+        "localization_node",
+        "perception_node",
+        "planning_node"
+      ],
+      "nominal_false_alarms": 36,
+      "nominal_window_sec": 18.05,
+      "discovered_graph": {
+        "nodes": [
+          "camera_node",
+          "control_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "sim_world"
+        ],
+        "edges": [
+          {
+            "from": "camera_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/camera/image"
+            ]
+          },
+          {
+            "from": "control_node",
+            "to": "sim_world",
+            "topics": [
+              "/cmd_vel"
+            ]
+          },
+          {
+            "from": "imu_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/imu/data"
+            ]
+          },
+          {
+            "from": "lidar_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/lidar/scan"
+            ]
+          },
+          {
+            "from": "localization_node",
+            "to": "planning_node",
+            "topics": [
+              "/localization/pose"
+            ]
+          },
+          {
+            "from": "odometry_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/odom"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "localization_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "planning_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "planning_node",
+            "to": "control_node",
+            "topics": [
+              "/planning/path"
+            ]
+          }
+        ]
+      },
+      "predicted_root_cause": "perception_node",
+      "confidence": 0.7,
+      "fault_type": "degradation",
+      "top1_correct": true,
+      "top3_correct": true,
+      "ground_truth_rank": 1,
+      "reciprocal_rank": 1.0,
+      "detection_latency_sec": 0.15,
+      "diagnosis_latency_sec": 0.192,
+      "correct_diagnosis_latency_sec": 2.195,
+      "false_diagnosis_rate": 0.25,
+      "num_false_diagnoses_after_injection": 4,
+      "ranking": [
+        "perception_node",
+        "planning_node",
+        "camera_node",
+        "lidar_node",
+        "control_node",
+        "localization_node",
+        "imu_node",
+        "odometry_node"
+      ],
+      "chain_accuracy": 0.5,
+      "chain_accuracy_numerator": 2,
+      "chain_accuracy_denominator": 4,
+      "chain_order_correct": true,
+      "predicted_chain": [
+        "perception_node",
+        "localization_node",
+        "planning_node",
+        "control_node"
+      ],
+      "expected_chain": [
+        "perception_node",
+        "localization_node"
+      ],
+      "physical_chain": [
+        "perception_node",
+        "localization_node",
+        "planning_node",
+        "control_node"
+      ],
+      "physical_chain_coverage": 1.0,
+      "physical_chain_numerator": 4,
+      "physical_chain_denominator": 4,
+      "physically_affected_unobserved": [],
+      "explanation": "============================================================\nROOT CAUSE DIAGNOSIS: perception_node (Confidence: 0.700)\n============================================================\nScore Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:\n  R(perception_node) = 0.3\u00b7D(1.00) + 0.3\u00b7T(0.00) + 0.25\u00b7S(1.00) + 0.15\u00b7A(1.00) = 0.700\n  - Dependency D: 1.00 (reaches 3 downstream anomalous node(s); 0 anomalous upstream node(s))\n  - Temporal   T: 0.00 (first anomaly at t=1790109880.59s; earliest in window = supporting evidence, not proof of causality)\n  - Symptom    S: 1.00 (explains 4/4 anomalous nodes)\n  - Severity   A: 1.00 (max normalised severity on node, 58 direct anomaly event(s))\n\nPropagation Chain (evidence-ordered, via discovered graph edges):\n  perception_node (t=1790109880.59s: /perception/obstacles:obstacle_empty, sev=1.00)\n    \u2514\u2500\u2192 localization_node via /perception/obstacles (t=1790109882.60s, +2.00s after perception_node: /localization/pose:pose_uncertainty)\n    \u2514\u2500\u2192 planning_node via /perception/obstacles (t=1790109753.06s, -127.54s after perception_node: /planning/path:path_empty)\n      \u2514\u2500\u2192 control_node via /planning/path (t=1790109753.06s, +0.01s after planning_node: /cmd_vel:cmd_zero)\n\nCandidate Ranking & Evidence Comparison:\n  #2 planning_node        R=0.625 (\u0394 -0.075) [downstream of perception_node in discovered graph; lower symptom coverage (50% vs 100%)]\n  #3 camera_node          R=0.565 (\u0394 -0.135) [lower anomaly severity]\n  #4 lidar_node           R=0.565 (\u0394 -0.135) [lower anomaly severity]\n============================================================",
+      "evaluated_offline": true
+    },
+    {
+      "scenario": "G09 localization failure: pose jump and uncertainty spike",
+      "key": "localization_failure",
+      "group": "single",
+      "rep": 0,
+      "launch_seed": 7,
+      "faults": [
+        {
+          "target": "localization_node",
+          "type": "localization_failure",
+          "param": 20.0,
+          "onset": 0.0,
+          "duration": 10.0
+        }
+      ],
+      "ground_truth": "localization_node",
+      "accepted_roots": [
+        "localization_node"
+      ],
+      "expect_no_diagnosis": false,
+      "t_inject": 1790109913.972363,
+      "t_end": 1790109921.972469,
+      "num_anomalies": 186,
+      "num_diagnoses_after_injection": 16,
+      "anomalous_nodes_observed": [
+        "control_node",
+        "localization_node",
+        "planning_node"
+      ],
+      "nominal_false_alarms": 36,
+      "nominal_window_sec": 18.05,
+      "discovered_graph": {
+        "nodes": [
+          "camera_node",
+          "control_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "sim_world"
+        ],
+        "edges": [
+          {
+            "from": "camera_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/camera/image"
+            ]
+          },
+          {
+            "from": "control_node",
+            "to": "sim_world",
+            "topics": [
+              "/cmd_vel"
+            ]
+          },
+          {
+            "from": "imu_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/imu/data"
+            ]
+          },
+          {
+            "from": "lidar_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/lidar/scan"
+            ]
+          },
+          {
+            "from": "localization_node",
+            "to": "planning_node",
+            "topics": [
+              "/localization/pose"
+            ]
+          },
+          {
+            "from": "odometry_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/odom"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "localization_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "planning_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "planning_node",
+            "to": "control_node",
+            "topics": [
+              "/planning/path"
+            ]
+          }
+        ]
+      },
+      "predicted_root_cause": "localization_node",
+      "confidence": 1.0,
+      "fault_type": "localization_failure",
+      "top1_correct": true,
+      "top3_correct": true,
+      "ground_truth_rank": 1,
+      "reciprocal_rank": 1.0,
+      "detection_latency_sec": 0.08,
+      "diagnosis_latency_sec": 0.223,
+      "correct_diagnosis_latency_sec": 6.225,
+      "false_diagnosis_rate": 0.75,
+      "num_false_diagnoses_after_injection": 12,
+      "ranking": [
+        "localization_node",
+        "camera_node",
+        "imu_node",
+        "lidar_node",
+        "odometry_node",
+        "perception_node",
+        "control_node",
+        "planning_node"
+      ],
+      "chain_accuracy": 0.3333,
+      "chain_accuracy_numerator": 1,
+      "chain_accuracy_denominator": 3,
+      "chain_order_correct": false,
+      "predicted_chain": [
+        "localization_node"
+      ],
+      "expected_chain": [
+        "localization_node",
+        "planning_node",
+        "control_node"
+      ],
+      "physical_chain": [
+        "localization_node",
+        "planning_node",
+        "control_node"
+      ],
+      "physical_chain_coverage": 0.3333,
+      "physical_chain_numerator": 1,
+      "physical_chain_denominator": 3,
+      "physically_affected_unobserved": [
+        "planning_node",
+        "control_node"
+      ],
+      "explanation": "============================================================\nROOT CAUSE DIAGNOSIS: localization_node (Confidence: 1.000)\n============================================================\nScore Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:\n  R(localization_node) = 0.3\u00b7D(1.00) + 0.3\u00b7T(1.00) + 0.25\u00b7S(1.00) + 0.15\u00b7A(1.00) = 1.000\n  - Dependency D: 1.00 (reaches 1 downstream anomalous node(s); 0 anomalous upstream node(s))\n  - Temporal   T: 1.00 (first anomaly at t=1790109914.07s; earliest in window = supporting evidence, not proof of causality)\n  - Symptom    S: 1.00 (explains 2/2 anomalous nodes)\n  - Severity   A: 1.00 (max normalised severity on node, 113 direct anomaly event(s))\n\nPropagation Chain (evidence-ordered, via discovered graph edges):\n  localization_node (t=1790109914.07s: /localization/pose:pose_uncertainty, sev=1.00)\n  (anomalous but not reachable from localization_node: control_node)\n\nCandidate Ranking & Evidence Comparison:\n  #2 camera_node          R=0.565 (\u0394 -0.435) [no direct anomaly observed]\n  #3 imu_node             R=0.565 (\u0394 -0.435) [no direct anomaly observed]\n  #4 lidar_node           R=0.565 (\u0394 -0.435) [no direct anomaly observed]\n============================================================",
+      "evaluated_offline": true
+    },
+    {
+      "scenario": "G10 planning failure: the planner emits no path",
+      "key": "navigation_failure",
+      "group": "single",
+      "rep": 0,
+      "launch_seed": 7,
+      "faults": [
+        {
+          "target": "planning_node",
+          "type": "navigation_failure",
+          "param": 2.0,
+          "onset": 0.0,
+          "duration": 10.0
+        }
+      ],
+      "ground_truth": "planning_node",
+      "accepted_roots": [
+        "planning_node"
+      ],
+      "expect_no_diagnosis": false,
+      "t_inject": 1790109947.4506807,
+      "t_end": 1790109955.4507859,
+      "num_anomalies": 40,
+      "num_diagnoses_after_injection": 16,
+      "anomalous_nodes_observed": [
+        "control_node",
+        "planning_node"
+      ],
+      "nominal_false_alarms": 36,
+      "nominal_window_sec": 18.056,
+      "discovered_graph": {
+        "nodes": [
+          "camera_node",
+          "control_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "sim_world"
+        ],
+        "edges": [
+          {
+            "from": "camera_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/camera/image"
+            ]
+          },
+          {
+            "from": "control_node",
+            "to": "sim_world",
+            "topics": [
+              "/cmd_vel"
+            ]
+          },
+          {
+            "from": "imu_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/imu/data"
+            ]
+          },
+          {
+            "from": "lidar_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/lidar/scan"
+            ]
+          },
+          {
+            "from": "localization_node",
+            "to": "planning_node",
+            "topics": [
+              "/localization/pose"
+            ]
+          },
+          {
+            "from": "odometry_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/odom"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "localization_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "planning_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "planning_node",
+            "to": "control_node",
+            "topics": [
+              "/planning/path"
+            ]
+          }
+        ]
+      },
+      "predicted_root_cause": "control_node",
+      "confidence": 0.9782,
+      "fault_type": "navigation_failure",
+      "top1_correct": false,
+      "top3_correct": false,
+      "ground_truth_rank": 8,
+      "reciprocal_rank": 0.125,
+      "detection_latency_sec": 0.001,
+      "diagnosis_latency_sec": 0.243,
+      "correct_diagnosis_latency_sec": 0.243,
+      "false_diagnosis_rate": 0.25,
+      "num_false_diagnoses_after_injection": 4,
+      "ranking": [
+        "control_node",
+        "camera_node",
+        "imu_node",
+        "lidar_node",
+        "localization_node",
+        "odometry_node",
+        "perception_node",
+        "planning_node"
+      ],
+      "chain_accuracy": 0.5,
+      "chain_accuracy_numerator": 1,
+      "chain_accuracy_denominator": 2,
+      "chain_order_correct": false,
+      "predicted_chain": [
+        "control_node"
+      ],
+      "expected_chain": [
+        "planning_node",
+        "control_node"
+      ],
+      "physical_chain": [
+        "planning_node",
+        "control_node"
+      ],
+      "physical_chain_coverage": 0.5,
+      "physical_chain_numerator": 1,
+      "physical_chain_denominator": 2,
+      "physically_affected_unobserved": [
+        "planning_node"
+      ],
+      "explanation": "============================================================\nROOT CAUSE DIAGNOSIS: control_node (Confidence: 0.978)\n============================================================\nScore Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:\n  R(control_node) = 0.3\u00b7D(1.00) + 0.3\u00b7T(1.00) + 0.25\u00b7S(1.00) + 0.15\u00b7A(0.85) = 0.978\n  - Dependency D: 1.00 (reaches 0 downstream anomalous node(s); 0 anomalous upstream node(s))\n  - Temporal   T: 1.00 (first anomaly at t=1790109947.66s; earliest in window = supporting evidence, not proof of causality)\n  - Symptom    S: 1.00 (explains 1/1 anomalous nodes)\n  - Severity   A: 0.85 (max normalised severity on node, 30 direct anomaly event(s))\n\nPropagation Chain (evidence-ordered, via discovered graph edges):\n  control_node (t=1790109947.66s: /cmd_vel:linear_vel, sev=0.85)\n\nCandidate Ranking & Evidence Comparison:\n  #2 camera_node          R=0.415 (\u0394 -0.563) [no direct anomaly observed; does not reach observed symptoms via dependency edges]\n  #3 imu_node             R=0.415 (\u0394 -0.563) [no direct anomaly observed; does not reach observed symptoms via dependency edges]\n  #4 lidar_node           R=0.415 (\u0394 -0.563) [no direct anomaly observed; does not reach observed symptoms via dependency edges]\n============================================================",
+      "evaluated_offline": true
+    },
+    {
+      "scenario": "G11 control failure: erratic velocity commands",
+      "key": "control_failure",
+      "group": "single",
+      "rep": 0,
+      "launch_seed": 7,
+      "faults": [
+        {
+          "target": "control_node",
+          "type": "control_failure",
+          "param": 1.0,
+          "onset": 0.0,
+          "duration": 10.0
+        }
+      ],
+      "ground_truth": "control_node",
+      "accepted_roots": [
+        "control_node"
+      ],
+      "expect_no_diagnosis": false,
+      "t_inject": 1790109980.909725,
+      "t_end": 1790109988.909854,
+      "num_anomalies": 85,
+      "num_diagnoses_after_injection": 16,
+      "anomalous_nodes_observed": [
+        "control_node",
+        "planning_node"
+      ],
+      "nominal_false_alarms": 36,
+      "nominal_window_sec": 18.04,
+      "discovered_graph": {
+        "nodes": [
+          "camera_node",
+          "control_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "sim_world"
+        ],
+        "edges": [
+          {
+            "from": "camera_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/camera/image"
+            ]
+          },
+          {
+            "from": "control_node",
+            "to": "sim_world",
+            "topics": [
+              "/cmd_vel"
+            ]
+          },
+          {
+            "from": "imu_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/imu/data"
+            ]
+          },
+          {
+            "from": "lidar_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/lidar/scan"
+            ]
+          },
+          {
+            "from": "localization_node",
+            "to": "planning_node",
+            "topics": [
+              "/localization/pose"
+            ]
+          },
+          {
+            "from": "odometry_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/odom"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "localization_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "planning_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "planning_node",
+            "to": "control_node",
+            "topics": [
+              "/planning/path"
+            ]
+          }
+        ]
+      },
+      "predicted_root_cause": "planning_node",
+      "confidence": 1.0,
+      "fault_type": "control_failure",
+      "top1_correct": false,
+      "top3_correct": true,
+      "ground_truth_rank": 2,
+      "reciprocal_rank": 0.5,
+      "detection_latency_sec": 0.15,
+      "diagnosis_latency_sec": 0.286,
+      "correct_diagnosis_latency_sec": null,
+      "false_diagnosis_rate": 1.0,
+      "num_false_diagnoses_after_injection": 16,
+      "ranking": [
+        "planning_node",
+        "control_node",
+        "camera_node",
+        "imu_node",
+        "lidar_node",
+        "localization_node",
+        "odometry_node",
+        "perception_node"
+      ],
+      "chain_accuracy": 0.5,
+      "chain_accuracy_numerator": 1,
+      "chain_accuracy_denominator": 2,
+      "chain_order_correct": true,
+      "predicted_chain": [
+        "planning_node",
+        "control_node"
+      ],
+      "expected_chain": [
+        "control_node"
+      ],
+      "physical_chain": [
+        "control_node"
+      ],
+      "physical_chain_coverage": 1.0,
+      "physical_chain_numerator": 1,
+      "physical_chain_denominator": 1,
+      "physically_affected_unobserved": [],
+      "explanation": "============================================================\nROOT CAUSE DIAGNOSIS: planning_node (Confidence: 1.000)\n============================================================\nScore Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:\n  R(planning_node) = 0.3\u00b7D(1.00) + 0.3\u00b7T(1.00) + 0.25\u00b7S(1.00) + 0.15\u00b7A(1.00) = 1.000\n  - Dependency D: 1.00 (reaches 1 downstream anomalous node(s); 0 anomalous upstream node(s))\n  - Temporal   T: 1.00 (first anomaly at t=1790109955.65s; earliest in window = supporting evidence, not proof of causality)\n  - Symptom    S: 1.00 (explains 2/2 anomalous nodes)\n  - Severity   A: 1.00 (max normalised severity on node, 30 direct anomaly event(s))\n\nPropagation Chain (evidence-ordered, via discovered graph edges):\n  planning_node (t=1790109955.65s: /planning/path:path_empty, sev=1.00)\n    \u2514\u2500\u2192 control_node via /planning/path (t=1790109955.66s, +0.01s after planning_node: /cmd_vel:cmd_zero)\n\nCandidate Ranking & Evidence Comparison:\n  #2 control_node         R=0.574 (\u0394 -0.426) [first anomaly 0.01s after planning_node; downstream of planning_node in discovered graph; lower symptom coverage (50% vs 100%)]\n  #3 camera_node          R=0.565 (\u0394 -0.435) [no direct anomaly observed]\n  #4 imu_node             R=0.565 (\u0394 -0.435) [no direct anomaly observed]\n============================================================",
+      "evaluated_offline": true
+    },
+    {
+      "scenario": "G12 communication delay: perception output delayed 0.4 s",
+      "key": "perception_link_latency",
+      "group": "communication",
+      "rep": 0,
+      "launch_seed": 7,
+      "faults": [
+        {
+          "target": "perception_node",
+          "type": "latency",
+          "param": 0.4,
+          "onset": 0.0,
+          "duration": 10.0
+        }
+      ],
+      "ground_truth": "perception_node",
+      "accepted_roots": [
+        "perception_node"
+      ],
+      "expect_no_diagnosis": false,
+      "t_inject": 1790110014.385812,
+      "t_end": 1790110022.3859234,
+      "num_anomalies": 153,
+      "num_diagnoses_after_injection": 16,
+      "anomalous_nodes_observed": [
+        "control_node",
+        "perception_node",
+        "planning_node"
+      ],
+      "nominal_false_alarms": 36,
+      "nominal_window_sec": 18.05,
+      "discovered_graph": {
+        "nodes": [
+          "camera_node",
+          "control_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "sim_world"
+        ],
+        "edges": [
+          {
+            "from": "camera_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/camera/image"
+            ]
+          },
+          {
+            "from": "control_node",
+            "to": "sim_world",
+            "topics": [
+              "/cmd_vel"
+            ]
+          },
+          {
+            "from": "imu_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/imu/data"
+            ]
+          },
+          {
+            "from": "lidar_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/lidar/scan"
+            ]
+          },
+          {
+            "from": "localization_node",
+            "to": "planning_node",
+            "topics": [
+              "/localization/pose"
+            ]
+          },
+          {
+            "from": "odometry_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/odom"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "localization_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "planning_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "planning_node",
+            "to": "control_node",
+            "topics": [
+              "/planning/path"
+            ]
+          }
+        ]
+      },
+      "predicted_root_cause": "planning_node",
+      "confidence": 0.7167,
+      "fault_type": "latency",
+      "top1_correct": false,
+      "top3_correct": true,
+      "ground_truth_rank": 2,
+      "reciprocal_rank": 0.5,
+      "detection_latency_sec": 0.071,
+      "diagnosis_latency_sec": 0.308,
+      "correct_diagnosis_latency_sec": null,
+      "false_diagnosis_rate": 1.0,
+      "num_false_diagnoses_after_injection": 16,
+      "ranking": [
+        "planning_node",
+        "perception_node",
+        "camera_node",
+        "lidar_node",
+        "control_node",
+        "imu_node",
+        "odometry_node",
+        "localization_node"
+      ],
+      "chain_accuracy": 0.0,
+      "chain_accuracy_numerator": 0,
+      "chain_accuracy_denominator": 4,
+      "chain_order_correct": false,
+      "predicted_chain": [
+        "planning_node",
+        "control_node"
+      ],
+      "expected_chain": [
+        "perception_node",
+        "localization_node"
+      ],
+      "physical_chain": [
+        "perception_node",
+        "localization_node",
+        "planning_node",
+        "control_node"
+      ],
+      "physical_chain_coverage": 0.5,
+      "physical_chain_numerator": 2,
+      "physical_chain_denominator": 4,
+      "physically_affected_unobserved": [
+        "perception_node",
+        "localization_node"
+      ],
+      "explanation": "============================================================\nROOT CAUSE DIAGNOSIS: planning_node (Confidence: 0.717)\n============================================================\nScore Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:\n  R(planning_node) = 0.3\u00b7D(0.33) + 0.3\u00b7T(1.00) + 0.25\u00b7S(0.67) + 0.15\u00b7A(1.00) = 0.717\n  - Dependency D: 0.33 (reaches 1 downstream anomalous node(s); 1 anomalous upstream node(s))\n  - Temporal   T: 1.00 (first anomaly at t=1790109955.65s; earliest in window = supporting evidence, not proof of causality)\n  - Symptom    S: 0.67 (explains 2/3 anomalous nodes)\n  - Severity   A: 1.00 (max normalised severity on node, 30 direct anomaly event(s))\n\nPropagation Chain (evidence-ordered, via discovered graph edges):\n  planning_node (t=1790109955.65s: /planning/path:path_empty, sev=1.00)\n    \u2514\u2500\u2192 control_node via /planning/path (t=1790109955.66s, +0.01s after planning_node: /cmd_vel:cmd_zero)\n  (anomalous but not reachable from planning_node: perception_node)\n\nCandidate Ranking & Evidence Comparison:\n  #2 perception_node      R=0.700 (\u0394 -0.017) [first anomaly 59.18s after planning_node]\n  #3 camera_node          R=0.565 (\u0394 -0.152) [no direct anomaly observed]\n  #4 lidar_node           R=0.565 (\u0394 -0.152) [no direct anomaly observed]\n============================================================",
+      "evaluated_offline": true
+    },
+    {
+      "scenario": "G13 communication loss: 60 % of LiDAR messages dropped in flight",
+      "key": "lidar_link_loss",
+      "group": "communication",
+      "rep": 0,
+      "launch_seed": 7,
+      "faults": [
+        {
+          "target": "lidar_node",
+          "type": "loss",
+          "param": 0.6,
+          "onset": 0.0,
+          "duration": 10.0
+        }
+      ],
+      "ground_truth": "lidar_node",
+      "accepted_roots": [
+        "lidar_node"
+      ],
+      "expect_no_diagnosis": false,
+      "t_inject": 1790110047.8604026,
+      "t_end": 1790110055.860504,
+      "num_anomalies": 94,
+      "num_diagnoses_after_injection": 16,
+      "anomalous_nodes_observed": [
+        "control_node",
+        "lidar_node",
+        "perception_node",
+        "planning_node"
+      ],
+      "nominal_false_alarms": 36,
+      "nominal_window_sec": 18.043,
+      "discovered_graph": {
+        "nodes": [
+          "camera_node",
+          "control_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "sim_world"
+        ],
+        "edges": [
+          {
+            "from": "camera_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/camera/image"
+            ]
+          },
+          {
+            "from": "control_node",
+            "to": "sim_world",
+            "topics": [
+              "/cmd_vel"
+            ]
+          },
+          {
+            "from": "imu_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/imu/data"
+            ]
+          },
+          {
+            "from": "lidar_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/lidar/scan"
+            ]
+          },
+          {
+            "from": "localization_node",
+            "to": "planning_node",
+            "topics": [
+              "/localization/pose"
+            ]
+          },
+          {
+            "from": "odometry_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/odom"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "localization_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "planning_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "planning_node",
+            "to": "control_node",
+            "topics": [
+              "/planning/path"
+            ]
+          }
+        ]
+      },
+      "predicted_root_cause": "lidar_node",
+      "confidence": 0.7,
+      "fault_type": "loss",
+      "top1_correct": true,
+      "top3_correct": true,
+      "ground_truth_rank": 1,
+      "reciprocal_rank": 1.0,
+      "detection_latency_sec": 0.007,
+      "diagnosis_latency_sec": 0.336,
+      "correct_diagnosis_latency_sec": 1.336,
+      "false_diagnosis_rate": 0.125,
+      "num_false_diagnoses_after_injection": 2,
+      "ranking": [
+        "lidar_node",
+        "planning_node",
+        "control_node",
+        "perception_node",
+        "camera_node",
+        "imu_node",
+        "odometry_node",
+        "localization_node"
+      ],
+      "chain_accuracy": 0.5,
+      "chain_accuracy_numerator": 2,
+      "chain_accuracy_denominator": 4,
+      "chain_order_correct": true,
+      "predicted_chain": [
+        "lidar_node",
+        "perception_node",
+        "planning_node",
+        "control_node"
+      ],
+      "expected_chain": [
+        "lidar_node",
+        "perception_node"
+      ],
+      "physical_chain": [
+        "lidar_node",
+        "perception_node",
+        "localization_node"
+      ],
+      "physical_chain_coverage": 0.6667,
+      "physical_chain_numerator": 2,
+      "physical_chain_denominator": 3,
+      "physically_affected_unobserved": [
+        "localization_node"
+      ],
+      "explanation": "============================================================\nROOT CAUSE DIAGNOSIS: lidar_node (Confidence: 0.700)\n============================================================\nScore Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:\n  R(lidar_node) = 0.3\u00b7D(1.00) + 0.3\u00b7T(0.00) + 0.25\u00b7S(1.00) + 0.15\u00b7A(1.00) = 0.700\n  - Dependency D: 1.00 (reaches 3 downstream anomalous node(s); 0 anomalous upstream node(s))\n  - Temporal   T: 0.00 (first anomaly at t=1790110053.18s; earliest in window = supporting evidence, not proof of causality)\n  - Symptom    S: 1.00 (explains 4/4 anomalous nodes)\n  - Severity   A: 1.00 (max normalised severity on node, 4 direct anomaly event(s))\n\nPropagation Chain (evidence-ordered, via discovered graph edges):\n  lidar_node (t=1790110053.18s: message_timeout, sev=0.76)\n    \u2514\u2500\u2192 perception_node via /sim/lidar/scan (t=1790110053.18s, -0.00s after lidar_node: message_timeout)\n      \u2514\u2500\u2192 planning_node via /perception/obstacles (t=1790109955.65s, -97.53s after perception_node: /planning/path:path_empty)\n        \u2514\u2500\u2192 control_node via /planning/path (t=1790109955.66s, +0.01s after planning_node: /cmd_vel:cmd_zero)\n\nCandidate Ranking & Evidence Comparison:\n  #2 planning_node        R=0.625 (\u0394 -0.075) [downstream of lidar_node in discovered graph; lower symptom coverage (50% vs 100%)]\n  #3 control_node         R=0.512 (\u0394 -0.188) [downstream of lidar_node in discovered graph; lower symptom coverage (25% vs 100%)]\n  #4 perception_node      R=0.488 (\u0394 -0.213) [downstream of lidar_node in discovered graph; lower symptom coverage (75% vs 100%)]\n============================================================",
+      "evaluated_offline": true
+    },
+    {
+      "scenario": "G14 node crash: perception process dies abruptly and is respawned",
+      "key": "perception_crash",
+      "group": "dynamic_graph",
+      "rep": 0,
+      "launch_seed": 7,
+      "faults": [
+        {
+          "target": "perception_node",
+          "type": "crash",
+          "param": 0.0,
+          "onset": 0.0,
+          "duration": 1.0
+        }
+      ],
+      "ground_truth": "perception_node",
+      "accepted_roots": [
+        "perception_node"
+      ],
+      "expect_no_diagnosis": false,
+      "t_inject": 1790110081.3350058,
+      "t_end": 1790110091.3351045,
+      "num_anomalies": 249,
+      "num_diagnoses_after_injection": 20,
+      "anomalous_nodes_observed": [
+        "control_node",
+        "localization_node",
+        "perception_node",
+        "planning_node"
+      ],
+      "nominal_false_alarms": 36,
+      "nominal_window_sec": 18.044,
+      "discovered_graph": {
+        "nodes": [
+          "camera_node",
+          "control_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "sim_world"
+        ],
+        "edges": [
+          {
+            "from": "camera_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/camera/image"
+            ]
+          },
+          {
+            "from": "control_node",
+            "to": "sim_world",
+            "topics": [
+              "/cmd_vel"
+            ]
+          },
+          {
+            "from": "imu_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/imu/data"
+            ]
+          },
+          {
+            "from": "lidar_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/lidar/scan"
+            ]
+          },
+          {
+            "from": "localization_node",
+            "to": "planning_node",
+            "topics": [
+              "/localization/pose"
+            ]
+          },
+          {
+            "from": "odometry_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/odom"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "localization_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "planning_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "planning_node",
+            "to": "control_node",
+            "topics": [
+              "/planning/path"
+            ]
+          }
+        ]
+      },
+      "predicted_root_cause": "perception_node",
+      "confidence": 0.7,
+      "fault_type": "crash",
+      "top1_correct": true,
+      "top3_correct": true,
+      "ground_truth_rank": 1,
+      "reciprocal_rank": 1.0,
+      "detection_latency_sec": 0.117,
+      "diagnosis_latency_sec": 0.359,
+      "correct_diagnosis_latency_sec": 2.366,
+      "false_diagnosis_rate": 0.2,
+      "num_false_diagnoses_after_injection": 4,
+      "ranking": [
+        "perception_node",
+        "planning_node",
+        "camera_node",
+        "lidar_node",
+        "control_node",
+        "localization_node",
+        "imu_node",
+        "odometry_node"
+      ],
+      "chain_accuracy": 0.5,
+      "chain_accuracy_numerator": 2,
+      "chain_accuracy_denominator": 4,
+      "chain_order_correct": true,
+      "predicted_chain": [
+        "perception_node",
+        "localization_node",
+        "planning_node",
+        "control_node"
+      ],
+      "expected_chain": [
+        "perception_node",
+        "localization_node"
+      ],
+      "physical_chain": [
+        "perception_node",
+        "localization_node",
+        "planning_node",
+        "control_node"
+      ],
+      "physical_chain_coverage": 1.0,
+      "physical_chain_numerator": 4,
+      "physical_chain_denominator": 4,
+      "physically_affected_unobserved": [],
+      "explanation": "============================================================\nROOT CAUSE DIAGNOSIS: perception_node (Confidence: 0.700)\n============================================================\nScore Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:\n  R(perception_node) = 0.3\u00b7D(1.00) + 0.3\u00b7T(0.00) + 0.25\u00b7S(1.00) + 0.15\u00b7A(1.00) = 0.700\n  - Dependency D: 1.00 (reaches 3 downstream anomalous node(s); 0 anomalous upstream node(s))\n  - Temporal   T: 0.00 (first anomaly at t=1790110081.74s; earliest in window = supporting evidence, not proof of causality)\n  - Symptom    S: 1.00 (explains 4/4 anomalous nodes)\n  - Severity   A: 1.00 (max normalised severity on node, 20 direct anomaly event(s))\n\nPropagation Chain (evidence-ordered, via discovered graph edges):\n  perception_node (t=1790110081.74s: message_timeout, sev=1.00)\n    \u2514\u2500\u2192 localization_node via /perception/obstacles (t=1790110083.39s, +1.64s after perception_node: /localization/pose:pose_uncertainty)\n    \u2514\u2500\u2192 planning_node via /perception/obstacles (t=1790109955.65s, -126.09s after perception_node: /planning/path:path_empty)\n      \u2514\u2500\u2192 control_node via /planning/path (t=1790109955.66s, +0.01s after planning_node: /cmd_vel:cmd_zero)\n\nCandidate Ranking & Evidence Comparison:\n  #2 planning_node        R=0.625 (\u0394 -0.075) [downstream of perception_node in discovered graph; lower symptom coverage (50% vs 100%)]\n  #3 camera_node          R=0.565 (\u0394 -0.135) [lower anomaly severity]\n  #4 lidar_node           R=0.565 (\u0394 -0.135) [lower anomaly severity]\n============================================================",
+      "evaluated_offline": true
+    },
+    {
+      "scenario": "G15 process restart: localization stops cleanly and is respawned after 4 s",
+      "key": "localization_restart",
+      "group": "dynamic_graph",
+      "rep": 0,
+      "launch_seed": 7,
+      "faults": [
+        {
+          "target": "localization_node",
+          "type": "stop",
+          "param": 0.0,
+          "onset": 0.0,
+          "duration": 1.0
+        }
+      ],
+      "ground_truth": "localization_node",
+      "accepted_roots": [
+        "localization_node"
+      ],
+      "expect_no_diagnosis": false,
+      "t_inject": 1790110116.8722143,
+      "t_end": 1790110126.8723316,
+      "num_anomalies": 57,
+      "num_diagnoses_after_injection": 20,
+      "anomalous_nodes_observed": [
+        "control_node",
+        "localization_node",
+        "planning_node"
+      ],
+      "nominal_false_alarms": 36,
+      "nominal_window_sec": 18.096,
+      "discovered_graph": {
+        "nodes": [
+          "camera_node",
+          "control_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "sim_world"
+        ],
+        "edges": [
+          {
+            "from": "camera_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/camera/image"
+            ]
+          },
+          {
+            "from": "control_node",
+            "to": "sim_world",
+            "topics": [
+              "/cmd_vel"
+            ]
+          },
+          {
+            "from": "imu_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/imu/data"
+            ]
+          },
+          {
+            "from": "lidar_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/lidar/scan"
+            ]
+          },
+          {
+            "from": "localization_node",
+            "to": "planning_node",
+            "topics": [
+              "/localization/pose"
+            ]
+          },
+          {
+            "from": "odometry_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/odom"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "localization_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "planning_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "planning_node",
+            "to": "control_node",
+            "topics": [
+              "/planning/path"
+            ]
+          }
+        ]
+      },
+      "predicted_root_cause": "planning_node",
+      "confidence": 0.7167,
+      "fault_type": "stop",
+      "top1_correct": false,
+      "top3_correct": true,
+      "ground_truth_rank": 2,
+      "reciprocal_rank": 0.5,
+      "detection_latency_sec": 0.18,
+      "diagnosis_latency_sec": 0.332,
+      "correct_diagnosis_latency_sec": 6.334,
+      "false_diagnosis_rate": 0.65,
+      "num_false_diagnoses_after_injection": 13,
+      "ranking": [
+        "planning_node",
+        "localization_node",
+        "camera_node",
+        "imu_node",
+        "lidar_node",
+        "odometry_node",
+        "perception_node",
+        "control_node"
+      ],
+      "chain_accuracy": 0.3333,
+      "chain_accuracy_numerator": 1,
+      "chain_accuracy_denominator": 3,
+      "chain_order_correct": false,
+      "predicted_chain": [
+        "planning_node",
+        "control_node"
+      ],
+      "expected_chain": [
+        "localization_node",
+        "planning_node"
+      ],
+      "physical_chain": [
+        "localization_node",
+        "planning_node",
+        "control_node"
+      ],
+      "physical_chain_coverage": 0.6667,
+      "physical_chain_numerator": 2,
+      "physical_chain_denominator": 3,
+      "physically_affected_unobserved": [
+        "localization_node"
+      ],
+      "explanation": "============================================================\nROOT CAUSE DIAGNOSIS: planning_node (Confidence: 0.717)\n============================================================\nScore Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:\n  R(planning_node) = 0.3\u00b7D(0.33) + 0.3\u00b7T(1.00) + 0.25\u00b7S(0.67) + 0.15\u00b7A(1.00) = 0.717\n  - Dependency D: 0.33 (reaches 1 downstream anomalous node(s); 1 anomalous upstream node(s))\n  - Temporal   T: 1.00 (first anomaly at t=1790110090.45s; earliest in window = supporting evidence, not proof of causality)\n  - Symptom    S: 0.67 (explains 2/3 anomalous nodes)\n  - Severity   A: 1.00 (max normalised severity on node, 30 direct anomaly event(s))\n\nPropagation Chain (evidence-ordered, via discovered graph edges):\n  planning_node (t=1790110090.45s: /planning/path:path_empty, sev=1.00)\n    \u2514\u2500\u2192 control_node via /planning/path (t=1790110090.46s, +0.01s after planning_node: /cmd_vel:cmd_zero)\n  (anomalous but not reachable from planning_node: localization_node)\n\nCandidate Ranking & Evidence Comparison:\n  #2 localization_node    R=0.700 (\u0394 -0.017) [first anomaly 26.45s after planning_node]\n  #3 camera_node          R=0.565 (\u0394 -0.152) [no direct anomaly observed]\n  #4 imu_node             R=0.565 (\u0394 -0.152) [no direct anomaly observed]\n============================================================",
+      "evaluated_offline": true
+    }
+  ],
+  "per_scenario": [
+    {
+      "key": "lidar_latency",
+      "scenario": "G01 LiDAR latency: scan publication delayed 0.4 s",
+      "group": "communication",
+      "runs": 1,
+      "top1": 1,
+      "top3": 1,
+      "mrr": 1.0,
+      "detection_latency": 0.027,
+      "diagnosis_latency": 0.469,
+      "fdr": 0.0,
+      "chain_accuracy": 0.5,
+      "physical_coverage": 0.8,
+      "evaluated_offline": 1,
+      "baseline_independent_top1": 1,
+      "baseline_temporal_only_top1": 0,
+      "baseline_static_dep_anom_top1": 1,
+      "baseline_static_dep_temp_top1": 0,
+      "baseline_proposed_top1": 1,
+      "ablation_full_top1": 1,
+      "ablation_no_D_top1": 0,
+      "ablation_no_T_top1": 1,
+      "ablation_no_S_top1": 0,
+      "ablation_no_A_top1": 1
+    },
+    {
+      "key": "lidar_dropout",
+      "scenario": "G02 LiDAR dropout: the scan stops entirely",
+      "group": "single",
+      "runs": 1,
+      "top1": 1,
+      "top3": 1,
+      "mrr": 1.0,
+      "detection_latency": 0.159,
+      "diagnosis_latency": 0.0,
+      "fdr": 0.062,
+      "chain_accuracy": 0.6,
+      "physical_coverage": 1.0,
+      "evaluated_offline": 1,
+      "baseline_independent_top1": 0,
+      "baseline_temporal_only_top1": 0,
+      "baseline_static_dep_anom_top1": 1,
+      "baseline_static_dep_temp_top1": 0,
+      "baseline_proposed_top1": 1,
+      "ablation_full_top1": 1,
+      "ablation_no_D_top1": 0,
+      "ablation_no_T_top1": 1,
+      "ablation_no_S_top1": 0,
+      "ablation_no_A_top1": 1
+    },
+    {
+      "key": "lidar_noise",
+      "scenario": "G03 LiDAR degradation: heavy noise and invalid returns",
+      "group": "single",
+      "runs": 1,
+      "top1": 1,
+      "top3": 1,
+      "mrr": 1.0,
+      "detection_latency": 0.097,
+      "diagnosis_latency": 0.039,
+      "fdr": 0.125,
+      "chain_accuracy": 0.5,
+      "physical_coverage": 0.8,
+      "evaluated_offline": 1,
+      "baseline_independent_top1": 1,
+      "baseline_temporal_only_top1": 0,
+      "baseline_static_dep_anom_top1": 1,
+      "baseline_static_dep_temp_top1": 0,
+      "baseline_proposed_top1": 1,
+      "ablation_full_top1": 1,
+      "ablation_no_D_top1": 0,
+      "ablation_no_T_top1": 1,
+      "ablation_no_S_top1": 0,
+      "ablation_no_A_top1": 1
+    },
+    {
+      "key": "camera_dropout",
+      "scenario": "G04 camera dropout: the image stream stops (perception gating opens downstream first)",
+      "group": "ambiguous",
+      "runs": 1,
+      "top1": 1,
+      "top3": 1,
+      "mrr": 1.0,
+      "detection_latency": 0.037,
+      "diagnosis_latency": 0.073,
+      "fdr": 0.05,
+      "chain_accuracy": 0.6,
+      "physical_coverage": 1.0,
+      "evaluated_offline": 1,
+      "baseline_independent_top1": 0,
+      "baseline_temporal_only_top1": 0,
+      "baseline_static_dep_anom_top1": 1,
+      "baseline_static_dep_temp_top1": 0,
+      "baseline_proposed_top1": 1,
+      "ablation_full_top1": 1,
+      "ablation_no_D_top1": 0,
+      "ablation_no_T_top1": 1,
+      "ablation_no_S_top1": 0,
+      "ablation_no_A_top1": 1
+    },
+    {
+      "key": "odometry_stale",
+      "scenario": "G05 stale/repeated sensor data: odometry repeats its last measurement",
+      "group": "ambiguous",
+      "runs": 1,
+      "top1": 1,
+      "top3": 1,
+      "mrr": 1.0,
+      "detection_latency": 0.074,
+      "diagnosis_latency": 0.108,
+      "fdr": 0.0,
+      "chain_accuracy": 1.0,
+      "physical_coverage": 0.75,
+      "evaluated_offline": 1,
+      "baseline_independent_top1": 0,
+      "baseline_temporal_only_top1": 0,
+      "baseline_static_dep_anom_top1": 1,
+      "baseline_static_dep_temp_top1": 1,
+      "baseline_proposed_top1": 1,
+      "ablation_full_top1": 1,
+      "ablation_no_D_top1": 0,
+      "ablation_no_T_top1": 1,
+      "ablation_no_S_top1": 1,
+      "ablation_no_A_top1": 1
+    },
+    {
+      "key": "imu_rate_drop",
+      "scenario": "G06 sensor rate reduction: IMU publishes at a quarter of its rate",
+      "group": "single",
+      "runs": 1,
+      "top1": 0,
+      "top3": 0,
+      "mrr": 0.25,
+      "detection_latency": 0.081,
+      "diagnosis_latency": 0.125,
+      "fdr": 1.0,
+      "chain_accuracy": 0.0,
+      "physical_coverage": 0.0,
+      "evaluated_offline": 1,
+      "baseline_independent_top1": 0,
+      "baseline_temporal_only_top1": 0,
+      "baseline_static_dep_anom_top1": 0,
+      "baseline_static_dep_temp_top1": 0,
+      "baseline_proposed_top1": 0,
+      "ablation_full_top1": 0,
+      "ablation_no_D_top1": 0,
+      "ablation_no_T_top1": 0,
+      "ablation_no_S_top1": 0,
+      "ablation_no_A_top1": 0
+    },
+    {
+      "key": "perception_delay",
+      "scenario": "G07 perception processing delay: 0.4 s of real work per scan",
+      "group": "single",
+      "runs": 1,
+      "top1": 0,
+      "top3": 1,
+      "mrr": 0.5,
+      "detection_latency": 0.017,
+      "diagnosis_latency": 0.161,
+      "fdr": 1.0,
+      "chain_accuracy": 0.0,
+      "physical_coverage": 0.5,
+      "evaluated_offline": 1,
+      "baseline_independent_top1": 0,
+      "baseline_temporal_only_top1": 0,
+      "baseline_static_dep_anom_top1": 1,
+      "baseline_static_dep_temp_top1": 0,
+      "baseline_proposed_top1": 1,
+      "ablation_full_top1": 1,
+      "ablation_no_D_top1": 0,
+      "ablation_no_T_top1": 1,
+      "ablation_no_S_top1": 0,
+      "ablation_no_A_top1": 1
+    },
+    {
+      "key": "perception_degradation",
+      "scenario": "G08 perception degradation: empty obstacle sets",
+      "group": "single",
+      "runs": 1,
+      "top1": 1,
+      "top3": 1,
+      "mrr": 1.0,
+      "detection_latency": 0.15,
+      "diagnosis_latency": 0.192,
+      "fdr": 0.25,
+      "chain_accuracy": 0.5,
+      "physical_coverage": 1.0,
+      "evaluated_offline": 1,
+      "baseline_independent_top1": 0,
+      "baseline_temporal_only_top1": 0,
+      "baseline_static_dep_anom_top1": 1,
+      "baseline_static_dep_temp_top1": 0,
+      "baseline_proposed_top1": 1,
+      "ablation_full_top1": 1,
+      "ablation_no_D_top1": 0,
+      "ablation_no_T_top1": 1,
+      "ablation_no_S_top1": 0,
+      "ablation_no_A_top1": 1
+    },
+    {
+      "key": "localization_failure",
+      "scenario": "G09 localization failure: pose jump and uncertainty spike",
+      "group": "single",
+      "runs": 1,
+      "top1": 1,
+      "top3": 1,
+      "mrr": 1.0,
+      "detection_latency": 0.08,
+      "diagnosis_latency": 0.223,
+      "fdr": 0.75,
+      "chain_accuracy": 0.333,
+      "physical_coverage": 0.333,
+      "evaluated_offline": 1,
+      "baseline_independent_top1": 1,
+      "baseline_temporal_only_top1": 0,
+      "baseline_static_dep_anom_top1": 1,
+      "baseline_static_dep_temp_top1": 0,
+      "baseline_proposed_top1": 0,
+      "ablation_full_top1": 0,
+      "ablation_no_D_top1": 0,
+      "ablation_no_T_top1": 1,
+      "ablation_no_S_top1": 0,
+      "ablation_no_A_top1": 0
+    },
+    {
+      "key": "navigation_failure",
+      "scenario": "G10 planning failure: the planner emits no path",
+      "group": "single",
+      "runs": 1,
+      "top1": 0,
+      "top3": 0,
+      "mrr": 0.125,
+      "detection_latency": 0.001,
+      "diagnosis_latency": 0.243,
+      "fdr": 0.25,
+      "chain_accuracy": 0.5,
+      "physical_coverage": 0.5,
+      "evaluated_offline": 1,
+      "baseline_independent_top1": 0,
+      "baseline_temporal_only_top1": 1,
+      "baseline_static_dep_anom_top1": 1,
+      "baseline_static_dep_temp_top1": 1,
+      "baseline_proposed_top1": 1,
+      "ablation_full_top1": 1,
+      "ablation_no_D_top1": 1,
+      "ablation_no_T_top1": 1,
+      "ablation_no_S_top1": 1,
+      "ablation_no_A_top1": 1
+    },
+    {
+      "key": "control_failure",
+      "scenario": "G11 control failure: erratic velocity commands",
+      "group": "single",
+      "runs": 1,
+      "top1": 0,
+      "top3": 1,
+      "mrr": 0.5,
+      "detection_latency": 0.15,
+      "diagnosis_latency": 0.286,
+      "fdr": 1.0,
+      "chain_accuracy": 0.5,
+      "physical_coverage": 1.0,
+      "evaluated_offline": 1,
+      "baseline_independent_top1": 1,
+      "baseline_temporal_only_top1": 0,
+      "baseline_static_dep_anom_top1": 0,
+      "baseline_static_dep_temp_top1": 0,
+      "baseline_proposed_top1": 0,
+      "ablation_full_top1": 0,
+      "ablation_no_D_top1": 0,
+      "ablation_no_T_top1": 0,
+      "ablation_no_S_top1": 0,
+      "ablation_no_A_top1": 0
+    },
+    {
+      "key": "perception_link_latency",
+      "scenario": "G12 communication delay: perception output delayed 0.4 s",
+      "group": "communication",
+      "runs": 1,
+      "top1": 0,
+      "top3": 1,
+      "mrr": 0.5,
+      "detection_latency": 0.071,
+      "diagnosis_latency": 0.308,
+      "fdr": 1.0,
+      "chain_accuracy": 0.0,
+      "physical_coverage": 0.5,
+      "evaluated_offline": 1,
+      "baseline_independent_top1": 1,
+      "baseline_temporal_only_top1": 0,
+      "baseline_static_dep_anom_top1": 1,
+      "baseline_static_dep_temp_top1": 0,
+      "baseline_proposed_top1": 1,
+      "ablation_full_top1": 1,
+      "ablation_no_D_top1": 0,
+      "ablation_no_T_top1": 1,
+      "ablation_no_S_top1": 0,
+      "ablation_no_A_top1": 1
+    },
+    {
+      "key": "lidar_link_loss",
+      "scenario": "G13 communication loss: 60 % of LiDAR messages dropped in flight",
+      "group": "communication",
+      "runs": 1,
+      "top1": 1,
+      "top3": 1,
+      "mrr": 1.0,
+      "detection_latency": 0.007,
+      "diagnosis_latency": 0.336,
+      "fdr": 0.125,
+      "chain_accuracy": 0.5,
+      "physical_coverage": 0.667,
+      "evaluated_offline": 1,
+      "baseline_independent_top1": 0,
+      "baseline_temporal_only_top1": 0,
+      "baseline_static_dep_anom_top1": 1,
+      "baseline_static_dep_temp_top1": 0,
+      "baseline_proposed_top1": 1,
+      "ablation_full_top1": 1,
+      "ablation_no_D_top1": 0,
+      "ablation_no_T_top1": 1,
+      "ablation_no_S_top1": 0,
+      "ablation_no_A_top1": 1
+    },
+    {
+      "key": "perception_crash",
+      "scenario": "G14 node crash: perception process dies abruptly and is respawned",
+      "group": "dynamic_graph",
+      "runs": 1,
+      "top1": 1,
+      "top3": 1,
+      "mrr": 1.0,
+      "detection_latency": 0.117,
+      "diagnosis_latency": 0.359,
+      "fdr": 0.2,
+      "chain_accuracy": 0.5,
+      "physical_coverage": 1.0,
+      "evaluated_offline": 1,
+      "baseline_independent_top1": 0,
+      "baseline_temporal_only_top1": 0,
+      "baseline_static_dep_anom_top1": 1,
+      "baseline_static_dep_temp_top1": 0,
+      "baseline_proposed_top1": 1,
+      "ablation_full_top1": 1,
+      "ablation_no_D_top1": 0,
+      "ablation_no_T_top1": 1,
+      "ablation_no_S_top1": 0,
+      "ablation_no_A_top1": 1
+    },
+    {
+      "key": "localization_restart",
+      "scenario": "G15 process restart: localization stops cleanly and is respawned after 4 s",
+      "group": "dynamic_graph",
+      "runs": 1,
+      "top1": 0,
+      "top3": 1,
+      "mrr": 0.5,
+      "detection_latency": 0.18,
+      "diagnosis_latency": 0.332,
+      "fdr": 0.65,
+      "chain_accuracy": 0.333,
+      "physical_coverage": 0.667,
+      "evaluated_offline": 1,
+      "baseline_independent_top1": 0,
+      "baseline_temporal_only_top1": 0,
+      "baseline_static_dep_anom_top1": 1,
+      "baseline_static_dep_temp_top1": 0,
+      "baseline_proposed_top1": 1,
+      "ablation_full_top1": 1,
+      "ablation_no_D_top1": 0,
+      "ablation_no_T_top1": 1,
+      "ablation_no_S_top1": 0,
+      "ablation_no_A_top1": 1
+    }
+  ],
+  "aggregate": {
+    "total_experiments": 15,
+    "top1_correct": 9,
+    "top1_accuracy": 0.6,
+    "top3_correct": 13,
+    "top3_accuracy": 0.8667,
+    "mean_reciprocal_rank": 0.7583,
+    "avg_detection_latency_sec": 0.083,
+    "avg_diagnosis_latency_sec": 0.217,
+    "avg_correct_diagnosis_latency_sec": 1.946,
+    "detection_latency_stats": {
+      "n": 15,
+      "mean": 0.083,
+      "min": 0.001,
+      "max": 0.18,
+      "std": 0.056,
+      "median": 0.08,
+      "p25": 0.032,
+      "p75": 0.134
+    },
+    "diagnosis_latency_stats": {
+      "n": 15,
+      "mean": 0.217,
+      "min": 0.0,
+      "max": 0.469,
+      "std": 0.129,
+      "median": 0.223,
+      "p25": 0.116,
+      "p75": 0.32
+    },
+    "correct_diagnosis_latency_stats": {
+      "n": 11,
+      "mean": 1.946,
+      "min": 0.108,
+      "max": 6.334,
+      "std": 2.161,
+      "median": 1.04,
+      "p25": 0.491,
+      "p75": 2.28
+    },
+    "post_injection_diagnoses": 256,
+    "post_injection_false_diagnoses": 107,
+    "post_injection_false_diagnosis_rate": 0.418,
+    "false_diagnosis_rate": 0.418,
+    "num_diagnoses_after_injection": 256,
+    "avg_chain_accuracy": 0.424,
+    "chain_accuracy_n": 15,
+    "chain_order_correct_count": 9,
+    "chain_order_n": 15,
+    "chain_order_accuracy": 0.6,
+    "avg_physical_chain_coverage": 0.701,
+    "physical_chain_coverage_n": 15,
+    "scenarios_with_unobserved_physical_nodes": [
+      "imu_rate_drop",
+      "lidar_latency",
+      "lidar_link_loss",
+      "lidar_noise",
+      "localization_failure",
+      "localization_restart",
+      "navigation_failure",
+      "odometry_stale",
+      "perception_delay",
+      "perception_link_latency"
+    ],
+    "nominal_fault_free_windows": 17,
+    "nominal_fault_free_sec": 355.757,
+    "nominal_anomalies": 3556,
+    "nominal_diagnoses": 711,
+    "nominal_false_alarms": 711,
+    "nominal_false_alarm_rate_per_min": 119.9133,
+    "nominal_false_alarms_per_min": 119.9133
+  },
+  "cohorts": {
+    "all_runs": {
+      "n": 15,
+      "proposed_top1_correct": 9,
+      "proposed_top1_accuracy": 0.6
+    },
+    "common_evidence_subset": {
+      "n": 15,
+      "proposed_top1_correct": 9,
+      "proposed_top1_accuracy": 0.6,
+      "baselines": {
+        "independent": {
+          "top1_correct": 5,
+          "n": 15,
+          "top1_accuracy": 0.3333,
+          "mean_reciprocal_rank": 0.5467
+        },
+        "temporal_only": {
+          "top1_correct": 1,
+          "n": 15,
+          "top1_accuracy": 0.0667,
+          "mean_reciprocal_rank": 0.3611
+        },
+        "static_dep_anom": {
+          "top1_correct": 13,
+          "n": 15,
+          "top1_accuracy": 0.8667,
+          "mean_reciprocal_rank": 0.8972
+        },
+        "static_dep_temp": {
+          "top1_correct": 2,
+          "n": 15,
+          "top1_accuracy": 0.1333,
+          "mean_reciprocal_rank": 0.5306
+        },
+        "proposed": {
+          "top1_correct": 12,
+          "n": 15,
+          "top1_accuracy": 0.8,
+          "mean_reciprocal_rank": 0.8833
+        }
+      },
+      "inclusion_criterion": "scenario declares a ground-truth root cause; defined before the comparison and independent of which method succeeded"
+    },
+    "excluded_from_common_subset": {
+      "n": 0,
+      "reasons": {},
+      "keys": []
+    },
+    "denominators_match": true
+  },
+  "nominal_windows": [
+    {
+      "name": "warmup",
+      "t_start": 1790109531.6983976,
+      "t_end": 1790109556.700373,
+      "duration_sec": 25.002,
+      "anomalies": 248,
+      "diagnoses": 50,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    },
+    {
+      "name": "nominal_soak",
+      "t_start": 1790109556.9143043,
+      "t_end": 1790109616.918823,
+      "duration_sec": 60.005,
+      "anomalies": 600,
+      "diagnoses": 120,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    },
+    {
+      "name": "pre_lidar_latency_r0",
+      "t_start": 1790109624.1806173,
+      "t_end": 1790109642.2249613,
+      "duration_sec": 18.044,
+      "anomalies": 180,
+      "diagnoses": 37,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    },
+    {
+      "name": "pre_lidar_dropout_r0",
+      "t_start": 1790109657.6463482,
+      "t_end": 1790109675.69368,
+      "duration_sec": 18.047,
+      "anomalies": 182,
+      "diagnoses": 36,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    },
+    {
+      "name": "pre_lidar_noise_r0",
+      "t_start": 1790109691.1144006,
+      "t_end": 1790109709.1565309,
+      "duration_sec": 18.042,
+      "anomalies": 180,
+      "diagnoses": 36,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    },
+    {
+      "name": "pre_camera_dropout_r0",
+      "t_start": 1790109724.5794609,
+      "t_end": 1790109742.6211743,
+      "duration_sec": 18.042,
+      "anomalies": 180,
+      "diagnoses": 36,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    },
+    {
+      "name": "pre_odometry_stale_r0",
+      "t_start": 1790109760.0436575,
+      "t_end": 1790109778.0877275,
+      "duration_sec": 18.044,
+      "anomalies": 182,
+      "diagnoses": 36,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    },
+    {
+      "name": "pre_imu_rate_drop_r0",
+      "t_start": 1790109795.5141654,
+      "t_end": 1790109813.5707202,
+      "duration_sec": 18.057,
+      "anomalies": 180,
+      "diagnoses": 36,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    },
+    {
+      "name": "pre_perception_delay_r0",
+      "t_start": 1790109828.9889634,
+      "t_end": 1790109847.034274,
+      "duration_sec": 18.045,
+      "anomalies": 180,
+      "diagnoses": 36,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    },
+    {
+      "name": "pre_perception_degradation_r0",
+      "t_start": 1790109862.4521098,
+      "t_end": 1790109880.5021424,
+      "duration_sec": 18.05,
+      "anomalies": 181,
+      "diagnoses": 36,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    },
+    {
+      "name": "pre_localization_failure_r0",
+      "t_start": 1790109895.9221015,
+      "t_end": 1790109913.972363,
+      "duration_sec": 18.05,
+      "anomalies": 180,
+      "diagnoses": 36,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    },
+    {
+      "name": "pre_navigation_failure_r0",
+      "t_start": 1790109929.3949358,
+      "t_end": 1790109947.4506807,
+      "duration_sec": 18.056,
+      "anomalies": 180,
+      "diagnoses": 36,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    },
+    {
+      "name": "pre_control_failure_r0",
+      "t_start": 1790109962.8693106,
+      "t_end": 1790109980.909725,
+      "duration_sec": 18.04,
+      "anomalies": 180,
+      "diagnoses": 36,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    },
+    {
+      "name": "pre_perception_link_latency_r0",
+      "t_start": 1790109996.3361418,
+      "t_end": 1790110014.385812,
+      "duration_sec": 18.05,
+      "anomalies": 180,
+      "diagnoses": 36,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    },
+    {
+      "name": "pre_lidar_link_loss_r0",
+      "t_start": 1790110029.8172038,
+      "t_end": 1790110047.8604026,
+      "duration_sec": 18.043,
+      "anomalies": 181,
+      "diagnoses": 36,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    },
+    {
+      "name": "pre_perception_crash_r0",
+      "t_start": 1790110063.2908385,
+      "t_end": 1790110081.3350058,
+      "duration_sec": 18.044,
+      "anomalies": 180,
+      "diagnoses": 36,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    },
+    {
+      "name": "pre_localization_restart_r0",
+      "t_start": 1790110098.7765386,
+      "t_end": 1790110116.8722143,
+      "duration_sec": 18.096,
+      "anomalies": 182,
+      "diagnoses": 36,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    }
+  ],
+  "baselines": [
+    {
+      "scenario": "G01 LiDAR latency: scan publication delayed 0.4 s",
+      "key": "lidar_latency",
+      "rep": 0,
+      "ground_truth": "lidar_node",
+      "accepted_roots": [
+        "lidar_node"
+      ],
+      "independent": {
+        "ranking": [
+          "lidar_node",
+          "perception_node",
+          "control_node",
+          "planning_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "temporal_only": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "lidar_node",
+          "perception_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "static_dep_anom": {
+        "ranking": [
+          "lidar_node",
+          "perception_node",
+          "camera_node",
+          "planning_node",
+          "control_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "static_dep_temp": {
+        "ranking": [
+          "planning_node",
+          "lidar_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "odometry_node",
+          "perception_node",
+          "localization_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "proposed": {
+        "ranking": [
+          "lidar_node",
+          "planning_node",
+          "control_node",
+          "perception_node",
+          "camera_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G02 LiDAR dropout: the scan stops entirely",
+      "key": "lidar_dropout",
+      "rep": 0,
+      "ground_truth": "lidar_node",
+      "accepted_roots": [
+        "lidar_node"
+      ],
+      "independent": {
+        "ranking": [
+          "localization_node",
+          "control_node",
+          "planning_node",
+          "lidar_node",
+          "perception_node"
+        ],
+        "rank": 4,
+        "top1": false
+      },
+      "temporal_only": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "lidar_node",
+          "perception_node",
+          "localization_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "static_dep_anom": {
+        "ranking": [
+          "lidar_node",
+          "perception_node",
+          "localization_node",
+          "camera_node",
+          "planning_node",
+          "imu_node",
+          "odometry_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "static_dep_temp": {
+        "ranking": [
+          "planning_node",
+          "lidar_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "odometry_node",
+          "perception_node",
+          "localization_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "proposed": {
+        "ranking": [
+          "lidar_node",
+          "planning_node",
+          "perception_node",
+          "control_node",
+          "camera_node",
+          "localization_node",
+          "imu_node",
+          "odometry_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G03 LiDAR degradation: heavy noise and invalid returns",
+      "key": "lidar_noise",
+      "rep": 0,
+      "ground_truth": "lidar_node",
+      "accepted_roots": [
+        "lidar_node"
+      ],
+      "independent": {
+        "ranking": [
+          "lidar_node",
+          "control_node",
+          "planning_node",
+          "perception_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "temporal_only": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "lidar_node",
+          "perception_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "static_dep_anom": {
+        "ranking": [
+          "lidar_node",
+          "perception_node",
+          "camera_node",
+          "planning_node",
+          "control_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "static_dep_temp": {
+        "ranking": [
+          "planning_node",
+          "lidar_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "odometry_node",
+          "perception_node",
+          "localization_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "proposed": {
+        "ranking": [
+          "lidar_node",
+          "planning_node",
+          "control_node",
+          "perception_node",
+          "camera_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G04 camera dropout: the image stream stops (perception gating opens downstream first)",
+      "key": "camera_dropout",
+      "rep": 0,
+      "ground_truth": "camera_node",
+      "accepted_roots": [
+        "camera_node"
+      ],
+      "independent": {
+        "ranking": [
+          "localization_node",
+          "perception_node",
+          "control_node",
+          "planning_node",
+          "camera_node"
+        ],
+        "rank": 5,
+        "top1": false
+      },
+      "temporal_only": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "perception_node",
+          "camera_node",
+          "localization_node"
+        ],
+        "rank": 4,
+        "top1": false
+      },
+      "static_dep_anom": {
+        "ranking": [
+          "camera_node",
+          "perception_node",
+          "localization_node",
+          "lidar_node",
+          "planning_node",
+          "imu_node",
+          "odometry_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "static_dep_temp": {
+        "ranking": [
+          "planning_node",
+          "camera_node",
+          "control_node",
+          "lidar_node",
+          "imu_node",
+          "odometry_node",
+          "perception_node",
+          "localization_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "proposed": {
+        "ranking": [
+          "camera_node",
+          "planning_node",
+          "perception_node",
+          "control_node",
+          "lidar_node",
+          "localization_node",
+          "imu_node",
+          "odometry_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G05 stale/repeated sensor data: odometry repeats its last measurement",
+      "key": "odometry_stale",
+      "rep": 0,
+      "ground_truth": "odometry_node",
+      "accepted_roots": [
+        "odometry_node"
+      ],
+      "independent": {
+        "ranking": [
+          "localization_node",
+          "odometry_node",
+          "planning_node",
+          "control_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "temporal_only": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "static_dep_anom": {
+        "ranking": [
+          "odometry_node",
+          "localization_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "perception_node",
+          "planning_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "static_dep_temp": {
+        "ranking": [
+          "odometry_node",
+          "planning_node",
+          "control_node",
+          "localization_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "perception_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "proposed": {
+        "ranking": [
+          "odometry_node",
+          "planning_node",
+          "localization_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "perception_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G06 sensor rate reduction: IMU publishes at a quarter of its rate",
+      "key": "imu_rate_drop",
+      "rep": 0,
+      "ground_truth": "imu_node",
+      "accepted_roots": [
+        "imu_node"
+      ],
+      "independent": {
+        "ranking": [
+          "control_node",
+          "planning_node"
+        ],
+        "rank": -1,
+        "top1": false
+      },
+      "temporal_only": {
+        "ranking": [
+          "planning_node",
+          "control_node"
+        ],
+        "rank": -1,
+        "top1": false
+      },
+      "static_dep_anom": {
+        "ranking": [
+          "planning_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "static_dep_temp": {
+        "ranking": [
+          "planning_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "proposed": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 4,
+        "top1": false
+      }
+    },
+    {
+      "scenario": "G07 perception processing delay: 0.4 s of real work per scan",
+      "key": "perception_delay",
+      "rep": 0,
+      "ground_truth": "perception_node",
+      "accepted_roots": [
+        "perception_node"
+      ],
+      "independent": {
+        "ranking": [
+          "control_node",
+          "planning_node",
+          "perception_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "temporal_only": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "perception_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "static_dep_anom": {
+        "ranking": [
+          "perception_node",
+          "camera_node",
+          "lidar_node",
+          "planning_node",
+          "imu_node",
+          "odometry_node",
+          "control_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "static_dep_temp": {
+        "ranking": [
+          "planning_node",
+          "perception_node",
+          "camera_node",
+          "lidar_node",
+          "control_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "proposed": {
+        "ranking": [
+          "perception_node",
+          "planning_node",
+          "camera_node",
+          "lidar_node",
+          "control_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G08 perception degradation: empty obstacle sets",
+      "key": "perception_degradation",
+      "rep": 0,
+      "ground_truth": "perception_node",
+      "accepted_roots": [
+        "perception_node"
+      ],
+      "independent": {
+        "ranking": [
+          "localization_node",
+          "perception_node",
+          "control_node",
+          "planning_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "temporal_only": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "perception_node",
+          "localization_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "static_dep_anom": {
+        "ranking": [
+          "perception_node",
+          "localization_node",
+          "camera_node",
+          "lidar_node",
+          "imu_node",
+          "odometry_node",
+          "planning_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "static_dep_temp": {
+        "ranking": [
+          "planning_node",
+          "perception_node",
+          "camera_node",
+          "lidar_node",
+          "control_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "proposed": {
+        "ranking": [
+          "perception_node",
+          "planning_node",
+          "camera_node",
+          "lidar_node",
+          "control_node",
+          "localization_node",
+          "imu_node",
+          "odometry_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G09 localization failure: pose jump and uncertainty spike",
+      "key": "localization_failure",
+      "rep": 0,
+      "ground_truth": "localization_node",
+      "accepted_roots": [
+        "localization_node"
+      ],
+      "independent": {
+        "ranking": [
+          "localization_node",
+          "control_node",
+          "planning_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "temporal_only": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "localization_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "static_dep_anom": {
+        "ranking": [
+          "localization_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "static_dep_temp": {
+        "ranking": [
+          "planning_node",
+          "localization_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "proposed": {
+        "ranking": [
+          "planning_node",
+          "localization_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 2,
+        "top1": false
+      }
+    },
+    {
+      "scenario": "G10 planning failure: the planner emits no path",
+      "key": "navigation_failure",
+      "rep": 0,
+      "ground_truth": "planning_node",
+      "accepted_roots": [
+        "planning_node"
+      ],
+      "independent": {
+        "ranking": [
+          "control_node",
+          "planning_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "temporal_only": {
+        "ranking": [
+          "planning_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "static_dep_anom": {
+        "ranking": [
+          "planning_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "static_dep_temp": {
+        "ranking": [
+          "planning_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "proposed": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G11 control failure: erratic velocity commands",
+      "key": "control_failure",
+      "rep": 0,
+      "ground_truth": "control_node",
+      "accepted_roots": [
+        "control_node"
+      ],
+      "independent": {
+        "ranking": [
+          "control_node",
+          "planning_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "temporal_only": {
+        "ranking": [
+          "planning_node",
+          "control_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "static_dep_anom": {
+        "ranking": [
+          "planning_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 8,
+        "top1": false
+      },
+      "static_dep_temp": {
+        "ranking": [
+          "planning_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 8,
+        "top1": false
+      },
+      "proposed": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 2,
+        "top1": false
+      }
+    },
+    {
+      "scenario": "G12 communication delay: perception output delayed 0.4 s",
+      "key": "perception_link_latency",
+      "rep": 0,
+      "ground_truth": "perception_node",
+      "accepted_roots": [
+        "perception_node"
+      ],
+      "independent": {
+        "ranking": [
+          "perception_node",
+          "control_node",
+          "planning_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "temporal_only": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "perception_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "static_dep_anom": {
+        "ranking": [
+          "perception_node",
+          "camera_node",
+          "lidar_node",
+          "planning_node",
+          "imu_node",
+          "odometry_node",
+          "control_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "static_dep_temp": {
+        "ranking": [
+          "planning_node",
+          "perception_node",
+          "camera_node",
+          "lidar_node",
+          "control_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "proposed": {
+        "ranking": [
+          "perception_node",
+          "planning_node",
+          "camera_node",
+          "lidar_node",
+          "control_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G13 communication loss: 60 % of LiDAR messages dropped in flight",
+      "key": "lidar_link_loss",
+      "rep": 0,
+      "ground_truth": "lidar_node",
+      "accepted_roots": [
+        "lidar_node"
+      ],
+      "independent": {
+        "ranking": [
+          "control_node",
+          "planning_node",
+          "lidar_node",
+          "perception_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "temporal_only": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "lidar_node",
+          "perception_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "static_dep_anom": {
+        "ranking": [
+          "lidar_node",
+          "perception_node",
+          "camera_node",
+          "planning_node",
+          "control_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "static_dep_temp": {
+        "ranking": [
+          "planning_node",
+          "lidar_node",
+          "control_node",
+          "camera_node",
+          "perception_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "proposed": {
+        "ranking": [
+          "lidar_node",
+          "planning_node",
+          "control_node",
+          "perception_node",
+          "camera_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G14 node crash: perception process dies abruptly and is respawned",
+      "key": "perception_crash",
+      "rep": 0,
+      "ground_truth": "perception_node",
+      "accepted_roots": [
+        "perception_node"
+      ],
+      "independent": {
+        "ranking": [
+          "localization_node",
+          "control_node",
+          "planning_node",
+          "perception_node"
+        ],
+        "rank": 4,
+        "top1": false
+      },
+      "temporal_only": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "perception_node",
+          "localization_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "static_dep_anom": {
+        "ranking": [
+          "perception_node",
+          "localization_node",
+          "camera_node",
+          "lidar_node",
+          "imu_node",
+          "odometry_node",
+          "planning_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "static_dep_temp": {
+        "ranking": [
+          "planning_node",
+          "perception_node",
+          "camera_node",
+          "lidar_node",
+          "control_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "proposed": {
+        "ranking": [
+          "perception_node",
+          "planning_node",
+          "camera_node",
+          "lidar_node",
+          "control_node",
+          "localization_node",
+          "imu_node",
+          "odometry_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G15 process restart: localization stops cleanly and is respawned after 4 s",
+      "key": "localization_restart",
+      "rep": 0,
+      "ground_truth": "localization_node",
+      "accepted_roots": [
+        "localization_node"
+      ],
+      "independent": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "localization_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "temporal_only": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "localization_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "static_dep_anom": {
+        "ranking": [
+          "localization_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "static_dep_temp": {
+        "ranking": [
+          "planning_node",
+          "localization_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "proposed": {
+        "ranking": [
+          "localization_node",
+          "planning_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    }
+  ],
+  "ablations": [
+    {
+      "scenario": "G01 LiDAR latency: scan publication delayed 0.4 s",
+      "key": "lidar_latency",
+      "rep": 0,
+      "ground_truth": "lidar_node",
+      "accepted_roots": [
+        "lidar_node"
+      ],
+      "full": {
+        "ranking": [
+          "lidar_node",
+          "planning_node",
+          "control_node",
+          "perception_node",
+          "camera_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_D": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "lidar_node",
+          "perception_node",
+          "camera_node",
+          "imu_node",
+          "localization_node",
+          "odometry_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "no_T": {
+        "ranking": [
+          "lidar_node",
+          "perception_node",
+          "camera_node",
+          "planning_node",
+          "imu_node",
+          "odometry_node",
+          "control_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_S": {
+        "ranking": [
+          "planning_node",
+          "lidar_node",
+          "control_node",
+          "perception_node",
+          "camera_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "no_A": {
+        "ranking": [
+          "lidar_node",
+          "planning_node",
+          "camera_node",
+          "control_node",
+          "perception_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G02 LiDAR dropout: the scan stops entirely",
+      "key": "lidar_dropout",
+      "rep": 0,
+      "ground_truth": "lidar_node",
+      "accepted_roots": [
+        "lidar_node"
+      ],
+      "full": {
+        "ranking": [
+          "lidar_node",
+          "planning_node",
+          "perception_node",
+          "control_node",
+          "camera_node",
+          "localization_node",
+          "imu_node",
+          "odometry_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_D": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "lidar_node",
+          "perception_node",
+          "localization_node",
+          "camera_node",
+          "imu_node",
+          "odometry_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "no_T": {
+        "ranking": [
+          "lidar_node",
+          "perception_node",
+          "camera_node",
+          "localization_node",
+          "imu_node",
+          "odometry_node",
+          "planning_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_S": {
+        "ranking": [
+          "planning_node",
+          "lidar_node",
+          "control_node",
+          "perception_node",
+          "camera_node",
+          "localization_node",
+          "imu_node",
+          "odometry_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "no_A": {
+        "ranking": [
+          "lidar_node",
+          "camera_node",
+          "planning_node",
+          "perception_node",
+          "control_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G03 LiDAR degradation: heavy noise and invalid returns",
+      "key": "lidar_noise",
+      "rep": 0,
+      "ground_truth": "lidar_node",
+      "accepted_roots": [
+        "lidar_node"
+      ],
+      "full": {
+        "ranking": [
+          "lidar_node",
+          "planning_node",
+          "control_node",
+          "perception_node",
+          "camera_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_D": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "lidar_node",
+          "perception_node",
+          "camera_node",
+          "imu_node",
+          "localization_node",
+          "odometry_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "no_T": {
+        "ranking": [
+          "lidar_node",
+          "perception_node",
+          "camera_node",
+          "planning_node",
+          "imu_node",
+          "odometry_node",
+          "control_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_S": {
+        "ranking": [
+          "planning_node",
+          "lidar_node",
+          "control_node",
+          "perception_node",
+          "camera_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "no_A": {
+        "ranking": [
+          "lidar_node",
+          "planning_node",
+          "camera_node",
+          "control_node",
+          "perception_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G04 camera dropout: the image stream stops (perception gating opens downstream first)",
+      "key": "camera_dropout",
+      "rep": 0,
+      "ground_truth": "camera_node",
+      "accepted_roots": [
+        "camera_node"
+      ],
+      "full": {
+        "ranking": [
+          "camera_node",
+          "planning_node",
+          "perception_node",
+          "control_node",
+          "lidar_node",
+          "localization_node",
+          "imu_node",
+          "odometry_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_D": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "camera_node",
+          "perception_node",
+          "localization_node",
+          "lidar_node",
+          "imu_node",
+          "odometry_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "no_T": {
+        "ranking": [
+          "camera_node",
+          "perception_node",
+          "lidar_node",
+          "localization_node",
+          "imu_node",
+          "odometry_node",
+          "planning_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_S": {
+        "ranking": [
+          "planning_node",
+          "camera_node",
+          "control_node",
+          "perception_node",
+          "lidar_node",
+          "localization_node",
+          "imu_node",
+          "odometry_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "no_A": {
+        "ranking": [
+          "camera_node",
+          "lidar_node",
+          "planning_node",
+          "perception_node",
+          "control_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G05 stale/repeated sensor data: odometry repeats its last measurement",
+      "key": "odometry_stale",
+      "rep": 0,
+      "ground_truth": "odometry_node",
+      "accepted_roots": [
+        "odometry_node"
+      ],
+      "full": {
+        "ranking": [
+          "odometry_node",
+          "planning_node",
+          "localization_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "perception_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_D": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "odometry_node",
+          "localization_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "perception_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "no_T": {
+        "ranking": [
+          "odometry_node",
+          "localization_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "perception_node",
+          "planning_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_S": {
+        "ranking": [
+          "odometry_node",
+          "planning_node",
+          "control_node",
+          "localization_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "perception_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_A": {
+        "ranking": [
+          "odometry_node",
+          "planning_node",
+          "localization_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G06 sensor rate reduction: IMU publishes at a quarter of its rate",
+      "key": "imu_rate_drop",
+      "rep": 0,
+      "ground_truth": "imu_node",
+      "accepted_roots": [
+        "imu_node"
+      ],
+      "full": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 4,
+        "top1": false
+      },
+      "no_D": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 4,
+        "top1": false
+      },
+      "no_T": {
+        "ranking": [
+          "planning_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "no_S": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 4,
+        "top1": false
+      },
+      "no_A": {
+        "ranking": [
+          "planning_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 3,
+        "top1": false
+      }
+    },
+    {
+      "scenario": "G07 perception processing delay: 0.4 s of real work per scan",
+      "key": "perception_delay",
+      "rep": 0,
+      "ground_truth": "perception_node",
+      "accepted_roots": [
+        "perception_node"
+      ],
+      "full": {
+        "ranking": [
+          "perception_node",
+          "planning_node",
+          "camera_node",
+          "lidar_node",
+          "control_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_D": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "perception_node",
+          "camera_node",
+          "lidar_node",
+          "imu_node",
+          "localization_node",
+          "odometry_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "no_T": {
+        "ranking": [
+          "perception_node",
+          "camera_node",
+          "lidar_node",
+          "planning_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_S": {
+        "ranking": [
+          "planning_node",
+          "perception_node",
+          "control_node",
+          "camera_node",
+          "lidar_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "no_A": {
+        "ranking": [
+          "perception_node",
+          "planning_node",
+          "camera_node",
+          "lidar_node",
+          "control_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G08 perception degradation: empty obstacle sets",
+      "key": "perception_degradation",
+      "rep": 0,
+      "ground_truth": "perception_node",
+      "accepted_roots": [
+        "perception_node"
+      ],
+      "full": {
+        "ranking": [
+          "perception_node",
+          "planning_node",
+          "camera_node",
+          "lidar_node",
+          "control_node",
+          "localization_node",
+          "imu_node",
+          "odometry_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_D": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "perception_node",
+          "localization_node",
+          "camera_node",
+          "lidar_node",
+          "imu_node",
+          "odometry_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "no_T": {
+        "ranking": [
+          "perception_node",
+          "camera_node",
+          "lidar_node",
+          "localization_node",
+          "imu_node",
+          "odometry_node",
+          "planning_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_S": {
+        "ranking": [
+          "planning_node",
+          "perception_node",
+          "control_node",
+          "localization_node",
+          "camera_node",
+          "lidar_node",
+          "imu_node",
+          "odometry_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "no_A": {
+        "ranking": [
+          "perception_node",
+          "camera_node",
+          "lidar_node",
+          "planning_node",
+          "imu_node",
+          "odometry_node",
+          "control_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G09 localization failure: pose jump and uncertainty spike",
+      "key": "localization_failure",
+      "rep": 0,
+      "ground_truth": "localization_node",
+      "accepted_roots": [
+        "localization_node"
+      ],
+      "full": {
+        "ranking": [
+          "planning_node",
+          "localization_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "no_D": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "localization_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "no_T": {
+        "ranking": [
+          "localization_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_S": {
+        "ranking": [
+          "planning_node",
+          "localization_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "no_A": {
+        "ranking": [
+          "planning_node",
+          "localization_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 2,
+        "top1": false
+      }
+    },
+    {
+      "scenario": "G10 planning failure: the planner emits no path",
+      "key": "navigation_failure",
+      "rep": 0,
+      "ground_truth": "planning_node",
+      "accepted_roots": [
+        "planning_node"
+      ],
+      "full": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_D": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_T": {
+        "ranking": [
+          "planning_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_S": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_A": {
+        "ranking": [
+          "planning_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G11 control failure: erratic velocity commands",
+      "key": "control_failure",
+      "rep": 0,
+      "ground_truth": "control_node",
+      "accepted_roots": [
+        "control_node"
+      ],
+      "full": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "no_D": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "no_T": {
+        "ranking": [
+          "planning_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 8,
+        "top1": false
+      },
+      "no_S": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "no_A": {
+        "ranking": [
+          "planning_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 8,
+        "top1": false
+      }
+    },
+    {
+      "scenario": "G12 communication delay: perception output delayed 0.4 s",
+      "key": "perception_link_latency",
+      "rep": 0,
+      "ground_truth": "perception_node",
+      "accepted_roots": [
+        "perception_node"
+      ],
+      "full": {
+        "ranking": [
+          "perception_node",
+          "planning_node",
+          "camera_node",
+          "lidar_node",
+          "control_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_D": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "perception_node",
+          "camera_node",
+          "lidar_node",
+          "imu_node",
+          "localization_node",
+          "odometry_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "no_T": {
+        "ranking": [
+          "perception_node",
+          "camera_node",
+          "lidar_node",
+          "planning_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_S": {
+        "ranking": [
+          "planning_node",
+          "perception_node",
+          "control_node",
+          "camera_node",
+          "lidar_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "no_A": {
+        "ranking": [
+          "perception_node",
+          "planning_node",
+          "camera_node",
+          "lidar_node",
+          "control_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G13 communication loss: 60 % of LiDAR messages dropped in flight",
+      "key": "lidar_link_loss",
+      "rep": 0,
+      "ground_truth": "lidar_node",
+      "accepted_roots": [
+        "lidar_node"
+      ],
+      "full": {
+        "ranking": [
+          "lidar_node",
+          "planning_node",
+          "control_node",
+          "perception_node",
+          "camera_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_D": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "lidar_node",
+          "perception_node",
+          "camera_node",
+          "imu_node",
+          "localization_node",
+          "odometry_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "no_T": {
+        "ranking": [
+          "lidar_node",
+          "perception_node",
+          "camera_node",
+          "planning_node",
+          "imu_node",
+          "odometry_node",
+          "control_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_S": {
+        "ranking": [
+          "planning_node",
+          "lidar_node",
+          "control_node",
+          "perception_node",
+          "camera_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "no_A": {
+        "ranking": [
+          "lidar_node",
+          "planning_node",
+          "camera_node",
+          "control_node",
+          "perception_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G14 node crash: perception process dies abruptly and is respawned",
+      "key": "perception_crash",
+      "rep": 0,
+      "ground_truth": "perception_node",
+      "accepted_roots": [
+        "perception_node"
+      ],
+      "full": {
+        "ranking": [
+          "perception_node",
+          "planning_node",
+          "camera_node",
+          "lidar_node",
+          "control_node",
+          "localization_node",
+          "imu_node",
+          "odometry_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_D": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "perception_node",
+          "localization_node",
+          "camera_node",
+          "lidar_node",
+          "imu_node",
+          "odometry_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "no_T": {
+        "ranking": [
+          "perception_node",
+          "camera_node",
+          "lidar_node",
+          "localization_node",
+          "imu_node",
+          "odometry_node",
+          "planning_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_S": {
+        "ranking": [
+          "planning_node",
+          "perception_node",
+          "control_node",
+          "localization_node",
+          "camera_node",
+          "lidar_node",
+          "imu_node",
+          "odometry_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "no_A": {
+        "ranking": [
+          "perception_node",
+          "camera_node",
+          "lidar_node",
+          "planning_node",
+          "imu_node",
+          "odometry_node",
+          "control_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G15 process restart: localization stops cleanly and is respawned after 4 s",
+      "key": "localization_restart",
+      "rep": 0,
+      "ground_truth": "localization_node",
+      "accepted_roots": [
+        "localization_node"
+      ],
+      "full": {
+        "ranking": [
+          "localization_node",
+          "planning_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_D": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "localization_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "no_T": {
+        "ranking": [
+          "localization_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_S": {
+        "ranking": [
+          "planning_node",
+          "localization_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "no_A": {
+        "ranking": [
+          "localization_node",
+          "planning_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    }
+  ]
+}

@@ -6,7 +6,7 @@ Strictly excludes fault injection and evaluation topics to maintain isolation.
 """
 
 from collections import deque
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Dict, List, Optional, Sequence, Set, Tuple
 
 
 class DependencyGraph:
@@ -143,6 +143,7 @@ class RosGraphDiscoverer:
         '/rca/fault_',      # Ground truth fault injection isolation
         '/rca/eval_',       # Evaluation isolation
         '/rca/diagnosis',   # Monitor output isolation
+        '/rca/dashboard',   # Monitor output isolation (live TUI state)
         '/experiment_',     # Experiment controller isolation
     )
 
@@ -152,19 +153,45 @@ class RosGraphDiscoverer:
         'experiment_controller',
     )
 
+    # Deployment-specific additions, supplied at launch time (NOT topology).
+    # Used for raw simulator-transport topics that are not part of the monitored
+    # application data flow, e.g. the Gazebo/ros_gz bridge topics under '/gz/',
+    # which carry simulator clock stamps rather than ROS wall-clock stamps.
+    # This never names an application node or an application data-flow topic, so
+    # the monitored dependency graph is still discovered, never declared.
+    EXTRA_TOPIC_PREFIXES: Tuple[str, ...] = ()
+    EXTRA_NODE_NAMES: Tuple[str, ...] = ()
+
+    @classmethod
+    def configure(cls, topic_prefixes=(), node_names=()):
+        """Registers deployment-specific exclusions (idempotent, process-wide)."""
+        cls.EXTRA_TOPIC_PREFIXES = tuple(sorted({p for p in topic_prefixes if p}))
+        cls.EXTRA_NODE_NAMES = tuple(sorted({n for n in node_names if n}))
+        return cls.EXTRA_TOPIC_PREFIXES, cls.EXTRA_NODE_NAMES
+
     @classmethod
     def should_ignore_topic(cls, topic_name: str) -> bool:
-        return any(topic_name.startswith(prefix) for prefix in cls.EXCLUDED_TOPIC_PREFIXES)
+        return any(topic_name.startswith(prefix)
+                   for prefix in cls.EXCLUDED_TOPIC_PREFIXES + cls.EXTRA_TOPIC_PREFIXES)
 
     @classmethod
     def should_ignore_node(cls, node_name: str) -> bool:
         if node_name.startswith('_ros2cli_'):
             return True
-        return node_name in cls.EXCLUDED_NODE_NAMES
+        if node_name == '_NODE_NAME_UNKNOWN_':      # rmw sentinel: endpoint without a resolvable node
+            return True
+        return node_name in cls.EXCLUDED_NODE_NAMES + cls.EXTRA_NODE_NAMES
 
     @classmethod
     def discover(cls, ros_node) -> DependencyGraph:
-        """Queries ROS 2 Graph APIs on `ros_node` to build live DependencyGraph."""
+        """Queries ROS 2 Graph APIs on `ros_node` to build the live DependencyGraph.
+
+        A node belongs to the dependency graph iff it is a publisher or a
+        subscriber of at least one application topic (i.e. a topic that is not
+        excluded). Pure observers such as the diagnostic monitor itself, CLI
+        tools or the dashboard TUI only touch excluded ``/rca/*`` topics (or no
+        topics at all) and therefore never appear as graph nodes.
+        """
         graph = DependencyGraph()
 
         # 1. Discover all active nodes
@@ -178,7 +205,6 @@ class RosGraphDiscoverer:
         for name, _ in node_names_and_ns:
             if not cls.should_ignore_node(name):
                 active_app_nodes.add(name)
-                graph.add_node(name)
 
         # 2. Discover all topics and publisher/subscriber endpoint info
         try:
@@ -187,31 +213,33 @@ class RosGraphDiscoverer:
             ros_node.get_logger().error(f'Failed to get topic names: {e}')
             return graph
 
+        endpoint_nodes = set()
+        edges = []
         for topic_name, _ in topic_names_and_types:
             if cls.should_ignore_topic(topic_name):
                 continue
-
-            # Query publishers
             try:
                 pubs = ros_node.get_publishers_info_by_topic(topic_name)
             except Exception:
                 pubs = []
-
-            # Query subscribers
             try:
                 subs = ros_node.get_subscriptions_info_by_topic(topic_name)
             except Exception:
                 subs = []
 
-            for p in pubs:
-                pub_node = p.node_name
-                if cls.should_ignore_node(pub_node):
-                    continue
-                for s in subs:
-                    sub_node = s.node_name
-                    if cls.should_ignore_node(sub_node):
-                        continue
+            pub_nodes = [p.node_name for p in pubs if not cls.should_ignore_node(p.node_name)]
+            sub_nodes = [s.node_name for s in subs if not cls.should_ignore_node(s.node_name)]
+            endpoint_nodes.update(pub_nodes)
+            endpoint_nodes.update(sub_nodes)
+            for pub_node in pub_nodes:
+                for sub_node in sub_nodes:
                     if pub_node != sub_node:
-                        graph.add_edge(pub_node, sub_node, topic_name)
+                        edges.append((pub_node, sub_node, topic_name))
+
+        # 3. Graph = application data-flow participants only
+        for name in sorted(active_app_nodes & endpoint_nodes):
+            graph.add_node(name)
+        for u, v, topic in edges:
+            graph.add_edge(u, v, topic)
 
         return graph

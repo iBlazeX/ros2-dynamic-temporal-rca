@@ -1,0 +1,1500 @@
+[INFO] [1789955279.027696000] [experiment_controller]: ExperimentController ready with DB: /home/lynx/ros2_rca_ws/events.db
+[INFO] [1789955294.230582716] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955324.433187543] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955326.636094634] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1789955334.638779895] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955334.842172341] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955342.551170200] [experiment_controller]: >>> Injected dropout on lidar_node (param=1.0, dur=10.0s)
+[INFO] [1789955350.553962077] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955350.758126773] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955358.468160795] [experiment_controller]: >>> Injected degradation on perception_node (param=0.0, dur=10.0s)
+[INFO] [1789955366.470938381] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955366.675067307] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955374.885613281] [experiment_controller]: >>> Injected crash on perception_node (param=0.0, dur=1.0s)
+[INFO] [1789955384.889945880] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955385.094825580] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955387.799466692] [experiment_controller]: >>> Injected localization_failure on localization_node (param=20.0, dur=10.0s)
+[INFO] [1789955395.803575558] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955396.009611082] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955403.719772271] [experiment_controller]: >>> Injected control_failure on control_node (param=1.0, dur=10.0s)
+[INFO] [1789955411.721143950] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955411.925639907] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955418.134453832] [experiment_controller]: >>> Injected latency on perception_node (param=0.4, dur=10.0s)
+[INFO] [1789955426.136389353] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955426.341416501] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955434.050421021] [experiment_controller]: >>> Injected jitter on lidar_node (param=0.25, dur=10.0s)
+[INFO] [1789955442.053153151] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955442.258977373] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955449.967794261] [experiment_controller]: >>> Injected loss on lidar_node (param=0.6, dur=10.0s)
+[INFO] [1789955457.968349330] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955458.174029915] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955465.382606263] [experiment_controller]: >>> Injected workload on perception_node (param=150.0, dur=10.0s)
+Event store: /home/lynx/ros2_rca_ws/events.db
+Waiting 15.0s (fault-free warm-up)...
+warm-up 15.0s: anomalies 0, diagnoses 0
+discovered graph: 9 nodes 9 edges: [('camera_node', 'perception_node'), ('control_node', 'sim_world'), ('imu_node', 'localization_node'), ('lidar_node', 'perception_node'), ('localization_node', 'planning_node'), ('odometry_node', 'localization_node'), ('perception_node', 'localization_node'), ('perception_node', 'planning_node'), ('planning_node', 'control_node')]
+
+========================================================================
+NOMINAL SOAK: observing fault-free operation for 30s
+========================================================================
+  duration 30.0s | anomalies 0 | diagnoses (false alarms) 0
+
+==============================================================================
+S01 sensor degradation: LiDAR noise / invalid returns   [rep 0]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.144s diag=0.465s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S02 sensor dropout: LiDAR stops publishing   [rep 0]
+  faults: lidar_node:dropout(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.55s diag=0.55s FDR=0.0 chain_acc=1.0 phys_cov=0.6
+  anomalous nodes: ['lidar_node', 'localization_node', 'perception_node']  chain: ['lidar_node', 'perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S03 perception processing degradation: empty obstacle sets   [rep 0]
+  faults: perception_node:degradation(p=0.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.123s diag=0.132s FDR=0.0 chain_acc=1.0 phys_cov=0.5
+  anomalous nodes: ['localization_node', 'perception_node']  chain: ['perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S04 perception node failure (process crash, respawned by launch)   [rep 0]
+  faults: perception_node:crash(p=0.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.714s diag=0.714s FDR=0.0 chain_acc=1.0 phys_cov=0.5
+  anomalous nodes: ['localization_node', 'perception_node']  chain: ['perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S05 localization failure: pose jump + uncertainty spike   [rep 0]
+  faults: localization_node:localization_failure(p=20.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=localization_node  accepted=['localization_node']  top1=PASS rank=1  det=0.095s diag=0.302s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node', 'localization_node', 'planning_node']  chain: ['localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S06 control failure: erratic velocity commands   [rep 0]
+  faults: control_node:control_failure(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=control_node  accepted=['control_node']  top1=PASS rank=1  det=0.708s diag=0.88s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node']  chain: ['control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S07 communication: perception output delayed 0.4 s   [rep 0]
+  faults: perception_node:latency(p=0.4, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.556s diag=0.968s FDR=0.0 chain_acc=0.5 phys_cov=0.25
+  anomalous nodes: ['perception_node']  chain: ['perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S08 communication: LiDAR link jitter (sigma 0.25 s)   [rep 0]
+  faults: lidar_node:jitter(p=0.25, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.31s diag=0.549s FDR=0.0 chain_acc=1.0 phys_cov=0.6667
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S09 communication: LiDAR message loss 60 %   [rep 0]
+  faults: lidar_node:loss(p=0.6, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=7.613s diag=7.632s FDR=0.0 chain_acc=1.0 phys_cov=0.6667
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S10 workload: perception CPU work 150 ms per callback   [rep 0]
+  faults: perception_node:workload(p=150.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.853s diag=1.217s FDR=0.0 chain_acc=1.0 phys_cov=0.3333
+  anomalous nodes: ['perception_node']  chain: ['perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS[INFO] [1789955473.384797492] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955473.592258112] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955481.301179673] [experiment_controller]: >>> Injected stop on localization_node (param=0.0, dur=1.0s)
+[INFO] [1789955491.303334478] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955491.509768476] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955496.716884797] [experiment_controller]: >>> Injected restart on camera_node (param=6.0, dur=1.0s)
+[INFO] [1789955506.719945946] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955506.927195054] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955511.134018429] [experiment_controller]: >>> Injected topic_change on planning_node (param=1.0, dur=10.0s)
+[INFO] [1789955519.134117487] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955519.341051351] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955521.544488569] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1789955523.544413404] [experiment_controller]: >>> Injected jitter on perception_node (param=0.3, dur=10.0s)
+[INFO] [1789955531.549640493] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955531.758919223] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955539.468179578] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1789955540.968480526] [experiment_controller]: >>> Injected workload on perception_node (param=150.0, dur=10.0s)
+[INFO] [1789955549.470986341] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955549.679947868] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955557.389052536] [experiment_controller]: >>> Injected degradation on perception_node (param=0.0, dur=10.0s)
+[INFO] [1789955558.389120325] [experiment_controller]: >>> Injected degradation on localization_node (param=0.6, dur=10.0s)
+[INFO] [1789955567.396843337] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955567.604712111] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955575.314684628] [experiment_controller]: >>> Injected stale on odometry_node (param=1.0, dur=10.0s)
+[INFO] [1789955585.320333593] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955585.530143439] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955593.239662191] [experiment_controller]: >>> Injected workload on perception_node (param=120.0, dur=10.0s)
+[INFO] [1789955596.239816664] [experiment_controller]: >>> Injected localization_failure on localization_node (param=20.0, dur=10.0s)
+[INFO] [1789955603.244388661] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955603.454051644] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955611.164430138] [experiment_controller]: >>> Injected dropout on camera_node (param=1.0, dur=10.0s)
+[INFO] [1789955621.168534915] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955621.377811367] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955630.089216871] [experiment_controller]: >>> Injected dropout on lidar_node (param=1.0, dur=10.0s)
+[INFO] [1789955633.089409280] [experiment_controller]: >>> Injected stop on localization_node (param=0.0, dur=1.0s)
+  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S11 node restart: localization clean stop, respawned after 4 s   [rep 0]
+  faults: localization_node:stop(p=0.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=planning_node  accepted=['localization_node']  top1=FAIL rank=5  det=0.487s diag=0.801s FDR=0.1579 chain_acc=0.5 phys_cov=0.3333
+  anomalous nodes: ['localization_node', 'planning_node']  chain: ['planning_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S12 node disappearance / reappearance: camera removed for 6 s   [rep 0]
+  faults: camera_node:restart(p=6.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=camera_node  accepted=['camera_node']  top1=PASS rank=1  det=0.383s diag=0.386s FDR=0.0 chain_acc=1.0 phys_cov=0.6
+  anomalous nodes: ['camera_node', 'localization_node', 'perception_node']  chain: ['camera_node', 'perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S13 runtime topic change: planner switches pose source to raw odometry (no fault)   [rep 0]
+  faults: planning_node:topic_change(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  graph-change scenario: diagnoses raised = 0  -> PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S14 compound: LiDAR noise + perception link jitter 2 s later   [rep 0]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s); perception_node:jitter(p=0.3, +2.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node', 'perception_node']  top1=PASS rank=1  det=0.136s diag=0.557s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S15 compound: LiDAR noise + perception workload 1.5 s later   [rep 0]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s); perception_node:workload(p=150.0, +1.5s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node', 'perception_node']  top1=PASS rank=1  det=0.112s diag=0.132s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S16 compound: perception degradation + localization degradation 1 s later   [rep 0]
+  faults: perception_node:degradation(p=0.0, +0.0s, 10.0s); localization_node:degradation(p=0.6, +1.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node', 'localization_node']  top1=PASS rank=1  det=0.201s diag=0.211s FDR=0.0 chain_acc=0.5 phys_cov=1.0
+  anomalous nodes: ['control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S17 ambiguous: mild upstream (stale odometry) with strong downstream symptoms   [rep 0]
+  faults: odometry_node:stale(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=odometry_node  accepted=['odometry_node']  top1=PASS rank=1  det=0.073s diag=0.285s FDR=0.0 chain_acc=1.0 phys_cov=0.75
+  anomalous nodes: ['localization_node', 'odometry_node', 'planning_node']  chain: ['odometry_node', 'localization_node', 'planning_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S18 ambiguous: mild perception workload, then strong localization failure 3 s later   [rep 0]
+  faults: perception_node:workload(p=120.0, +0.0s, 10.0s); localization_node:localization_failure(p=20.0, +3.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node', 'localization_node']  top1=PASS rank=1  det=0.768s diag=0.861s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S20 ambiguous: low-rate camera dropout; perception empties before the camera timeout is confirmable   [rep 0]
+  faults: camera_node:dropout(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=camera_node  accepted=['camera_node']  top1=PASS rank=1  det=0.526s diag=0.938s FDR=0.0 chain_acc=0.6 phys_cov=1.0
+  anomalous nodes: ['camera_node', 'control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['camera_node', 'perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=FAIL  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S19 ambiguous: LiDAR dropout, localization stops mid-incident (graph changes)   [rep 0]
+  faults: lidar_node:dropout(p=1.0, +0.0s, 10.0s); localization_node:stop(p=0.0, +3.0s, 1.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node', 'localization_node']  top1=PASS rank=1  det=0.51s diag=0.51s FDR=0.0 chain_acc=0.75 phys_cov=0.8
+  anomalous nodes: ['lidar_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['lidar_node', 'perception_node', 'localization_node', 'planning_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS[INFO] [1789955642.093013613] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955642.302042634] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955648.509884354] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1789955656.512115090] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955656.720986146] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955664.430280690] [experiment_controller]: >>> Injected dropout on lidar_node (param=1.0, dur=10.0s)
+[INFO] [1789955672.435042518] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955672.644926110] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955680.855103112] [experiment_controller]: >>> Injected degradation on perception_node (param=0.0, dur=10.0s)
+[INFO] [1789955688.858637305] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955689.068104056] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955696.777377251] [experiment_controller]: >>> Injected crash on perception_node (param=0.0, dur=1.0s)
+[INFO] [1789955706.781318339] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955706.992098961] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955712.699705511] [experiment_controller]: >>> Injected localization_failure on localization_node (param=20.0, dur=10.0s)
+[INFO] [1789955720.705958867] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955720.920403618] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955728.631086677] [experiment_controller]: >>> Injected control_failure on control_node (param=1.0, dur=10.0s)
+[INFO] [1789955736.632301557] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955736.842898463] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955743.552376362] [experiment_controller]: >>> Injected latency on perception_node (param=0.4, dur=10.0s)
+[INFO] [1789955751.554636688] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955751.767761554] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955759.476050832] [experiment_controller]: >>> Injected jitter on lidar_node (param=0.25, dur=10.0s)
+[INFO] [1789955767.478448275] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955767.691087057] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955775.400448571] [experiment_controller]: >>> Injected loss on lidar_node (param=0.6, dur=10.0s)
+[INFO] [1789955783.401693760] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955783.611945247] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955785.815493644] [experiment_controller]: >>> Injected workload on perception_node (param=150.0, dur=10.0s)
+[INFO] [1789955793.817005053] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955794.027207415] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955801.736003518] [experiment_controller]: >>> Injected stop on localization_node (param=0.0, dur=1.0s)
+  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S01 sensor degradation: LiDAR noise / invalid returns   [rep 1]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.171s diag=0.591s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S02 sensor dropout: LiDAR stops publishing   [rep 1]
+  faults: lidar_node:dropout(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.671s diag=0.671s FDR=0.0 chain_acc=1.0 phys_cov=0.6
+  anomalous nodes: ['lidar_node', 'localization_node', 'perception_node']  chain: ['lidar_node', 'perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S03 perception processing degradation: empty obstacle sets   [rep 1]
+  faults: perception_node:degradation(p=0.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.135s diag=0.246s FDR=0.0 chain_acc=1.0 phys_cov=0.5
+  anomalous nodes: ['localization_node', 'perception_node']  chain: ['perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S04 perception node failure (process crash, respawned by launch)   [rep 1]
+  faults: perception_node:crash(p=0.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.822s diag=0.822s FDR=0.0 chain_acc=1.0 phys_cov=0.5
+  anomalous nodes: ['localization_node', 'perception_node']  chain: ['perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S05 localization failure: pose jump + uncertainty spike   [rep 1]
+  faults: localization_node:localization_failure(p=20.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=localization_node  accepted=['localization_node']  top1=PASS rank=1  det=0.089s diag=0.402s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node', 'localization_node', 'planning_node']  chain: ['localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S06 control failure: erratic velocity commands   [rep 1]
+  faults: control_node:control_failure(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=control_node  accepted=['control_node']  top1=PASS rank=1  det=1.396s diag=1.47s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node']  chain: ['control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S07 communication: perception output delayed 0.4 s   [rep 1]
+  faults: perception_node:latency(p=0.4, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.531s diag=0.549s FDR=0.0 chain_acc=0.5 phys_cov=0.25
+  anomalous nodes: ['perception_node']  chain: ['perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S08 communication: LiDAR link jitter (sigma 0.25 s)   [rep 1]
+  faults: lidar_node:jitter(p=0.25, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.794s diag=1.124s FDR=0.0 chain_acc=1.0 phys_cov=0.6667
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S09 communication: LiDAR message loss 60 %   [rep 1]
+  faults: lidar_node:loss(p=0.6, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=1.28s diag=1.701s FDR=0.0 chain_acc=1.0 phys_cov=0.6667
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S10 workload: perception CPU work 150 ms per callback   [rep 1]
+  faults: perception_node:workload(p=150.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.619s diag=0.784s FDR=0.0 chain_acc=1.0 phys_cov=0.3333
+  anomalous nodes: ['perception_node']  chain: ['perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S11 node restart: localization clean stop, respawned after 4 s   [rep 1]
+  faults: localization_node:stop(p=0.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=localization_node  accepted=['localization_node']  top1=PASS rank=1  det=0.364s diag=0.366s FDR=0.0 chain_acc=1.0 phys_cov=0.6667
+  anomalous nodes: ['localization_node', 'planning_node']  chain: ['localization_node', 'planning_node'][INFO] [1789955811.739264336] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955811.951484938] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955818.159467548] [experiment_controller]: >>> Injected restart on camera_node (param=6.0, dur=1.0s)
+[INFO] [1789955828.163343950] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955828.374851631] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955833.081434637] [experiment_controller]: >>> Injected topic_change on planning_node (param=1.0, dur=10.0s)
+[INFO] [1789955841.081866565] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955841.293493594] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955843.496662546] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1789955845.497014355] [experiment_controller]: >>> Injected jitter on perception_node (param=0.3, dur=10.0s)
+[INFO] [1789955853.499244188] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955853.710767051] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955861.419730093] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1789955862.919917117] [experiment_controller]: >>> Injected workload on perception_node (param=150.0, dur=10.0s)
+[INFO] [1789955871.422933020] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955871.638204923] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955879.848134837] [experiment_controller]: >>> Injected degradation on perception_node (param=0.0, dur=10.0s)
+[INFO] [1789955880.848449743] [experiment_controller]: >>> Injected degradation on localization_node (param=0.6, dur=10.0s)
+[INFO] [1789955889.852741672] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955890.067609611] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955897.778001699] [experiment_controller]: >>> Injected stale on odometry_node (param=1.0, dur=10.0s)
+[INFO] [1789955907.800406469] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955908.013485247] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955915.724880373] [experiment_controller]: >>> Injected workload on perception_node (param=120.0, dur=10.0s)
+[INFO] [1789955918.724232114] [experiment_controller]: >>> Injected localization_failure on localization_node (param=20.0, dur=10.0s)
+[INFO] [1789955925.727943568] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955925.945412157] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955933.655793823] [experiment_controller]: >>> Injected dropout on camera_node (param=1.0, dur=10.0s)
+[INFO] [1789955943.659421754] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955943.872287740] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955952.584112001] [experiment_controller]: >>> Injected dropout on lidar_node (param=1.0, dur=10.0s)
+[INFO] [1789955955.584295444] [experiment_controller]: >>> Injected stop on localization_node (param=0.0, dur=1.0s)
+[INFO] [1789955964.586540422] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955964.804347584] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955971.013120225] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S12 node disappearance / reappearance: camera removed for 6 s   [rep 1]
+  faults: camera_node:restart(p=6.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=perception_node  accepted=['camera_node']  top1=FAIL rank=2  det=0.724s diag=0.943s FDR=0.0526 chain_acc=0.6667 phys_cov=0.4
+  anomalous nodes: ['camera_node', 'localization_node', 'perception_node']  chain: ['perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S13 runtime topic change: planner switches pose source to raw odometry (no fault)   [rep 1]
+  faults: planning_node:topic_change(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  graph-change scenario: diagnoses raised = 0  -> PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S14 compound: LiDAR noise + perception link jitter 2 s later   [rep 1]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s); perception_node:jitter(p=0.3, +2.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node', 'perception_node']  top1=PASS rank=1  det=0.183s diag=0.604s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S15 compound: LiDAR noise + perception workload 1.5 s later   [rep 1]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s); perception_node:workload(p=150.0, +1.5s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node', 'perception_node']  top1=PASS rank=1  det=0.161s diag=0.18s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S16 compound: perception degradation + localization degradation 1 s later   [rep 1]
+  faults: perception_node:degradation(p=0.0, +0.0s, 10.0s); localization_node:degradation(p=0.6, +1.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node', 'localization_node']  top1=PASS rank=1  det=0.135s diag=0.254s FDR=0.0 chain_acc=0.5 phys_cov=1.0
+  anomalous nodes: ['control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S17 ambiguous: mild upstream (stale odometry) with strong downstream symptoms   [rep 1]
+  faults: odometry_node:stale(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=odometry_node  accepted=['odometry_node']  top1=PASS rank=1  det=0.109s diag=0.323s FDR=0.0 chain_acc=1.0 phys_cov=0.75
+  anomalous nodes: ['localization_node', 'odometry_node', 'planning_node']  chain: ['odometry_node', 'localization_node', 'planning_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S18 ambiguous: mild perception workload, then strong localization failure 3 s later   [rep 1]
+  faults: perception_node:workload(p=120.0, +0.0s, 10.0s); localization_node:localization_failure(p=20.0, +3.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node', 'localization_node']  top1=PASS rank=1  det=0.731s diag=0.876s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S20 ambiguous: low-rate camera dropout; perception empties before the camera timeout is confirmable   [rep 1]
+  faults: camera_node:dropout(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=camera_node  accepted=['camera_node']  top1=PASS rank=1  det=0.528s diag=0.944s FDR=0.0 chain_acc=0.6 phys_cov=1.0
+  anomalous nodes: ['camera_node', 'control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['camera_node', 'perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=FAIL  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S19 ambiguous: LiDAR dropout, localization stops mid-incident (graph changes)   [rep 1]
+  faults: lidar_node:dropout(p=1.0, +0.0s, 10.0s); localization_node:stop(p=0.0, +3.0s, 1.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node', 'localization_node']  top1=PASS rank=1  det=0.517s diag=0.517s FDR=0.0 chain_acc=0.75 phys_cov=0.8
+  anomalous nodes: ['lidar_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['lidar_node', 'perception_node', 'localization_node', 'planning_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S01 sensor degradation: LiDAR noise / invalid returns   [rep 2]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.167s diag=0.587s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS[INFO] [1789955979.015279632] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955979.230695926] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955986.940643512] [experiment_controller]: >>> Injected dropout on lidar_node (param=1.0, dur=10.0s)
+[INFO] [1789955994.944220574] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789955995.157675888] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956002.867429414] [experiment_controller]: >>> Injected degradation on perception_node (param=0.0, dur=10.0s)
+[INFO] [1789956010.870679012] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956011.085027794] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956018.794930696] [experiment_controller]: >>> Injected crash on perception_node (param=0.0, dur=1.0s)
+[INFO] [1789956028.798220935] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956029.017106381] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956034.224905544] [experiment_controller]: >>> Injected localization_failure on localization_node (param=20.0, dur=10.0s)
+[INFO] [1789956042.229024529] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956042.444880504] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956050.155640196] [experiment_controller]: >>> Injected control_failure on control_node (param=1.0, dur=10.0s)
+[INFO] [1789956058.158156113] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956058.374807537] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956065.084792698] [experiment_controller]: >>> Injected latency on perception_node (param=0.4, dur=10.0s)
+[INFO] [1789956073.086843039] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956073.303280193] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956081.012371584] [experiment_controller]: >>> Injected jitter on lidar_node (param=0.25, dur=10.0s)
+[INFO] [1789956089.014927140] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956089.234541006] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956096.443404826] [experiment_controller]: >>> Injected loss on lidar_node (param=0.6, dur=10.0s)
+[INFO] [1789956104.444604603] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956104.661974749] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956111.370017755] [experiment_controller]: >>> Injected workload on perception_node (param=150.0, dur=10.0s)
+[INFO] [1789956119.372568525] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956119.594097231] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956127.803487966] [experiment_controller]: >>> Injected stop on localization_node (param=0.0, dur=1.0s)
+[INFO] [1789956137.805796659] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956138.023832443] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956143.231381225] [experiment_controller]: >>> Injected restart on camera_node (param=6.0, dur=1.0s)
+  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S02 sensor dropout: LiDAR stops publishing   [rep 2]
+  faults: lidar_node:dropout(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.659s diag=0.659s FDR=0.0 chain_acc=1.0 phys_cov=0.6
+  anomalous nodes: ['lidar_node', 'localization_node', 'perception_node']  chain: ['lidar_node', 'perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S03 perception processing degradation: empty obstacle sets   [rep 2]
+  faults: perception_node:degradation(p=0.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.117s diag=0.234s FDR=0.0 chain_acc=1.0 phys_cov=0.5
+  anomalous nodes: ['localization_node', 'perception_node']  chain: ['perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S04 perception node failure (process crash, respawned by launch)   [rep 2]
+  faults: perception_node:crash(p=0.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.805s diag=0.805s FDR=0.0 chain_acc=1.0 phys_cov=0.5
+  anomalous nodes: ['localization_node', 'perception_node']  chain: ['perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S05 localization failure: pose jump + uncertainty spike   [rep 2]
+  faults: localization_node:localization_failure(p=20.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=localization_node  accepted=['localization_node']  top1=PASS rank=1  det=0.067s diag=0.375s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node', 'localization_node', 'planning_node']  chain: ['localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S06 control failure: erratic velocity commands   [rep 2]
+  faults: control_node:control_failure(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=control_node  accepted=['control_node']  top1=PASS rank=1  det=0.671s diag=0.946s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node']  chain: ['control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S07 communication: perception output delayed 0.4 s   [rep 2]
+  faults: perception_node:latency(p=0.4, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.603s diag=1.017s FDR=0.0 chain_acc=0.5 phys_cov=0.25
+  anomalous nodes: ['perception_node']  chain: ['perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S08 communication: LiDAR link jitter (sigma 0.25 s)   [rep 2]
+  faults: lidar_node:jitter(p=0.25, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.388s diag=0.587s FDR=0.0 chain_acc=1.0 phys_cov=0.6667
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S09 communication: LiDAR message loss 60 %   [rep 2]
+  faults: lidar_node:loss(p=0.6, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=1.937s diag=2.157s FDR=0.0 chain_acc=1.0 phys_cov=0.6667
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S10 workload: perception CPU work 150 ms per callback   [rep 2]
+  faults: perception_node:workload(p=150.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.765s diag=1.23s FDR=0.0 chain_acc=1.0 phys_cov=0.3333
+  anomalous nodes: ['perception_node']  chain: ['perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S11 node restart: localization clean stop, respawned after 4 s   [rep 2]
+  faults: localization_node:stop(p=0.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=localization_node  accepted=['localization_node']  top1=PASS rank=1  det=0.296s diag=0.299s FDR=0.0 chain_acc=1.0 phys_cov=0.6667
+  anomalous nodes: ['imu_node', 'localization_node', 'odometry_node', 'planning_node']  chain: ['localization_node', 'planning_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=FAIL  static_dep_temp=PASS  proposed=FAIL
+  ablation:  full=FAIL  no_D=PASS  no_T=FAIL  no_S=PASS  no_A=FAIL
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S12 node disappearance / reappearance: camera removed for 6 s   [rep 2]
+  faults: camera_node:restart(p=6.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=camera_node  accepted=['camera_node']  top1=PASS rank=1  det=0.556s diag=0.872s FDR=0.0 chain_acc=1.0 phys_cov=0.6[INFO] [1789956153.234039020] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956153.449411752] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956157.655735050] [experiment_controller]: >>> Injected topic_change on planning_node (param=1.0, dur=10.0s)
+[INFO] [1789956165.655986572] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956165.875071041] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956168.078494461] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1789956170.078547273] [experiment_controller]: >>> Injected jitter on perception_node (param=0.3, dur=10.0s)
+[INFO] [1789956178.081001395] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956178.301189036] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956186.010764498] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1789956187.510790251] [experiment_controller]: >>> Injected workload on perception_node (param=150.0, dur=10.0s)
+[INFO] [1789956196.014829830] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956196.238906751] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956204.448901374] [experiment_controller]: >>> Injected degradation on perception_node (param=0.0, dur=10.0s)
+[INFO] [1789956205.448915926] [experiment_controller]: >>> Injected degradation on localization_node (param=0.6, dur=10.0s)
+[INFO] [1789956214.454745548] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956214.677070529] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956222.387067086] [experiment_controller]: >>> Injected stale on odometry_node (param=1.0, dur=10.0s)
+[INFO] [1789956232.397534178] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956232.618124605] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956240.327835909] [experiment_controller]: >>> Injected workload on perception_node (param=120.0, dur=10.0s)
+[INFO] [1789956243.327878529] [experiment_controller]: >>> Injected localization_failure on localization_node (param=20.0, dur=10.0s)
+[INFO] [1789956250.335396146] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956250.558338166] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956258.269215638] [experiment_controller]: >>> Injected dropout on camera_node (param=1.0, dur=10.0s)
+[INFO] [1789956268.273922255] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956268.493183956] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956276.704671504] [experiment_controller]: >>> Injected dropout on lidar_node (param=1.0, dur=10.0s)
+[INFO] [1789956279.704627671] [experiment_controller]: >>> Injected stop on localization_node (param=0.0, dur=1.0s)
+[INFO] [1789956288.706835190] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956288.934311552] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956294.642551858] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1789956302.645007136] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956302.865083744] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956310.574123177] [experiment_controller]: >>> Injected dropout on lidar_node (param=1.0, dur=10.0s)
+
+  anomalous nodes: ['camera_node', 'localization_node', 'perception_node']  chain: ['camera_node', 'perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S13 runtime topic change: planner switches pose source to raw odometry (no fault)   [rep 2]
+  faults: planning_node:topic_change(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  graph-change scenario: diagnoses raised = 0  -> PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S14 compound: LiDAR noise + perception link jitter 2 s later   [rep 2]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s); perception_node:jitter(p=0.3, +2.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node', 'perception_node']  top1=PASS rank=1  det=0.202s diag=0.521s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S15 compound: LiDAR noise + perception workload 1.5 s later   [rep 2]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s); perception_node:workload(p=150.0, +1.5s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node', 'perception_node']  top1=PASS rank=1  det=0.169s diag=0.589s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S16 compound: perception degradation + localization degradation 1 s later   [rep 2]
+  faults: perception_node:degradation(p=0.0, +0.0s, 10.0s); localization_node:degradation(p=0.6, +1.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node', 'localization_node']  top1=PASS rank=1  det=0.138s diag=0.151s FDR=0.0 chain_acc=0.5 phys_cov=1.0
+  anomalous nodes: ['control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S17 ambiguous: mild upstream (stale odometry) with strong downstream symptoms   [rep 2]
+  faults: odometry_node:stale(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=odometry_node  accepted=['odometry_node']  top1=PASS rank=1  det=0.099s diag=0.213s FDR=0.0 chain_acc=1.0 phys_cov=0.75
+  anomalous nodes: ['localization_node', 'odometry_node', 'planning_node']  chain: ['odometry_node', 'localization_node', 'planning_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S18 ambiguous: mild perception workload, then strong localization failure 3 s later   [rep 2]
+  faults: perception_node:workload(p=120.0, +0.0s, 10.0s); localization_node:localization_failure(p=20.0, +3.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node', 'localization_node']  top1=PASS rank=1  det=0.781s diag=1.272s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S20 ambiguous: low-rate camera dropout; perception empties before the camera timeout is confirmable   [rep 2]
+  faults: camera_node:dropout(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=camera_node  accepted=['camera_node']  top1=PASS rank=1  det=0.518s diag=0.832s FDR=0.0 chain_acc=0.6 phys_cov=1.0
+  anomalous nodes: ['camera_node', 'control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['camera_node', 'perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=FAIL  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S19 ambiguous: LiDAR dropout, localization stops mid-incident (graph changes)   [rep 2]
+  faults: lidar_node:dropout(p=1.0, +0.0s, 10.0s); localization_node:stop(p=0.0, +3.0s, 1.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node', 'localization_node']  top1=PASS rank=1  det=0.896s diag=0.896s FDR=0.0 chain_acc=0.75 phys_cov=0.8
+  anomalous nodes: ['lidar_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['lidar_node', 'perception_node', 'localization_node', 'planning_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S01 sensor degradation: LiDAR noise / invalid returns   [rep 3]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.137s diag=0.459s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S02 sensor dropout: LiDAR stops publishing   [rep 3]
+  faults: lidar_node:dropout(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.527s diag=0.527s FDR=0.0 chain_acc=1.0 phys_cov=0.6
+  anomalous nodes: ['lidar_node', 'localization_node', 'perception_node']  chain: ['lidar_node', 'perception_node', 'localization_node'][INFO] [1789956318.578153722] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956318.802264769] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956326.512088431] [experiment_controller]: >>> Injected degradation on perception_node (param=0.0, dur=10.0s)
+[INFO] [1789956334.515851914] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956334.740775614] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956342.450664811] [experiment_controller]: >>> Injected crash on perception_node (param=0.0, dur=1.0s)
+[INFO] [1789956352.452726682] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956352.673966103] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956355.378663845] [experiment_controller]: >>> Injected localization_failure on localization_node (param=20.0, dur=10.0s)
+[INFO] [1789956363.383593041] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956363.607014830] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956371.317337370] [experiment_controller]: >>> Injected control_failure on control_node (param=1.0, dur=10.0s)
+[INFO] [1789956379.319375707] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956379.538558172] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956385.746623161] [experiment_controller]: >>> Injected latency on perception_node (param=0.4, dur=10.0s)
+[INFO] [1789956393.749196422] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956393.971170547] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956401.680818853] [experiment_controller]: >>> Injected jitter on lidar_node (param=0.25, dur=10.0s)
+[INFO] [1789956409.682192219] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956409.904909414] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956417.614421092] [experiment_controller]: >>> Injected loss on lidar_node (param=0.6, dur=10.0s)
+[INFO] [1789956425.615723700] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956425.838224638] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956432.046111819] [experiment_controller]: >>> Injected workload on perception_node (param=150.0, dur=10.0s)
+[INFO] [1789956440.048296698] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956440.271152964] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956447.981007143] [experiment_controller]: >>> Injected stop on localization_node (param=0.0, dur=1.0s)
+[INFO] [1789956457.983760787] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956458.207063171] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956461.912627501] [experiment_controller]: >>> Injected restart on camera_node (param=6.0, dur=1.0s)
+[INFO] [1789956471.915793351] [experiment_controller]: >>> Cleared all faults.
+
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S03 perception processing degradation: empty obstacle sets   [rep 3]
+  faults: perception_node:degradation(p=0.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.175s diag=0.589s FDR=0.0 chain_acc=1.0 phys_cov=0.5
+  anomalous nodes: ['localization_node', 'perception_node']  chain: ['perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S04 perception node failure (process crash, respawned by launch)   [rep 3]
+  faults: perception_node:crash(p=0.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.651s diag=0.651s FDR=0.0 chain_acc=1.0 phys_cov=0.5
+  anomalous nodes: ['localization_node', 'perception_node']  chain: ['perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S05 localization failure: pose jump + uncertainty spike   [rep 3]
+  faults: localization_node:localization_failure(p=20.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=localization_node  accepted=['localization_node']  top1=PASS rank=1  det=0.065s diag=0.221s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node', 'localization_node', 'planning_node']  chain: ['localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S06 control failure: erratic velocity commands   [rep 3]
+  faults: control_node:control_failure(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=control_node  accepted=['control_node']  top1=PASS rank=1  det=0.51s diag=0.784s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node']  chain: ['control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S07 communication: perception output delayed 0.4 s   [rep 3]
+  faults: perception_node:latency(p=0.4, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.536s diag=0.853s FDR=0.0 chain_acc=0.5 phys_cov=0.25
+  anomalous nodes: ['perception_node']  chain: ['perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S08 communication: LiDAR link jitter (sigma 0.25 s)   [rep 3]
+  faults: lidar_node:jitter(p=0.25, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.87s diag=0.919s FDR=0.0 chain_acc=1.0 phys_cov=0.6667
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S09 communication: LiDAR message loss 60 %   [rep 3]
+  faults: lidar_node:loss(p=0.6, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=3.366s diag=3.487s FDR=0.0 chain_acc=1.0 phys_cov=0.6667
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S10 workload: perception CPU work 150 ms per callback   [rep 3]
+  faults: perception_node:workload(p=150.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.789s diag=1.055s FDR=0.0 chain_acc=1.0 phys_cov=0.3333
+  anomalous nodes: ['perception_node']  chain: ['perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S11 node restart: localization clean stop, respawned after 4 s   [rep 3]
+  faults: localization_node:stop(p=0.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=localization_node  accepted=['localization_node']  top1=PASS rank=1  det=0.119s diag=0.121s FDR=0.0 chain_acc=1.0 phys_cov=0.6667
+  anomalous nodes: ['localization_node', 'planning_node']  chain: ['localization_node', 'planning_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S12 node disappearance / reappearance: camera removed for 6 s   [rep 3]
+  faults: camera_node:restart(p=6.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=camera_node  accepted=['camera_node']  top1=PASS rank=1  det=0.187s diag=0.191s FDR=0.0 chain_acc=1.0 phys_cov=0.6
+  anomalous nodes: ['camera_node', 'localization_node', 'perception_node']  chain: ['camera_node', 'perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S13 runtime topic change: planner switches pose source to raw odometry (no fault)   [rep 3]
+  faults: planning_node:topic_change(p=1.0, +0.0s, 10.0s)
+==============================================================================[INFO] [1789956472.139784991] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956476.346713960] [experiment_controller]: >>> Injected topic_change on planning_node (param=1.0, dur=10.0s)
+[INFO] [1789956484.346540396] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956484.570201479] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956486.773668928] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1789956488.773801227] [experiment_controller]: >>> Injected jitter on perception_node (param=0.3, dur=10.0s)
+[INFO] [1789956496.776236948] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956497.004601351] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956504.714423178] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1789956506.214402907] [experiment_controller]: >>> Injected workload on perception_node (param=150.0, dur=10.0s)
+[INFO] [1789956514.716717695] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956514.937763402] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956522.646835336] [experiment_controller]: >>> Injected degradation on perception_node (param=0.0, dur=10.0s)
+[INFO] [1789956523.646863664] [experiment_controller]: >>> Injected degradation on localization_node (param=0.6, dur=10.0s)
+[INFO] [1789956532.651792465] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956532.880309893] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956541.092541257] [experiment_controller]: >>> Injected stale on odometry_node (param=1.0, dur=10.0s)
+[INFO] [1789956551.099994910] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956551.324515403] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956559.034688505] [experiment_controller]: >>> Injected workload on perception_node (param=120.0, dur=10.0s)
+[INFO] [1789956562.034652114] [experiment_controller]: >>> Injected localization_failure on localization_node (param=20.0, dur=10.0s)
+[INFO] [1789956569.039172258] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956569.261382372] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956577.472041329] [experiment_controller]: >>> Injected dropout on camera_node (param=1.0, dur=10.0s)
+[INFO] [1789956587.476202910] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956587.703047049] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956595.414050691] [experiment_controller]: >>> Injected dropout on lidar_node (param=1.0, dur=10.0s)
+[INFO] [1789956598.413494884] [experiment_controller]: >>> Injected stop on localization_node (param=0.0, dur=1.0s)
+[INFO] [1789956607.416430742] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956607.639804077] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956614.348827289] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1789956622.352026312] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956622.578880915] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956630.288040800] [experiment_controller]: >>> Injected dropout on lidar_node (param=1.0, dur=10.0s)
+[INFO] [1789956638.290781549] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956638.518909053] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956646.228619105] [experiment_controller]: >>> Injected degradation on perception_node (param=0.0, dur=10.0s)
+
+  graph-change scenario: diagnoses raised = 0  -> PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S14 compound: LiDAR noise + perception link jitter 2 s later   [rep 3]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s); perception_node:jitter(p=0.3, +2.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node', 'perception_node']  top1=PASS rank=1  det=0.207s diag=0.328s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S15 compound: LiDAR noise + perception workload 1.5 s later   [rep 3]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s); perception_node:workload(p=150.0, +1.5s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node', 'perception_node']  top1=PASS rank=1  det=0.166s diag=0.387s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S16 compound: perception degradation + localization degradation 1 s later   [rep 3]
+  faults: perception_node:degradation(p=0.0, +0.0s, 10.0s); localization_node:degradation(p=0.6, +1.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node', 'localization_node']  top1=PASS rank=1  det=0.136s diag=0.454s FDR=0.0 chain_acc=0.5 phys_cov=1.0
+  anomalous nodes: ['control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S17 ambiguous: mild upstream (stale odometry) with strong downstream symptoms   [rep 3]
+  faults: odometry_node:stale(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=odometry_node  accepted=['odometry_node']  top1=PASS rank=1  det=0.094s diag=0.508s FDR=0.0 chain_acc=1.0 phys_cov=0.75
+  anomalous nodes: ['localization_node', 'odometry_node', 'planning_node']  chain: ['odometry_node', 'localization_node', 'planning_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S18 ambiguous: mild perception workload, then strong localization failure 3 s later   [rep 3]
+  faults: perception_node:workload(p=120.0, +0.0s, 10.0s); localization_node:localization_failure(p=20.0, +3.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node', 'localization_node']  top1=PASS rank=1  det=0.531s diag=0.565s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S20 ambiguous: low-rate camera dropout; perception empties before the camera timeout is confirmable   [rep 3]
+  faults: camera_node:dropout(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=camera_node  accepted=['camera_node']  top1=PASS rank=1  det=0.611s diag=0.63s FDR=0.0 chain_acc=0.6 phys_cov=1.0
+  anomalous nodes: ['camera_node', 'control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['camera_node', 'perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=FAIL  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S19 ambiguous: LiDAR dropout, localization stops mid-incident (graph changes)   [rep 3]
+  faults: lidar_node:dropout(p=1.0, +0.0s, 10.0s); localization_node:stop(p=0.0, +3.0s, 1.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node', 'localization_node']  top1=PASS rank=1  det=0.688s diag=0.688s FDR=0.0 chain_acc=0.75 phys_cov=0.8
+  anomalous nodes: ['lidar_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['lidar_node', 'perception_node', 'localization_node', 'planning_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S01 sensor degradation: LiDAR noise / invalid returns   [rep 4]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.131s diag=0.251s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S02 sensor dropout: LiDAR stops publishing   [rep 4]
+  faults: lidar_node:dropout(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.813s diag=0.813s FDR=0.0 chain_acc=1.0 phys_cov=0.6
+  anomalous nodes: ['lidar_node', 'localization_node', 'perception_node']  chain: ['lidar_node', 'perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S03 perception processing degradation: empty obstacle sets   [rep 4]
+  faults: perception_node:degradation(p=0.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.154s diag=0.371s FDR=0.0 chain_acc=1.0 phys_cov=0.5[INFO] [1789956654.231872019] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956654.457310267] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956662.167506447] [experiment_controller]: >>> Injected crash on perception_node (param=0.0, dur=1.0s)
+[INFO] [1789956672.170276316] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956672.397435312] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956675.602702332] [experiment_controller]: >>> Injected localization_failure on localization_node (param=20.0, dur=10.0s)
+[INFO] [1789956683.606334556] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956683.830403240] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956692.040892937] [experiment_controller]: >>> Injected control_failure on control_node (param=1.0, dur=10.0s)
+[INFO] [1789956700.042510823] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956700.266647610] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956706.474998627] [experiment_controller]: >>> Injected latency on perception_node (param=0.4, dur=10.0s)
+[INFO] [1789956714.477217940] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956714.711556132] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956722.421091675] [experiment_controller]: >>> Injected jitter on lidar_node (param=0.25, dur=10.0s)
+[INFO] [1789956730.422835686] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956730.650426429] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956738.359929220] [experiment_controller]: >>> Injected loss on lidar_node (param=0.6, dur=10.0s)
+[INFO] [1789956746.361651699] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956746.587973898] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956752.295541699] [experiment_controller]: >>> Injected workload on perception_node (param=150.0, dur=10.0s)
+[INFO] [1789956760.296913246] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956760.521017611] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956768.230295813] [experiment_controller]: >>> Injected stop on localization_node (param=0.0, dur=1.0s)
+[INFO] [1789956778.233763608] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956778.461678919] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956780.665810583] [experiment_controller]: >>> Injected restart on camera_node (param=6.0, dur=1.0s)
+[INFO] [1789956790.669307933] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956790.902088556] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956795.108046839] [experiment_controller]: >>> Injected topic_change on planning_node (param=1.0, dur=10.0s)
+[INFO] [1789956803.109389917] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956803.334165360] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956805.537077476] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1789956807.537370984] [experiment_controller]: >>> Injected jitter on perception_node (param=0.3, dur=10.0s)
+
+  anomalous nodes: ['localization_node', 'perception_node']  chain: ['perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S04 perception node failure (process crash, respawned by launch)   [rep 4]
+  faults: perception_node:crash(p=0.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.433s diag=0.433s FDR=0.0 chain_acc=1.0 phys_cov=0.5
+  anomalous nodes: ['localization_node', 'perception_node']  chain: ['perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S05 localization failure: pose jump + uncertainty spike   [rep 4]
+  faults: localization_node:localization_failure(p=20.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=localization_node  accepted=['localization_node']  top1=PASS rank=1  det=0.09s diag=0.499s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node', 'localization_node', 'planning_node']  chain: ['localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S06 control failure: erratic velocity commands   [rep 4]
+  faults: control_node:control_failure(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=control_node  accepted=['control_node']  top1=PASS rank=1  det=1.986s diag=2.06s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node']  chain: ['control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S07 communication: perception output delayed 0.4 s   [rep 4]
+  faults: perception_node:latency(p=0.4, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.51s diag=0.626s FDR=0.0 chain_acc=0.5 phys_cov=0.25
+  anomalous nodes: ['perception_node']  chain: ['perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S08 communication: LiDAR link jitter (sigma 0.25 s)   [rep 4]
+  faults: lidar_node:jitter(p=0.25, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.3s diag=0.68s FDR=0.0 chain_acc=1.0 phys_cov=0.6667
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S09 communication: LiDAR message loss 60 %   [rep 4]
+  faults: lidar_node:loss(p=0.6, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=1.741s diag=1.741s FDR=0.0 chain_acc=1.0 phys_cov=0.6667
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S10 workload: perception CPU work 150 ms per callback   [rep 4]
+  faults: perception_node:workload(p=150.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.842s diag=1.305s FDR=0.0 chain_acc=1.0 phys_cov=0.3333
+  anomalous nodes: ['perception_node']  chain: ['perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S11 node restart: localization clean stop, respawned after 4 s   [rep 4]
+  faults: localization_node:stop(p=0.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=planning_node  accepted=['localization_node']  top1=FAIL rank=5  det=0.558s diag=0.873s FDR=0.0526 chain_acc=0.5 phys_cov=0.3333
+  anomalous nodes: ['localization_node', 'planning_node']  chain: ['planning_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S12 node disappearance / reappearance: camera removed for 6 s   [rep 4]
+  faults: camera_node:restart(p=6.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=camera_node  accepted=['camera_node']  top1=PASS rank=1  det=0.434s diag=0.437s FDR=0.0 chain_acc=1.0 phys_cov=0.6
+  anomalous nodes: ['camera_node', 'localization_node', 'perception_node']  chain: ['camera_node', 'perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S13 runtime topic change: planner switches pose source to raw odometry (no fault)   [rep 4]
+  faults: planning_node:topic_change(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  graph-change scenario: diagnoses raised = 0  -> PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S14 compound: LiDAR noise + perception link jitter 2 s later   [rep 4]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s); perception_node:jitter(p=0.3, +2.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node', 'perception_node']  top1=PASS rank=1  det=0.143s diag=0.564s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):[INFO] [1789956815.540210024] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956815.768470185] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956823.478096434] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1789956824.978086546] [experiment_controller]: >>> Injected workload on perception_node (param=150.0, dur=10.0s)
+[INFO] [1789956833.480697743] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956833.723500253] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956841.433146176] [experiment_controller]: >>> Injected degradation on perception_node (param=0.0, dur=10.0s)
+[INFO] [1789956842.433364720] [experiment_controller]: >>> Injected degradation on localization_node (param=0.6, dur=10.0s)
+[INFO] [1789956851.438479572] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956851.665332220] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956859.375496608] [experiment_controller]: >>> Injected stale on odometry_node (param=1.0, dur=10.0s)
+[INFO] [1789956869.382967665] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956869.614802856] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956877.324700978] [experiment_controller]: >>> Injected workload on perception_node (param=120.0, dur=10.0s)
+[INFO] [1789956880.324822127] [experiment_controller]: >>> Injected localization_failure on localization_node (param=20.0, dur=10.0s)
+[INFO] [1789956887.328531527] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956887.557341514] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956895.268216368] [experiment_controller]: >>> Injected dropout on camera_node (param=1.0, dur=10.0s)
+[INFO] [1789956905.272705436] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956905.506973204] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1789956913.719743268] [experiment_controller]: >>> Injected dropout on lidar_node (param=1.0, dur=10.0s)
+[INFO] [1789956916.719894749] [experiment_controller]: >>> Injected stop on localization_node (param=0.0, dur=1.0s)
+[INFO] [1789956925.722295386] [experiment_controller]: >>> Cleared all faults.
+  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S15 compound: LiDAR noise + perception workload 1.5 s later   [rep 4]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s); perception_node:workload(p=150.0, +1.5s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node', 'perception_node']  top1=PASS rank=1  det=0.202s diag=0.624s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S16 compound: perception degradation + localization degradation 1 s later   [rep 4]
+  faults: perception_node:degradation(p=0.0, +0.0s, 10.0s); localization_node:degradation(p=0.6, +1.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node', 'localization_node']  top1=PASS rank=1  det=0.151s diag=0.167s FDR=0.0 chain_acc=0.5 phys_cov=1.0
+  anomalous nodes: ['control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S17 ambiguous: mild upstream (stale odometry) with strong downstream symptoms   [rep 4]
+  faults: odometry_node:stale(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=odometry_node  accepted=['odometry_node']  top1=PASS rank=1  det=0.111s diag=0.225s FDR=0.0 chain_acc=1.0 phys_cov=0.75
+  anomalous nodes: ['localization_node', 'odometry_node', 'planning_node']  chain: ['odometry_node', 'localization_node', 'planning_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S18 ambiguous: mild perception workload, then strong localization failure 3 s later   [rep 4]
+  faults: perception_node:workload(p=120.0, +0.0s, 10.0s); localization_node:localization_failure(p=20.0, +3.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node', 'localization_node']  top1=PASS rank=1  det=0.661s diag=0.778s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S20 ambiguous: low-rate camera dropout; perception empties before the camera timeout is confirmable   [rep 4]
+  faults: camera_node:dropout(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=camera_node  accepted=['camera_node']  top1=PASS rank=1  det=0.616s diag=0.834s FDR=0.0 chain_acc=0.6 phys_cov=1.0
+  anomalous nodes: ['camera_node', 'control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['camera_node', 'perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=FAIL  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+==============================================================================
+S19 ambiguous: LiDAR dropout, localization stops mid-incident (graph changes)   [rep 4]
+  faults: lidar_node:dropout(p=1.0, +0.0s, 10.0s); localization_node:stop(p=0.0, +3.0s, 1.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node', 'localization_node']  top1=PASS rank=1  det=0.88s diag=0.88s FDR=0.0 chain_acc=0.75 phys_cov=0.8
+  anomalous nodes: ['lidar_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['lidar_node', 'perception_node', 'localization_node', 'planning_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/simulation/bench2/results.json
+
+======================================================================================================================
+SIMULATION BENCHMARK (proposed method, live; baselines/ablations on identical recorded evidence)
+======================================================================================================================
+scenario                                n top1 top3   MRR   det  diag   FDR chain  phys | indepe tempor static static propos |  full  no_D  no_T  no_S  no_A
+----------------------------------------------------------------------------------------------------------------------
+lidar_noise                             5    5    5   1.0  0.15 0.471   0.0   1.0   0.4 |      5      5      5      5      5 |     5     5     5     5     5
+lidar_dropout                           5    5    5   1.0 0.644 0.644   0.0   1.0   0.6 |      0      5      5      5      5 |     5     5     5     5     5
+perception_degradation                  5    5    5   1.0 0.141 0.314   0.0   1.0   0.5 |      0      5      5      5      5 |     5     5     5     5     5
+perception_crash                        5    5    5   1.0 0.685 0.685   0.0   1.0   0.5 |      0      5      5      5      5 |     5     5     5     5     5
+localization_failure                    5    5    5   1.0 0.081  0.36   0.0   1.0   1.0 |      5      5      5      5      5 |     5     5     5     5     5
+control_failure                         5    5    5   1.0 1.054 1.228   0.0   1.0   1.0 |      5      5      5      5      5 |     5     5     5     5     5
+perception_link_latency                 5    5    5   1.0 0.547 0.803   0.0   0.5  0.25 |      5      5      5      5      5 |     5     5     5     5     5
+lidar_link_jitter                       5    5    5   1.0 0.532 0.772   0.0   1.0 0.667 |      4      5      5      5      5 |     5     5     5     5     5
+lidar_link_loss                         5    5    5   1.0 3.187 3.344   0.0   1.0 0.667 |      5      5      5      5      5 |     5     5     5     5     5
+perception_workload                     5    5    5   1.0 0.774 1.118   0.0   1.0 0.333 |      5      5      5      5      5 |     5     5     5     5     5
+localization_restart                    5    3    3  0.68 0.365 0.492 0.042   0.8 0.533 |      1      5      4      5      4 |     4     5     4     5     4
+camera_disappear_reappear               5    4    5   0.9 0.457 0.566 0.011 0.933  0.56 |      0      5      5      5      5 |     5     5     5     5     5
+planning_topic_change                   5    5    5   1.0  None  None   0.0   1.0   1.0 |      -      -      -      -      - |     -     -     -     -     -
+lidar_noise_plus_perception_jitter      5    5    5   1.0 0.174 0.515   0.0   1.0   0.4 |      5      5      5      5      5 |     5     5     5     5     5
+lidar_noise_plus_perception_workload    5    5    5   1.0 0.162 0.382   0.0   1.0   0.4 |      5      5      5      5      5 |     5     5     5     5     5
+perception_plus_localization_degradation  5    5    5   1.0 0.152 0.247   0.0   0.5   1.0 |      5      5      5      5      5 |     5     5     5     5     5
+odometry_stale_cascade                  5    5    5   1.0 0.097 0.311   0.0   1.0  0.75 |      2      5      5      5      5 |     5     5     5     5     5
+workload_then_localization_failure      5    5    5   1.0 0.694  0.87   0.0   1.0   1.0 |      5      5      5      5      5 |     5     5     5     5     5
+camera_dropout_gated_perception         5    5    5   1.0  0.56 0.836   0.0   0.6   1.0 |      0      0      5      5      5 |     5     5     5     5     5
+lidar_dropout_with_localization_stop    5    5    5   1.0 0.698 0.698   0.0  0.75   0.8 |      2      5      5      5      5 |     5     5     5     5     5
+----------------------------------------------------------------------------------------------------------------------
+{
+  "total_experiments": 100,
+  "top1_accuracy": 0.97,
+  "top3_accuracy": 0.98,
+  "mean_reciprocal_rank": 0.979,
+  "avg_detection_latency_sec": 0.587,
+  "avg_diagnosis_latency_sec": 0.771,
+  "avg_correct_diagnosis_latency_sec": 0.771,
+  "false_diagnosis_rate": 0.0031,
+  "num_diagnoses_after_injection": 1639,
+  "avg_chain_accuracy": 0.904,
+  "chain_order_accuracy": 0.92,
+  "avg_physical_chain_coverage": 0.668,
+  "scenarios_with_unobserved_physical_nodes": [
+    "camera_disappear_reappear",
+    "lidar_dropout",
+    "lidar_dropout_with_localization_stop",
+    "lidar_link_jitter",
+    "lidar_link_loss",
+    "lidar_noise",
+    "lidar_noise_plus_perception_jitter",
+    "lidar_noise_plus_perception_workload",
+    "localization_restart",
+    "odometry_stale_cascade",
+    "perception_crash",
+    "perception_degradation",
+    "perception_link_latency",
+    "perception_workload"
+  ],
+  "nominal_fault_free_sec": 84.537,
+  "nominal_anomalies": 0,
+  "nominal_diagnoses": 0,
+  "nominal_false_alarms": 0,
+  "nominal_false_alarms_per_min": 0.0
+}
+
+BASELINES (Top-1 over all evaluated runs, identical evidence):
+  independent      top1 = 59/95 (62%)  MRR = 0.793
+  temporal_only    top1 = 90/95 (95%)  MRR = 0.974
+  static_dep_anom  top1 = 94/95 (99%)  MRR = 0.993
+  static_dep_temp  top1 = 95/95 (100%)  MRR = 1.000
+  proposed         top1 = 94/95 (99%)  MRR = 0.993
+ABLATIONS (Top-1 over all evaluated runs):
+  full     {'wD': 0.3, 'wT': 0.3, 'wS': 0.25, 'wA': 0.15}  top1 = 94/95 (99%)
+  no_D     {'wD': 0.0, 'wT': 0.3, 'wS': 0.25, 'wA': 0.15}  top1 = 95/95 (100%)
+  no_T     {'wD': 0.3, 'wT': 0.0, 'wS': 0.25, 'wA': 0.15}  top1 = 94/95 (99%)
+  no_S     {'wD': 0.3, 'wT': 0.3, 'wS': 0.0, 'wA': 0.15}  top1 = 95/95 (100%)
+  no_A     {'wD': 0.3, 'wT': 0.3, 'wS': 0.25, 'wA': 0.0}  top1 = 94/95 (99%)
+
+NOMINAL: 84.5s fault-free observed, 0 anomalies, 0 false alarms (0.0/min)
+
+Results written to runs/simulation/bench2/results.json

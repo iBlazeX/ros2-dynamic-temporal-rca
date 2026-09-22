@@ -1,0 +1,17 @@
+[INFO] [launch]: All log files can be found below /home/lynx/.ros/log/2026-09-22-22-19-31-640958-WINDOWS-FIRE-19212
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [sim_world-1]: process started with pid [19216]
+[INFO] [perception_node-2]: process started with pid [19217]
+[INFO] [localization_node-3]: process started with pid [19218]
+[INFO] [planning_node-4]: process started with pid [19219]
+[INFO] [control_node-5]: process started with pid [19220]
+[control_node-5] [INFO] [1790115572.987988238] [control_node]: control_node ready (path -> /cmd_vel)
+[planning_node-4] [WARN] [1790115572.988615705] [planning_node]: planning_node: pose source = localization
+[planning_node-4] [INFO] [1790115572.989287337] [planning_node]: planning_node ready (pose + obstacles -> /planning/path)
+[perception_node-2] [INFO] [1790115573.043859743] [perception_node]: perception_node ready (lidar + camera -> /perception/obstacles)
+[localization_node-3] [INFO] [1790115573.108989300] [localization_node]: localization_node ready (odom + imu + landmarks -> /localization/pose)
+[sim_world-1] [INFO] [1790115573.113854645] [sim_world]: sensor node started: lidar_node
+[sim_world-1] [INFO] [1790115573.143897583] [sim_world]: sensor node started: camera_node
+[sim_world-1] [INFO] [1790115573.165210510] [sim_world]: sensor node started: imu_node
+[sim_world-1] [INFO] [1790115573.190640364] [sim_world]: sensor node started: odometry_node
+[sim_world-1] [INFO] [1790115573.191279505] [sim_world]: sim_world ready (seed=7, obstacles=12)

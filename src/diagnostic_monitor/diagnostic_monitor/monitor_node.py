@@ -11,13 +11,16 @@ import importlib
 import json
 import math
 import time
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import rclpy
 from rclpy.node import Node
+from rclpy.qos import DurabilityPolicy, HistoryPolicy, QoSProfile, ReliabilityPolicy
 from std_msgs.msg import String
 
 from .anomaly_detector import Anomaly, AnomalyDetector
+from .dashboard_state import EventTimeline, build_dashboard_state
+from .db_path import ensure_parent_dir, resolve_db_path
 from .event_store import EventStore
 from .explainer import Explainer
 from .graph_engine import DependencyGraph, RosGraphDiscoverer
@@ -30,7 +33,8 @@ class DiagnosticMonitorNode(Node):
         super().__init__('diagnostic_monitor')
 
         # Parameters
-        self.declare_parameter('db_path', 'events.db')
+        # '' = auto: resolved by diagnostic_monitor.db_path (RCA_DB_PATH, then <workspace>/events.db)
+        self.declare_parameter('db_path', '')
         self.declare_parameter('warmup_sec', 4.0)
         self.declare_parameter('z_threshold', 3.0)
         self.declare_parameter('timeout_multiplier', 3.0)
@@ -40,8 +44,17 @@ class DiagnosticMonitorNode(Node):
         self.declare_parameter('w_t', 0.30)
         self.declare_parameter('w_s', 0.25)
         self.declare_parameter('w_a', 0.15)
+        # Presentation-only label for the environment that produced the data
+        # ("rca_sim", "gazebo", "rca_test_system"). It is NOT evaluation ground
+        # truth: it names the backend, never the injected fault or its target.
+        self.declare_parameter('simulator', 'unknown')
+        # Deployment-specific monitoring exclusions (raw simulator transport etc.)
+        self.declare_parameter('excluded_topic_prefixes', [''])
+        self.declare_parameter('excluded_node_names', [''])
+        self.declare_parameter('dashboard_heartbeat_sec', 1.0)
+        self.declare_parameter('dashboard_min_interval_sec', 0.5)
 
-        db_path = self.get_parameter('db_path').value
+        db_path = ensure_parent_dir(resolve_db_path(ros_param=self.get_parameter('db_path').value))
         warmup_sec = float(self.get_parameter('warmup_sec').value)
         z_threshold = float(self.get_parameter('z_threshold').value)
         timeout_mult = float(self.get_parameter('timeout_multiplier').value)
@@ -66,6 +79,17 @@ class DiagnosticMonitorNode(Node):
             time_window_sec=self.rca_window_sec,
         )
         self.graph = DependencyGraph()
+        self.simulator_label = str(self.get_parameter('simulator').value or 'unknown')
+        extra_topics, extra_nodes = RosGraphDiscoverer.configure(
+            topic_prefixes=list(self.get_parameter('excluded_topic_prefixes').value or []),
+            node_names=list(self.get_parameter('excluded_node_names').value or []),
+        )
+        if extra_topics or extra_nodes:
+            self.get_logger().info(
+                f'Deployment exclusions: topics={list(extra_topics)} nodes={list(extra_nodes)}')
+        # Node names present in the last ROS graph discovery sweep (membership),
+        # as opposed to the runtime liveness the anomaly detector tracks.
+        self.live_graph_nodes = set()
         self.last_stored_graph: Dict[str, Any] = {}
         # Last-known structure of nodes that vanished, kept for the RCA window
         self.vanished_nodes: Dict[str, float] = {}   # node -> time vanished
@@ -76,8 +100,26 @@ class DiagnosticMonitorNode(Node):
         self.last_recv_times: Dict[str, float] = {}
         self.topic_publisher_cache: Dict[str, str] = {}
 
-        # Publisher for diagnosis reports
+        # Publisher for diagnosis reports (unchanged semantics)
         self.diagnosis_pub = self.create_publisher(String, '/rca/diagnosis_report', 10)
+
+        # Live dashboard state for the TUI: latched (transient local) so a TUI that
+        # starts later immediately receives the latest state; depth 1, reliable.
+        dash_qos = QoSProfile(
+            depth=1, history=HistoryPolicy.KEEP_LAST,
+            reliability=ReliabilityPolicy.RELIABLE, durability=DurabilityPolicy.TRANSIENT_LOCAL,
+        )
+        self.dashboard_pub = self.create_publisher(String, '/rca/dashboard_state', dash_qos)
+        self.dashboard_heartbeat_sec = float(self.get_parameter('dashboard_heartbeat_sec').value)
+        self.dashboard_min_interval_sec = float(self.get_parameter('dashboard_min_interval_sec').value)
+        self.timeline = EventTimeline()
+        self.start_time = time.time()
+        self.dashboard_dirty = True
+        self.last_dashboard_pub = 0.0
+        self.diagnoses_total = 0
+        self.anomalies_total = 0
+        self.last_recent_anoms: List[Anomaly] = []
+        self.last_diagnosis = None
 
         # Timers
         self.graph_timer = self.create_timer(1.0, self._update_graph)
@@ -109,6 +151,9 @@ class DiagnosticMonitorNode(Node):
         """Periodically discovers live computational graph without hardcoding."""
         now_time = time.time()
         live_graph = RosGraphDiscoverer.discover(self)
+        # ROS graph membership as of this sweep, kept separate from runtime
+        # liveness: a crashed process lingers here until its DDS lease expires.
+        self.live_graph_nodes = set(live_graph.nodes)
 
         # Crash detection: nodes that were active and are now gone
         crash_anoms = self.detector.check_node_crashes(live_graph.nodes, now_time)
@@ -148,6 +193,9 @@ class DiagnosticMonitorNode(Node):
             self.last_stored_graph = gd
             edges = ', '.join(f"{e['from']}->{e['to']}" for e in gd['edges'])
             self.get_logger().info(f'Discovered graph: nodes={gd["nodes"]} edges=[{edges}]')
+            self.timeline.add(now_time, 'graph', 'graph_discovered', 0.0,
+                              f'{len(gd["nodes"])} nodes, {len(gd["edges"])} edges')
+            self.dashboard_dirty = True
 
         # Discover topics and dynamically subscribe to monitor them
         topic_types = self.get_topic_names_and_types()
@@ -173,7 +221,7 @@ class DiagnosticMonitorNode(Node):
 
     # ------------------------------------------------------------ telemetry
 
-    def _publisher_of(self, topic_name: str) -> str:
+    def _publisher_of(self, topic_name: str) -> Optional[str]:
         pub_nodes = [
             u for (u, v), topics in self.graph.edge_topics.items()
             if topic_name in topics
@@ -187,7 +235,9 @@ class DiagnosticMonitorNode(Node):
                 pass
         if pub_nodes:
             self.topic_publisher_cache[topic_name] = sorted(pub_nodes)[0]
-        return self.topic_publisher_cache.get(topic_name, 'unknown_publisher')
+        # None while the publisher cannot be resolved yet (startup race): the sample
+        # is dropped rather than attributed to a pseudo-node.
+        return self.topic_publisher_cache.get(topic_name)
 
     def _metric(self, now_time, node_name, topic_name, name, value):
         self.event_store.insert_telemetry(now_time, node_name, topic_name, name, value)
@@ -199,6 +249,8 @@ class DiagnosticMonitorNode(Node):
         """Processes received telemetry from monitored topics."""
         now_time = time.time()
         node_name = self._publisher_of(topic_name)
+        if node_name is None:
+            return
 
         header_stamp_sec = None
         if hasattr(msg, 'header') and hasattr(msg.header, 'stamp'):
@@ -210,8 +262,10 @@ class DiagnosticMonitorNode(Node):
             is_dup, order_anom = self.detector.check_header_order(now_time, node_name, topic_name, header_stamp_sec)
             if order_anom is not None:
                 self._record_anomaly(order_anom)
+            # validity indicator: a repeated header stamp is a re-published (stale) measurement
+            self._metric(now_time, node_name, topic_name, 'stale_repeat', 1.0 if is_dup else 0.0)
             if is_dup:
-                # Exact duplicate stamp: keep liveness, skip statistics
+                # Exact duplicate stamp: keep liveness, skip rate/latency statistics
                 self.detector.last_seen_times[(node_name, topic_name)] = now_time
                 self.last_recv_times[topic_name] = now_time
                 return
@@ -232,14 +286,27 @@ class DiagnosticMonitorNode(Node):
         if hasattr(msg, 'ranges'):                                   # LaserScan-like
             nan_count = sum(1 for r in msg.ranges if math.isnan(r) or math.isinf(r))
             self._metric(now_time, node_name, topic_name, 'nan_ratio', nan_count / max(1, len(msg.ranges)))
+        elif hasattr(msg, 'poses') and type(msg).__name__ == 'Path':  # nav_msgs/Path-like
+            # validity indicator: an empty path means "no plan" (safety stop upstream)
+            self._metric(now_time, node_name, topic_name, 'path_empty', 1.0 if not msg.poses else 0.0)
         elif hasattr(msg, 'poses'):                                  # PoseArray-like
-            self._metric(now_time, node_name, topic_name, 'obstacle_count', float(len(msg.poses)))
+            # validity indicator rather than scene content: the number of detected
+            # objects legitimately varies while a robot moves, an empty set does not
+            self._metric(now_time, node_name, topic_name, 'obstacle_empty', 1.0 if not msg.poses else 0.0)
         elif hasattr(msg, 'pose') and hasattr(msg.pose, 'position'):  # PoseStamped-like
             self._metric(now_time, node_name, topic_name, 'z_pos', float(msg.pose.position.z))
-        elif hasattr(msg, 'twist'):                                  # TwistStamped-like
-            self._metric(now_time, node_name, topic_name, 'linear_vel', float(msg.twist.linear.x))
-        elif hasattr(msg, 'linear'):                                 # Twist-like
-            self._metric(now_time, node_name, topic_name, 'linear_vel', float(msg.linear.x))
+        elif hasattr(msg, 'pose') and hasattr(msg.pose, 'covariance'):  # PoseWithCovariance(Stamped)-like
+            cov = msg.pose.covariance
+            if len(cov) >= 8:
+                self._metric(now_time, node_name, topic_name, 'pose_uncertainty',
+                             math.sqrt(max(0.0, float(cov[0]) + float(cov[7]))))
+        elif hasattr(msg, 'twist') or hasattr(msg, 'linear'):        # TwistStamped / Twist-like
+            tw = msg.twist if hasattr(msg, 'twist') else msg
+            v, w = float(tw.linear.x), float(tw.angular.z)
+            self._metric(now_time, node_name, topic_name, 'linear_vel', v)
+            # validity indicator: an exactly-zero command is a commanded stop
+            self._metric(now_time, node_name, topic_name, 'cmd_zero',
+                         1.0 if (abs(v) < 1e-6 and abs(w) < 1e-6) else 0.0)
 
     def _record_anomaly(self, anom: Anomaly):
         self.event_store.insert_anomaly(
@@ -252,6 +319,9 @@ class DiagnosticMonitorNode(Node):
         self.get_logger().warn(
             f'ANOMALY on [{anom.node}] {anom.metric}: {anom.description} (sev={anom.severity:.2f})'
         )
+        self.anomalies_total += 1
+        self.timeline.add_anomaly(anom)
+        self.dashboard_dirty = True
 
     # ------------------------------------------------------------ diagnosis
 
@@ -291,14 +361,53 @@ class DiagnosticMonitorNode(Node):
             report_msg = String()
             report_msg.data = json.dumps(diagnosis.to_dict())
             self.diagnosis_pub.publish(report_msg)
+            self.diagnoses_total += 1
 
             if diagnosis.root_cause != self.last_reported_root:
                 self.last_reported_root = diagnosis.root_cause
                 self.get_logger().info(f'\n{explanation}')
+                self.timeline.add(now_time, diagnosis.root_cause, 'diagnosis', diagnosis.confidence,
+                                  f'probable root cause {diagnosis.root_cause} '
+                                  f'(R={diagnosis.confidence:.3f}, chain {" -> ".join(diagnosis.propagation_chain)})')
+                self.dashboard_dirty = True
         else:
             if self.last_reported_root is not None:
                 self.get_logger().info('Anomaly window cleared. System operating nominally.')
+                self.timeline.add(now_time, 'system', 'window_cleared', 0.0,
+                                  'no anomalies in RCA window; operating nominally')
+                self.dashboard_dirty = True
             self.last_reported_root = None
+
+        self.last_recent_anoms = recent_anoms
+        self.last_diagnosis = diagnosis if diagnosis.root_cause else None
+        self._publish_dashboard_if_due(now_time)
+
+    # ------------------------------------------------------------ dashboard
+
+    def build_dashboard(self, now_time: float) -> Dict[str, Any]:
+        """Current live state as the schema-v1 document (no ground truth exists here)."""
+        warmed_up = (now_time - self.detector.start_time) >= self.detector.warmup_duration_sec
+        return build_dashboard_state(
+            now_time, self.graph, self.last_recent_anoms, self.last_diagnosis, self.timeline,
+            missing_nodes=self.detector.missing_nodes.keys(),
+            monitored_topics=len(self.subscriptions_map),
+            diagnoses_total=self.diagnoses_total, anomalies_total=self.anomalies_total,
+            monitor_start_time=self.start_time, warmed_up=warmed_up,
+            rca_window_sec=self.rca_window_sec,
+            simulator=self.simulator_label,
+            ros_graph_nodes=self.live_graph_nodes,
+        )
+
+    def _publish_dashboard_if_due(self, now_time: float):
+        """Publishes on change (rate-limited) or as a low-rate heartbeat."""
+        since = now_time - self.last_dashboard_pub
+        if (self.dashboard_dirty and since >= self.dashboard_min_interval_sec) or \
+                since >= self.dashboard_heartbeat_sec:
+            msg = String()
+            msg.data = json.dumps(self.build_dashboard(now_time))
+            self.dashboard_pub.publish(msg)
+            self.last_dashboard_pub = now_time
+            self.dashboard_dirty = False
 
 
 def main(args=None):

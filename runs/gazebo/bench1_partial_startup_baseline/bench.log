@@ -1,0 +1,160 @@
+[INFO] [1790109531.698051233] [experiment_controller]: ExperimentController ready with DB: /home/lynx/ros2_rca_ws/events.db
+[INFO] [1790109556.914158961] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109617.181324916] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109642.432520747] [experiment_controller]: >>> Injected latency on lidar_node (param=0.4, dur=10.0s)
+[INFO] [1790109650.441434889] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109650.647019776] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109675.901204346] [experiment_controller]: >>> Injected dropout on lidar_node (param=1.0, dur=10.0s)
+[INFO] [1790109683.906164894] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109684.115075951] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109709.372100158] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1790109717.374489894] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109717.580586473] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109742.828895399] [experiment_controller]: >>> Injected dropout on camera_node (param=1.0, dur=10.0s)
+[INFO] [1790109752.835697756] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109753.044378456] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109778.300108757] [experiment_controller]: >>> Injected stale on odometry_node (param=1.0, dur=10.0s)
+[INFO] [1790109788.308299622] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109788.514902703] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109813.777966292] [experiment_controller]: >>> Injected rate on imu_node (param=0.25, dur=10.0s)
+[INFO] [1790109821.779976129] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109821.989752193] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109847.243313358] [experiment_controller]: >>> Injected processing_delay on perception_node (param=0.4, dur=10.0s)
+[INFO] [1790109855.243057565] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109855.452795880] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109880.709632950] [experiment_controller]: >>> Injected degradation on perception_node (param=0.0, dur=10.0s)
+[INFO] [1790109888.712389331] [experiment_controller]: >>> Cleared all faults.
+Event store: /home/lynx/ros2_rca_ws/events.db
+Simulator backend: gazebo
+Waiting 25.0s (fault-free warm-up)...
+warm-up 25.0s: anomalies 248, diagnoses 50
+discovered graph: 9 nodes 9 edges: [('camera_node', 'perception_node'), ('control_node', 'sim_world'), ('imu_node', 'localization_node'), ('lidar_node', 'perception_node'), ('localization_node', 'planning_node'), ('odometry_node', 'localization_node'), ('perception_node', 'localization_node'), ('perception_node', 'planning_node'), ('planning_node', 'control_node')]
+
+========================================================================
+NOMINAL SOAK: observing fault-free operation for 60s
+========================================================================
+  duration 60.0s | anomalies 600 | diagnoses (false alarms) 120 | anomalous nodes ['control_node', 'planning_node'] | diagnosed roots ['planning_node']
+
+==============================================================================
+G01 LiDAR latency: scan publication delayed 0.4 s   [rep 0]
+  faults: lidar_node:latency(p=0.4, +0.0s, 10.0s)
+==============================================================================
+  (warning: monitor still reporting diagnoses before injection)
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.027s diag=0.469s FDR=0.0 chain_acc=0.5 phys_cov=0.8
+  anomalous nodes: ['control_node', 'lidar_node', 'perception_node', 'planning_node']  chain: ['lidar_node', 'perception_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=FAIL  static_dep_anom=PASS  static_dep_temp=FAIL  proposed=PASS
+  ablation:  full=PASS  no_D=FAIL  no_T=PASS  no_S=FAIL  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G02 LiDAR dropout: the scan stops entirely   [rep 0]
+  faults: lidar_node:dropout(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  (warning: monitor still reporting diagnoses before injection)
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.159s diag=0.0s FDR=0.0625 chain_acc=0.6 phys_cov=1.0
+  anomalous nodes: ['control_node', 'lidar_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['lidar_node', 'perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=FAIL  static_dep_anom=PASS  static_dep_temp=FAIL  proposed=PASS
+  ablation:  full=PASS  no_D=FAIL  no_T=PASS  no_S=FAIL  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G03 LiDAR degradation: heavy noise and invalid returns   [rep 0]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s)
+==============================================================================
+  (warning: monitor still reporting diagnoses before injection)
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.097s diag=0.039s FDR=0.125 chain_acc=0.5 phys_cov=0.8
+  anomalous nodes: ['control_node', 'lidar_node', 'perception_node', 'planning_node']  chain: ['lidar_node', 'perception_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=FAIL  static_dep_anom=PASS  static_dep_temp=FAIL  proposed=PASS
+  ablation:  full=PASS  no_D=FAIL  no_T=PASS  no_S=FAIL  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G04 camera dropout: the image stream stops (perception gating opens downstream first)   [rep 0]
+  faults: camera_node:dropout(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  (warning: monitor still reporting diagnoses before injection)
+  predicted=camera_node  accepted=['camera_node']  top1=PASS rank=1  det=0.037s diag=0.073s FDR=0.05 chain_acc=0.6 phys_cov=1.0
+  anomalous nodes: ['camera_node', 'control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['camera_node', 'perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=FAIL  static_dep_anom=PASS  static_dep_temp=FAIL  proposed=PASS
+  ablation:  full=PASS  no_D=FAIL  no_T=PASS  no_S=FAIL  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G05 stale/repeated sensor data: odometry repeats its last measurement   [rep 0]
+  faults: odometry_node:stale(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  (warning: monitor still reporting diagnoses before injection)
+  predicted=odometry_node  accepted=['odometry_node']  top1=PASS rank=1  det=0.074s diag=0.108s FDR=0.0 chain_acc=1.0 phys_cov=0.75
+  anomalous nodes: ['control_node', 'localization_node', 'odometry_node', 'planning_node']  chain: ['odometry_node', 'localization_node', 'planning_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=FAIL  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=FAIL  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G06 sensor rate reduction: IMU publishes at a quarter of its rate   [rep 0]
+  faults: imu_node:rate(p=0.25, +0.0s, 10.0s)
+==============================================================================
+  (warning: monitor still reporting diagnoses before injection)
+  predicted=planning_node  accepted=['imu_node']  top1=FAIL rank=4  det=0.081s diag=0.125s FDR=1.0 chain_acc=0.0 phys_cov=0.0
+  anomalous nodes: ['control_node', 'planning_node']  chain: ['planning_node', 'control_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=FAIL  static_dep_anom=FAIL  static_dep_temp=FAIL  proposed=FAIL
+  ablation:  full=FAIL  no_D=FAIL  no_T=FAIL  no_S=FAIL  no_A=FAIL
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G07 perception processing delay: 0.4 s of real work per scan   [rep 0]
+  faults: perception_node:processing_delay(p=0.4, +0.0s, 10.0s)
+==============================================================================
+  (warning: monitor still reporting diagnoses before injection)
+  predicted=planning_node  accepted=['perception_node']  top1=FAIL rank=2  det=0.017s diag=0.161s FDR=1.0 chain_acc=0.0 phys_cov=0.5
+  anomalous nodes: ['control_node', 'perception_node', 'planning_node']  chain: ['planning_node', 'control_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=FAIL  static_dep_anom=PASS  static_dep_temp=FAIL  proposed=PASS
+  ablation:  full=PASS  no_D=FAIL  no_T=PASS  no_S=FAIL  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G08 perception degradation: empty obstacle sets   [rep 0]
+  faults: perception_node:degradation(p=0.0, +0.0s, 10.0s)
+==============================================================================
+  (warning: monitor still reporting diagnoses before injection)
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.15s diag=0.192s FDR=0.25 chain_acc=0.5 phys_cov=1.0
+  anomalous nodes: ['control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=FAIL  static_dep_anom=PASS  static_dep_temp=FAIL  proposed=PASS
+  ablation:  full=PASS  no_D=FAIL  no_T=PASS  no_S=FAIL  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G09 localization failure: pose jump and uncertainty spike   [rep 0]
+  faults: localization_node:localization_failure(p=20.0, +0.0s, 10.0s)
+==============================================================================[INFO] [1790109888.922774874] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109914.217303622] [experiment_controller]: >>> Injected localization_failure on localization_node (param=20.0, dur=10.0s)
+[INFO] [1790109922.185378933] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109922.395573371] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109947.660009442] [experiment_controller]: >>> Injected navigation_failure on planning_node (param=2.0, dur=10.0s)
+[INFO] [1790109955.656819477] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109955.869953376] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109981.122573195] [experiment_controller]: >>> Injected control_failure on control_node (param=1.0, dur=10.0s)
+[INFO] [1790109989.125454244] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790109989.336799539] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110014.593030372] [experiment_controller]: >>> Injected latency on perception_node (param=0.4, dur=10.0s)
+[INFO] [1790110022.593863006] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110022.818487010] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110048.079326439] [experiment_controller]: >>> Injected loss on lidar_node (param=0.6, dur=10.0s)
+[INFO] [1790110056.076606385] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110056.291489872] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110081.543024725] [experiment_controller]: >>> Injected crash on perception_node (param=0.0, dur=1.0s)
+[INFO] [1790110091.557009344] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110091.777180232] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110117.128337156] [experiment_controller]: >>> Injected stop on localization_node (param=0.0, dur=1.0s)
+[INFO] [1790110127.079278550] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110127.330827603] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110152.748961327] [experiment_controller]: >>> Injected topic_change on planning_node (param=1.0, dur=10.0s)
+EXIT=143

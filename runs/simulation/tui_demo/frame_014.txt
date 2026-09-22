@@ -1,0 +1,46 @@
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Dynamic Dependency-Aware Temporal RCA  |  ROS 2 diagnostic console                                                                                            ROS LIVE │
+│ SYSTEM RECOVERING   backend rca_sim   nodes 9  edges 9  topics 8  anomalies(window) 26  anomalous nodes 2                       state age 0.9s  monitor up 60s  msgs 22│
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓┌────────────────────────────────────────────────────────────────┐
+┃╭ DEPENDENCY GRAPH (discovered at runtime) ──────────────────────────────────────────────────────────╮┃│╭ ROOT CAUSE DIAGNOSIS ────────────────────────────────────────╮│
+┃│                                                                                                    │┃││  ROOT CAUSE                                                  ││
+┃│╭───────────────╮                                                                                   │┃││  lidar_node                                                  ││
+┃││[ ] camera_node│                                                                                   │┃││                                                              ││
+┃│╰───────────────╯                                                                                   │┃││  Confidence: 1.000                                           ││
+┃│╭───────────────╮    ╭─────────────────╮   ╭────────────╮   ╭──────────╮   ╭──────────╮   ╭────────╮│┃││                                                              ││
+┃││[ ] imu_node   │    │[!] perception_no│   │[ ] localiza│   │[ ] planni│   │[ ] contro│   │[ ] sim_││┃││  Dependency  ██████████████ 1.00                             ││
+┃│╰───────────────╯ ──▶│ obstacle_empty  │ ──│ nominal    │ ──│ nominal  │ ──│ nominal  │ ──│ nominal││┃││  Temporal    ██████████████ 1.00                             ││
+┃│╭───────────────╮    │ in graph / ALIVE│   │ in graph / │   │ in graph │   │ in graph │   │ in grap││┃││  Symptoms    ██████████████ 1.00                             ││
+┃││[*] lidar_node │    ╰─────────────────╯   ╰────────────╯   ╰──────────╯   ╰──────────╯   ╰────────╯│┃││  Severity    ██████████████ 1.00                             ││
+┃│╰───────────────╯                                                                                   │┃││                                                              ││
+┃│╭───────────────╮                                                                                   │┃││  Propagation: lidar_node -> perception_node                  ││
+┃││[ ] odometry_no│                                                                                   │┃││  Ranking:                                                    ││
+┃│╰───────────────╯                                                                                   │┃││   1. lidar_node         R=1.000                              ││
+┃│                                                                                                    │┃││   2. perception_node    R=0.434                              ││
+┃├────────────────────────────────────────────────────────────────────────────────────────────────────┤┃││   3. camera_node        R=0.290                              ││
+┃│  edges (dynamic ROS 2 graph discovery):                                                            │┃│├──────────────────────────────────────────────────────────────┤│
+┃│  camera_node -> perception_node   via /sim/camera/image                                            │┃││  Evidence (from diagnostic monitor):                         ││
+┃│  control_node -> sim_world   via /cmd_vel                                                          │┃││  ROOT CAUSE DIAGNOSIS: lidar_node (Confidence: 1.000)        ││
+┃│  imu_node -> localization_node   via /sim/imu/data                                                 │┃││  Score Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:          ││
+┃│  lidar_node -> perception_node   via /sim/lidar/scan                                               │┃││    R(lidar_node) = 0.3·D(1.00) + 0.3·T(1.00) + 0.25·S(1.00   ││
+┃╰────────────────────────────────────────────────────────────────────────────────────────────────────╯┃│╰──────────────────────────────────────────────────────────────╯│
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛└────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│╭ TEMPORAL TIMELINE (onset-ordered evidence; ordering supports, does not prove, causality) ────────────────────────────────────────────────────────────────────────────╮│
+││22:18:33.08  perception_node      obstacle_empty    sev 1.00  Value 1.0000 deviated from baseline 0.0000±0.0001 (z=10000.0, confirmed x2) (recorded t=1790115513.19)  ││
+││22:18:33.68  perception_node      obstacle_empty    sev 1.00  Value 1.0000 deviated from baseline 0.0000±0.0001 (z=10000.0, confirmed x2) (recorded t=1790115513.79)  ││
+││22:18:34.27  lidar_node           nan_ratio         sev 1.00  Value 0.2889 deviated from baseline 0.0004±0.0087 (z=33.3, confirmed x2) (recorded t=1790115514.38)     ││
+││22:18:34.48  perception_node      obstacle_empty    sev 1.00  Value 1.0000 deviated from baseline 0.0000±0.0001 (z=10000.0, confirmed x2) (recorded t=1790115514.59)  ││
+││22:18:34.98  perception_node      obstacle_empty    sev 1.00  Value 1.0000 deviated from baseline 0.0000±0.0001 (z=10000.0, confirmed x2) (recorded t=1790115515.09)  ││
+││22:18:35.48  perception_node      obstacle_empty    sev 1.00  Value 1.0000 deviated from baseline 0.0000±0.0001 (z=10000.0, confirmed x2) (recorded t=1790115515.59)  ││
+││22:18:36.48  perception_node      obstacle_empty    sev 1.00  Value 1.0000 deviated from baseline 0.0000±0.0001 (z=10000.0, confirmed x2) (recorded t=1790115516.59)  ││
+││22:18:36.78  perception_node      obstacle_empty    sev 1.00  Value 1.0000 deviated from baseline 0.0000±0.0001 (z=10000.0, confirmed x2) (recorded t=1790115516.89)  ││
+││22:18:37.08  perception_node      obstacle_empty    sev 1.00  Value 1.0000 deviated from baseline 0.0000±0.0001 (z=10000.0, confirmed x2) (recorded t=1790115517.19)  ││
+││22:18:37.98  perception_node      obstacle_empty    sev 1.00  Value 1.0000 deviated from baseline 0.0000±0.0001 (z=10000.0, confirmed x2) (recorded t=1790115518.09)  ││
+││22:18:38.58  perception_node      obstacle_empty    sev 1.00  Value 1.0000 deviated from baseline 0.0000±0.0001 (z=10000.0, confirmed x2) (recorded t=1790115518.69)  ││
+││22:18:38.98  perception_node      obstacle_empty    sev 1.00  Value 1.0000 deviated from baseline 0.0000±0.0001 (z=10000.0, confirmed x2) (recorded t=1790115519.09)  ││
+││  [6-17/17]  press T then ↑/↓                                                                                                                                         ││
+│╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯│
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+ [R] Refresh  [G] Graph  [D] Diagnosis  [T] Timeline  [↑/↓] Scroll focused panel  [Q] Quit             visualisation layer only: all RCA logic runs in diagnostic_monitor

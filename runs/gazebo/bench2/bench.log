@@ -1,0 +1,894 @@
+[INFO] [1790110316.170036576] [experiment_controller]: ExperimentController ready with DB: /home/lynx/ros2_rca_ws/events.db
+[INFO] [1790110341.378701470] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110401.582191082] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110403.788700697] [experiment_controller]: >>> Injected latency on lidar_node (param=0.4, dur=10.0s)
+[INFO] [1790110411.793744745] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110412.001577880] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110419.718504126] [experiment_controller]: >>> Injected dropout on lidar_node (param=1.0, dur=10.0s)
+[INFO] [1790110427.726391486] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110427.938689357] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110435.655032023] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1790110443.656432424] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110443.862752261] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110451.600988358] [experiment_controller]: >>> Injected dropout on camera_node (param=1.0, dur=10.0s)
+[INFO] [1790110461.613883023] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110461.828516061] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110469.547318712] [experiment_controller]: >>> Injected stale on odometry_node (param=1.0, dur=10.0s)
+[INFO] [1790110479.582700342] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110479.793181066] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110487.526470304] [experiment_controller]: >>> Injected rate on imu_node (param=0.25, dur=10.0s)
+[INFO] [1790110495.528629572] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110495.736456190] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110497.940781675] [experiment_controller]: >>> Injected processing_delay on perception_node (param=0.4, dur=10.0s)
+[INFO] [1790110505.946265585] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110506.170002273] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110514.395057172] [experiment_controller]: >>> Injected degradation on perception_node (param=0.0, dur=10.0s)
+[INFO] [1790110522.427439337] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110522.635810063] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110530.351212541] [experiment_controller]: >>> Injected localization_failure on localization_node (param=20.0, dur=10.0s)
+[INFO] [1790110538.360985698] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110538.579102050] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110546.302485364] [experiment_controller]: >>> Injected navigation_failure on planning_node (param=2.0, dur=10.0s)
+Event store: /home/lynx/ros2_rca_ws/events.db
+Simulator backend: gazebo
+Waiting 25.0s (fault-free warm-up)...
+warm-up 25.0s: anomalies 0, diagnoses 0
+discovered graph: 9 nodes 9 edges: [('camera_node', 'perception_node'), ('control_node', 'sim_world'), ('imu_node', 'localization_node'), ('lidar_node', 'perception_node'), ('localization_node', 'planning_node'), ('odometry_node', 'localization_node'), ('perception_node', 'localization_node'), ('perception_node', 'planning_node'), ('planning_node', 'control_node')]
+
+========================================================================
+NOMINAL SOAK: observing fault-free operation for 60s
+========================================================================
+  duration 60.0s | anomalies 0 | diagnoses (false alarms) 0
+
+==============================================================================
+G01 LiDAR latency: scan publication delayed 0.4 s   [rep 0]
+  faults: lidar_node:latency(p=0.4, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.505s diag=0.703s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G02 LiDAR dropout: the scan stops entirely   [rep 0]
+  faults: lidar_node:dropout(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.777s diag=0.777s FDR=0.0 chain_acc=1.0 phys_cov=0.6
+  anomalous nodes: ['lidar_node', 'localization_node', 'perception_node']  chain: ['lidar_node', 'perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G03 LiDAR degradation: heavy noise and invalid returns   [rep 0]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.145s diag=0.336s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G04 camera dropout: the image stream stops (perception gating opens downstream first)   [rep 0]
+  faults: camera_node:dropout(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=camera_node  accepted=['camera_node']  top1=PASS rank=1  det=0.585s diag=0.891s FDR=0.0 chain_acc=0.6 phys_cov=1.0
+  anomalous nodes: ['camera_node', 'control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['camera_node', 'perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=FAIL  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G05 stale/repeated sensor data: odometry repeats its last measurement   [rep 0]
+  faults: odometry_node:stale(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=odometry_node  accepted=['odometry_node']  top1=PASS rank=1  det=0.11s diag=0.441s FDR=0.0 chain_acc=1.0 phys_cov=0.75
+  anomalous nodes: ['localization_node', 'odometry_node', 'planning_node']  chain: ['odometry_node', 'localization_node', 'planning_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G06 sensor rate reduction: IMU publishes at a quarter of its rate   [rep 0]
+  faults: imu_node:rate(p=0.25, +0.0s, 10.0s)
+==============================================================================
+  !! no diagnosis in the observation window
+  baselines (identical evidence):  independent=FAIL  temporal_only=FAIL  static_dep_anom=FAIL  static_dep_temp=FAIL  proposed=FAIL
+  ablation:  full=FAIL  no_D=FAIL  no_T=FAIL  no_S=FAIL  no_A=FAIL
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G07 perception processing delay: 0.4 s of real work per scan   [rep 0]
+  faults: perception_node:processing_delay(p=0.4, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=1.047s diag=1.047s FDR=0.0 chain_acc=1.0 phys_cov=0.25
+  anomalous nodes: ['perception_node']  chain: ['perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G08 perception degradation: empty obstacle sets   [rep 0]
+  faults: perception_node:degradation(p=0.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.172s diag=0.597s FDR=0.0 chain_acc=1.0 phys_cov=0.5
+  anomalous nodes: ['localization_node', 'perception_node']  chain: ['perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G09 localization failure: pose jump and uncertainty spike   [rep 0]
+  faults: localization_node:localization_failure(p=20.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=localization_node  accepted=['localization_node']  top1=PASS rank=1  det=0.062s diag=0.141s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node', 'localization_node', 'planning_node']  chain: ['localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G10 planning failure: the planner emits no path   [rep 0]
+  faults: planning_node:navigation_failure(p=2.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=planning_node  accepted=['planning_node']  top1=PASS rank=1  det=0.344s diag=0.688s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node', 'planning_node']  chain: ['planning_node', 'control_node']
+  baselines (identical evidence):  independent=FAIL[INFO] [1790110554.304418628] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110554.520224790] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110562.258689981] [experiment_controller]: >>> Injected control_failure on control_node (param=1.0, dur=10.0s)
+[INFO] [1790110570.251635236] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110570.475742203] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110578.191011165] [experiment_controller]: >>> Injected latency on perception_node (param=0.4, dur=10.0s)
+[INFO] [1790110586.192741729] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110586.409776613] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110594.127565361] [experiment_controller]: >>> Injected loss on lidar_node (param=0.6, dur=10.0s)
+[INFO] [1790110602.129956865] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110602.355688426] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110610.086684526] [experiment_controller]: >>> Injected crash on perception_node (param=0.0, dur=1.0s)
+[INFO] [1790110620.075965731] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110620.304866062] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110625.026761268] [experiment_controller]: >>> Injected stop on localization_node (param=0.0, dur=1.0s)
+[INFO] [1790110635.040753109] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110635.278896679] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110640.995288386] [experiment_controller]: >>> Injected topic_change on planning_node (param=1.0, dur=10.0s)
+[INFO] [1790110648.992767217] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110649.211178507] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110651.417912554] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1790110652.917830494] [experiment_controller]: >>> Injected workload on perception_node (param=150.0, dur=10.0s)
+[INFO] [1790110661.428350882] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110661.648668183] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110669.869326477] [experiment_controller]: >>> Injected dropout on camera_node (param=1.0, dur=10.0s)
+[INFO] [1790110672.865917356] [experiment_controller]: >>> Injected localization_failure on localization_node (param=20.0, dur=10.0s)
+[INFO] [1790110681.891158975] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110682.113793841] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110689.829442864] [experiment_controller]: >>> Injected latency on lidar_node (param=0.4, dur=10.0s)
+[INFO] [1790110697.837443853] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110698.064157430] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110705.781481907] [experiment_controller]: >>> Injected dropout on lidar_node (param=1.0, dur=10.0s)
+[INFO] [1790110713.788110091] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110714.037629905] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110721.753404162] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G11 control failure: erratic velocity commands   [rep 0]
+  faults: control_node:control_failure(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=control_node  accepted=['control_node']  top1=PASS rank=1  det=2.049s diag=2.244s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node']  chain: ['control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G12 communication delay: perception output delayed 0.4 s   [rep 0]
+  faults: perception_node:latency(p=0.4, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.612s diag=0.797s FDR=0.0 chain_acc=0.5 phys_cov=0.25
+  anomalous nodes: ['perception_node']  chain: ['perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G13 communication loss: 60 % of LiDAR messages dropped in flight   [rep 0]
+  faults: lidar_node:loss(p=0.6, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=3.369s diag=3.369s FDR=0.0 chain_acc=1.0 phys_cov=0.6667
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G14 node crash: perception process dies abruptly and is respawned   [rep 0]
+  faults: perception_node:crash(p=0.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.42s diag=0.42s FDR=0.0 chain_acc=1.0 phys_cov=0.5
+  anomalous nodes: ['localization_node', 'perception_node']  chain: ['perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G15 process restart: localization stops cleanly and is respawned after 4 s   [rep 0]
+  faults: localization_node:stop(p=0.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=localization_node  accepted=['localization_node']  top1=PASS rank=1  det=0.418s diag=0.465s FDR=0.0 chain_acc=1.0 phys_cov=0.6667
+  anomalous nodes: ['localization_node', 'planning_node']  chain: ['localization_node', 'planning_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G16 runtime topic change: the planner switches its pose source to raw odometry (no fault)   [rep 0]
+  faults: planning_node:topic_change(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  graph-change scenario: diagnoses raised = 0  -> PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G17 compound: LiDAR noise, then perception workload 1.5 s later   [rep 0]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s); perception_node:workload(p=150.0, +1.5s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node', 'perception_node']  top1=PASS rank=1  det=0.22s diag=0.57s FDR=0.0 chain_acc=0.6667 phys_cov=0.6
+  anomalous nodes: ['lidar_node', 'localization_node', 'perception_node']  chain: ['lidar_node', 'perception_node', 'localization_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G18 ambiguous compound: camera loss, then a strong localization failure 3 s later   [rep 0]
+  faults: camera_node:dropout(p=1.0, +0.0s, 10.0s); localization_node:localization_failure(p=20.0, +3.0s, 10.0s)
+==============================================================================
+  predicted=camera_node  accepted=['camera_node', 'localization_node']  top1=PASS rank=1  det=0.514s diag=0.627s FDR=0.0 chain_acc=0.8 phys_cov=1.0
+  anomalous nodes: ['camera_node', 'control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['camera_node', 'perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=FAIL  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G01 LiDAR latency: scan publication delayed 0.4 s   [rep 1]
+  faults: lidar_node:latency(p=0.4, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.532s diag=0.661s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G02 LiDAR dropout: the scan stops entirely   [rep 1]
+  faults: lidar_node:dropout(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.709s diag=0.709s FDR=0.0 chain_acc=1.0 phys_cov=0.6
+  anomalous nodes: ['lidar_node', 'localization_node', 'perception_node']  chain: ['lidar_node', 'perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G03 LiDAR degradation: heavy noise and invalid returns   [rep 1]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.149s diag=0.234s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node'][INFO] [1790110729.758512147] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110729.981762129] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110737.705614621] [experiment_controller]: >>> Injected dropout on camera_node (param=1.0, dur=10.0s)
+[INFO] [1790110747.722703096] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110747.952439647] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110757.671464264] [experiment_controller]: >>> Injected stale on odometry_node (param=1.0, dur=10.0s)
+[INFO] [1790110767.705436449] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110767.942272603] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110775.655281797] [experiment_controller]: >>> Injected rate on imu_node (param=0.25, dur=10.0s)
+[INFO] [1790110783.655507520] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110783.880617604] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110786.084685845] [experiment_controller]: >>> Injected processing_delay on perception_node (param=0.4, dur=10.0s)
+[INFO] [1790110794.089090867] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110794.314881623] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110802.531920347] [experiment_controller]: >>> Injected degradation on perception_node (param=0.0, dur=10.0s)
+[INFO] [1790110810.548607550] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110810.782938956] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110819.006445932] [experiment_controller]: >>> Injected localization_failure on localization_node (param=20.0, dur=10.0s)
+[INFO] [1790110827.011148606] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110827.235290564] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110835.475198212] [experiment_controller]: >>> Injected navigation_failure on planning_node (param=2.0, dur=10.0s)
+[INFO] [1790110843.495291625] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110843.724243127] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110851.937642678] [experiment_controller]: >>> Injected control_failure on control_node (param=1.0, dur=10.0s)
+[INFO] [1790110859.940606746] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110860.167629856] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110866.879543446] [experiment_controller]: >>> Injected latency on perception_node (param=0.4, dur=10.0s)
+[INFO] [1790110874.882641105] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110875.111980760] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110882.823941339] [experiment_controller]: >>> Injected loss on lidar_node (param=0.6, dur=10.0s)
+[INFO] [1790110890.832115932] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110891.087317868] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110898.326604714] [experiment_controller]: >>> Injected crash on perception_node (param=0.0, dur=1.0s)
+
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G04 camera dropout: the image stream stops (perception gating opens downstream first)   [rep 1]
+  faults: camera_node:dropout(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=camera_node  accepted=['camera_node']  top1=PASS rank=1  det=0.593s diag=0.785s FDR=0.0 chain_acc=0.6 phys_cov=1.0
+  anomalous nodes: ['camera_node', 'control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['camera_node', 'perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=FAIL  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G05 stale/repeated sensor data: odometry repeats its last measurement   [rep 1]
+  faults: odometry_node:stale(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=odometry_node  accepted=['odometry_node']  top1=PASS rank=1  det=0.085s diag=0.316s FDR=0.0 chain_acc=1.0 phys_cov=0.75
+  anomalous nodes: ['localization_node', 'odometry_node', 'planning_node']  chain: ['odometry_node', 'localization_node', 'planning_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G06 sensor rate reduction: IMU publishes at a quarter of its rate   [rep 1]
+  faults: imu_node:rate(p=0.25, +0.0s, 10.0s)
+==============================================================================
+  !! no diagnosis in the observation window
+  baselines (identical evidence):  independent=FAIL  temporal_only=FAIL  static_dep_anom=FAIL  static_dep_temp=FAIL  proposed=FAIL
+  ablation:  full=FAIL  no_D=FAIL  no_T=FAIL  no_S=FAIL  no_A=FAIL
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G07 perception processing delay: 0.4 s of real work per scan   [rep 1]
+  faults: perception_node:processing_delay(p=0.4, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.406s diag=0.406s FDR=0.0 chain_acc=1.0 phys_cov=0.25
+  anomalous nodes: ['perception_node']  chain: ['perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G08 perception degradation: empty obstacle sets   [rep 1]
+  faults: perception_node:degradation(p=0.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.189s diag=0.458s FDR=0.0 chain_acc=1.0 phys_cov=0.5
+  anomalous nodes: ['localization_node', 'perception_node']  chain: ['perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G09 localization failure: pose jump and uncertainty spike   [rep 1]
+  faults: localization_node:localization_failure(p=20.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=localization_node  accepted=['localization_node']  top1=PASS rank=1  det=0.096s diag=0.488s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node', 'localization_node', 'planning_node']  chain: ['localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G10 planning failure: the planner emits no path   [rep 1]
+  faults: planning_node:navigation_failure(p=2.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=planning_node  accepted=['planning_node']  top1=PASS rank=1  det=0.37s diag=0.514s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node', 'planning_node']  chain: ['planning_node', 'control_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G11 control failure: erratic velocity commands   [rep 1]
+  faults: control_node:control_failure(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=control_node  accepted=['control_node']  top1=PASS rank=1  det=1.356s diag=1.552s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node']  chain: ['control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G12 communication delay: perception output delayed 0.4 s   [rep 1]
+  faults: perception_node:latency(p=0.4, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.51s diag=0.617s FDR=0.0 chain_acc=0.5 phys_cov=0.25
+  anomalous nodes: ['perception_node']  chain: ['perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G13 communication loss: 60 % of LiDAR messages dropped in flight   [rep 1]
+  faults: lidar_node:loss(p=0.6, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.666s diag=0.666s FDR=0.0 chain_acc=1.0 phys_cov=0.6667
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G14 node crash: perception process dies abruptly and is respawned   [rep 1]
+  faults: perception_node:crash(p=0.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.684s diag=0.684s FDR=0.0 chain_acc=1.0 phys_cov=0.5[INFO] [1790110908.328754137] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110908.572427872] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110914.783833488] [experiment_controller]: >>> Injected stop on localization_node (param=0.0, dur=1.0s)
+[INFO] [1790110924.787479501] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110925.040166526] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110929.249270602] [experiment_controller]: >>> Injected topic_change on planning_node (param=1.0, dur=10.0s)
+[INFO] [1790110937.249703172] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110937.483819622] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110939.687945389] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1790110941.188728536] [experiment_controller]: >>> Injected workload on perception_node (param=150.0, dur=10.0s)
+[INFO] [1790110949.702092913] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110949.937205058] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110957.665706380] [experiment_controller]: >>> Injected dropout on camera_node (param=1.0, dur=10.0s)
+[INFO] [1790110960.661669878] [experiment_controller]: >>> Injected localization_failure on localization_node (param=20.0, dur=10.0s)
+[INFO] [1790110969.713304002] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110969.935006232] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110977.670668159] [experiment_controller]: >>> Injected latency on lidar_node (param=0.4, dur=10.0s)
+[INFO] [1790110985.674816882] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110985.906706541] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790110993.623058522] [experiment_controller]: >>> Injected dropout on lidar_node (param=1.0, dur=10.0s)
+[INFO] [1790111001.630509855] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111001.876929433] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111009.604854840] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1790111017.592899675] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111017.831153324] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111028.551900339] [experiment_controller]: >>> Injected dropout on camera_node (param=1.0, dur=10.0s)
+[INFO] [1790111038.567661356] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111038.810709487] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111046.525963149] [experiment_controller]: >>> Injected stale on odometry_node (param=1.0, dur=10.0s)
+[INFO] [1790111056.532675658] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111056.778273258] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111064.491092388] [experiment_controller]: >>> Injected rate on imu_node (param=0.25, dur=10.0s)
+[INFO] [1790111072.499732886] [experiment_controller]: >>> Cleared all faults.
+
+  anomalous nodes: ['localization_node', 'perception_node']  chain: ['perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G15 process restart: localization stops cleanly and is respawned after 4 s   [rep 1]
+  faults: localization_node:stop(p=0.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=localization_node  accepted=['localization_node']  top1=PASS rank=1  det=0.461s diag=0.709s FDR=0.0 chain_acc=1.0 phys_cov=0.6667
+  anomalous nodes: ['localization_node', 'planning_node']  chain: ['localization_node', 'planning_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G16 runtime topic change: the planner switches its pose source to raw odometry (no fault)   [rep 1]
+  faults: planning_node:topic_change(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  graph-change scenario: diagnoses raised = 0  -> PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G17 compound: LiDAR noise, then perception workload 1.5 s later   [rep 1]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s); perception_node:workload(p=150.0, +1.5s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node', 'perception_node']  top1=PASS rank=1  det=0.118s diag=0.3s FDR=0.0 chain_acc=0.6667 phys_cov=0.6
+  anomalous nodes: ['lidar_node', 'localization_node', 'perception_node']  chain: ['lidar_node', 'perception_node', 'localization_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G18 ambiguous compound: camera loss, then a strong localization failure 3 s later   [rep 1]
+  faults: camera_node:dropout(p=1.0, +0.0s, 10.0s); localization_node:localization_failure(p=20.0, +3.0s, 10.0s)
+==============================================================================
+  predicted=camera_node  accepted=['camera_node', 'localization_node']  top1=PASS rank=1  det=0.496s diag=0.829s FDR=0.0 chain_acc=0.8 phys_cov=1.0
+  anomalous nodes: ['camera_node', 'control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['camera_node', 'perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=FAIL  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G01 LiDAR latency: scan publication delayed 0.4 s   [rep 2]
+  faults: lidar_node:latency(p=0.4, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.562s diag=0.82s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G02 LiDAR dropout: the scan stops entirely   [rep 2]
+  faults: lidar_node:dropout(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.877s diag=0.877s FDR=0.0 chain_acc=1.0 phys_cov=0.6
+  anomalous nodes: ['lidar_node', 'localization_node', 'perception_node']  chain: ['lidar_node', 'perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G03 LiDAR degradation: heavy noise and invalid returns   [rep 2]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.112s diag=0.398s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G04 camera dropout: the image stream stops (perception gating opens downstream first)   [rep 2]
+  faults: camera_node:dropout(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=camera_node  accepted=['camera_node']  top1=PASS rank=1  det=0.507s diag=0.94s FDR=0.0 chain_acc=0.6 phys_cov=1.0
+  anomalous nodes: ['camera_node', 'control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['camera_node', 'perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=FAIL  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G05 stale/repeated sensor data: odometry repeats its last measurement   [rep 2]
+  faults: odometry_node:stale(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=odometry_node  accepted=['odometry_node']  top1=PASS rank=1  det=0.068s diag=0.463s FDR=0.0 chain_acc=1.0 phys_cov=0.75
+  anomalous nodes: ['localization_node', 'odometry_node', 'planning_node']  chain: ['odometry_node', 'localization_node', 'planning_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G06 sensor rate reduction: IMU publishes at a quarter of its rate   [rep 2]
+  faults: imu_node:rate(p=0.25, +0.0s, 10.0s)
+==============================================================================
+  !! no diagnosis in the observation window
+  baselines (identical evidence):  independent=FAIL  temporal_only=FAIL  static_dep_anom=FAIL  static_dep_temp=FAIL  proposed=FAIL
+  ablation:  full=FAIL  no_D=FAIL  no_T=FAIL  no_S=FAIL  no_A=FAIL
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G07 perception processing delay: 0.4 s of real work per scan   [rep 2]
+  faults: perception_node:processing_delay(p=0.4, +0.0s, 10.0s)
+==============================================================================[INFO] [1790111072.753893647] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111074.959007898] [experiment_controller]: >>> Injected processing_delay on perception_node (param=0.4, dur=10.0s)
+[INFO] [1790111082.969634418] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111083.256249765] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111091.502966870] [experiment_controller]: >>> Injected degradation on perception_node (param=0.0, dur=10.0s)
+[INFO] [1790111099.490336841] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111099.709651021] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111107.421143880] [experiment_controller]: >>> Injected localization_failure on localization_node (param=20.0, dur=10.0s)
+[INFO] [1790111115.439601789] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111115.688840154] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111123.912701252] [experiment_controller]: >>> Injected navigation_failure on planning_node (param=2.0, dur=10.0s)
+[INFO] [1790111131.917724025] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111132.187206246] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111139.905425304] [experiment_controller]: >>> Injected control_failure on control_node (param=1.0, dur=10.0s)
+[INFO] [1790111147.908273627] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111148.152910842] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111154.867949003] [experiment_controller]: >>> Injected latency on perception_node (param=0.4, dur=10.0s)
+[INFO] [1790111162.871008548] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111163.119101021] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111170.846689462] [experiment_controller]: >>> Injected loss on lidar_node (param=0.6, dur=10.0s)
+[INFO] [1790111178.835434753] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111179.083341007] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111184.299179736] [experiment_controller]: >>> Injected crash on perception_node (param=0.0, dur=1.0s)
+[INFO] [1790111194.307047858] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111194.561650574] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111200.776819094] [experiment_controller]: >>> Injected stop on localization_node (param=0.0, dur=1.0s)
+[INFO] [1790111210.788798644] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111211.031929546] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111215.745202167] [experiment_controller]: >>> Injected topic_change on planning_node (param=1.0, dur=10.0s)
+[INFO] [1790111223.742593299] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111223.992609624] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111226.199935653] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1790111227.701824329] [experiment_controller]: >>> Injected workload on perception_node (param=150.0, dur=10.0s)
+[INFO] [1790111236.213741781] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111236.471499166] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790111244.188921709] [experiment_controller]: >>> Injected dropout on camera_node (param=1.0, dur=10.0s)
+[INFO] [1790111247.191565685] [experiment_controller]: >>> Injected localization_failure on localization_node (param=20.0, dur=10.0s)
+
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=1.029s diag=1.029s FDR=0.0 chain_acc=1.0 phys_cov=0.25
+  anomalous nodes: ['perception_node']  chain: ['perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G08 perception degradation: empty obstacle sets   [rep 2]
+  faults: perception_node:degradation(p=0.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.183s diag=0.504s FDR=0.0 chain_acc=1.0 phys_cov=0.5
+  anomalous nodes: ['localization_node', 'perception_node']  chain: ['perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G09 localization failure: pose jump and uncertainty spike   [rep 2]
+  faults: localization_node:localization_failure(p=20.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=localization_node  accepted=['localization_node']  top1=PASS rank=1  det=0.109s diag=0.567s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node', 'localization_node', 'planning_node']  chain: ['localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G10 planning failure: the planner emits no path   [rep 2]
+  faults: planning_node:navigation_failure(p=2.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=planning_node  accepted=['planning_node']  top1=PASS rank=1  det=0.334s diag=0.58s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node', 'planning_node']  chain: ['planning_node', 'control_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G11 control failure: erratic velocity commands   [rep 2]
+  faults: control_node:control_failure(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=control_node  accepted=['control_node']  top1=PASS rank=1  det=1.789s diag=2.083s FDR=0.0 chain_acc=1.0 phys_cov=1.0
+  anomalous nodes: ['control_node']  chain: ['control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G12 communication delay: perception output delayed 0.4 s   [rep 2]
+  faults: perception_node:latency(p=0.4, +0.0s, 10.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.59s diag=0.623s FDR=0.0 chain_acc=0.5 phys_cov=0.25
+  anomalous nodes: ['perception_node']  chain: ['perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G13 communication loss: 60 % of LiDAR messages dropped in flight   [rep 2]
+  faults: lidar_node:loss(p=0.6, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=1.155s diag=1.155s FDR=0.0 chain_acc=1.0 phys_cov=0.6667
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G14 node crash: perception process dies abruptly and is respawned   [rep 2]
+  faults: perception_node:crash(p=0.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.696s diag=0.696s FDR=0.0 chain_acc=1.0 phys_cov=0.5
+  anomalous nodes: ['localization_node', 'perception_node']  chain: ['perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G15 process restart: localization stops cleanly and is respawned after 4 s   [rep 2]
+  faults: localization_node:stop(p=0.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=localization_node  accepted=['localization_node']  top1=PASS rank=1  det=0.469s diag=0.716s FDR=0.0 chain_acc=1.0 phys_cov=0.6667
+  anomalous nodes: ['localization_node', 'planning_node']  chain: ['localization_node', 'planning_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G16 runtime topic change: the planner switches its pose source to raw odometry (no fault)   [rep 2]
+  faults: planning_node:topic_change(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  graph-change scenario: diagnoses raised = 0  -> PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G17 compound: LiDAR noise, then perception workload 1.5 s later   [rep 2]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s); perception_node:workload(p=150.0, +1.5s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node', 'perception_node']  top1=PASS rank=1  det=0.205s diag=0.293s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+==============================================================================
+G18 ambiguous compound: camera loss, then a strong localization failure 3 s later   [rep 2]
+  faults: camera_node:dropout(p=1.0, +0.0s, 10.0s); localization_node:localization_failure(p=20.0, +3.0s, 10.0s)
+==============================================================================
+  predicted=camera_node  accepted=['camera_node', 'localization_node']  top1=PASS rank=1  det=0.476s diag=0.804s FDR=0.0 chain_acc=0.8 phys_cov=1.0[INFO] [1790111256.204984958] [experiment_controller]: >>> Cleared all faults.
+
+  anomalous nodes: ['camera_node', 'control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['camera_node', 'perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=FAIL  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to runs/gazebo/bench2/results.json
+
+======================================================================================================================
+SIMULATION BENCHMARK (proposed method, live; baselines/ablations on identical recorded evidence)
+======================================================================================================================
+scenario                                n top1 top3   MRR   det  diag   FDR chain  phys | indepe tempor static static propos |  full  no_D  no_T  no_S  no_A
+----------------------------------------------------------------------------------------------------------------------
+lidar_latency                           3    3    3   1.0 0.533 0.728   0.0   1.0   0.4 |      3      3      3      3      3 |     3     3     3     3     3
+lidar_dropout                           3    3    3   1.0 0.788 0.788   0.0   1.0   0.6 |      0      3      3      3      3 |     3     3     3     3     3
+lidar_noise                             3    3    3   1.0 0.135 0.323   0.0   1.0   0.4 |      3      3      3      3      3 |     3     3     3     3     3
+camera_dropout                          3    3    3   1.0 0.562 0.872   0.0   0.6   1.0 |      0      0      3      3      3 |     3     3     3     3     3
+odometry_stale                          3    3    3   1.0 0.088 0.407   0.0   1.0  0.75 |      0      3      3      3      3 |     3     3     3     3     3
+imu_rate_drop                           3    0    0   0.0  None  None  None   0.0   0.0 |      0      0      0      0      0 |     0     0     0     0     0
+perception_delay                        3    3    3   1.0 0.827 0.827   0.0   1.0  0.25 |      3      3      3      3      3 |     3     3     3     3     3
+perception_degradation                  3    3    3   1.0 0.181  0.52   0.0   1.0   0.5 |      0      3      3      3      3 |     3     3     3     3     3
+localization_failure                    3    3    3   1.0 0.089 0.399   0.0   1.0   1.0 |      3      3      3      3      3 |     3     3     3     3     3
+navigation_failure                      3    3    3   1.0 0.349 0.594   0.0   1.0   1.0 |      0      3      3      3      3 |     3     3     3     3     3
+control_failure                         3    3    3   1.0 1.731  1.96   0.0   1.0   1.0 |      3      3      3      3      3 |     3     3     3     3     3
+perception_link_latency                 3    3    3   1.0 0.571 0.679   0.0   0.5  0.25 |      3      3      3      3      3 |     3     3     3     3     3
+lidar_link_loss                         3    3    3   1.0  1.73  1.73   0.0   1.0 0.667 |      3      3      3      3      3 |     3     3     3     3     3
+perception_crash                        3    3    3   1.0   0.6   0.6   0.0   1.0   0.5 |      0      3      3      3      3 |     3     3     3     3     3
+localization_restart                    3    3    3   1.0 0.449  0.63   0.0   1.0 0.667 |      0      3      3      3      3 |     3     3     3     3     3
+planning_topic_change                   3    3    3   1.0  None  None   0.0   1.0   1.0 |      -      -      -      -      - |     -     -     -     -     -
+lidar_noise_plus_perception_workload    3    3    3   1.0 0.181 0.388   0.0 0.778 0.533 |      3      3      3      3      3 |     3     3     3     3     3
+camera_dropout_plus_localization_failure  3    3    3   1.0 0.495 0.753   0.0   0.8   1.0 |      3      0      3      3      3 |     3     3     3     3     3
+----------------------------------------------------------------------------------------------------------------------
+{
+  "total_experiments": 54,
+  "top1_correct": 51,
+  "top1_accuracy": 0.9444,
+  "top3_correct": 51,
+  "top3_accuracy": 0.9444,
+  "mean_reciprocal_rank": 0.9444,
+  "avg_detection_latency_sec": 0.582,
+  "avg_diagnosis_latency_sec": 0.762,
+  "avg_correct_diagnosis_latency_sec": 0.762,
+  "detection_latency_stats": {
+    "n": 48,
+    "mean": 0.582,
+    "min": 0.062,
+    "max": 3.369,
+    "std": 0.582,
+    "median": 0.486,
+    "p25": 0.188,
+    "p75": 0.671
+  },
+  "diagnosis_latency_stats": {
+    "n": 48,
+    "mean": 0.762,
+    "min": 0.141,
+    "max": 3.369,
+    "std": 0.548,
+    "median": 0.663,
+    "p25": 0.465,
+    "p75": 0.808
+  },
+  "correct_diagnosis_latency_stats": {
+    "n": 48,
+    "mean": 0.762,
+    "min": 0.141,
+    "max": 3.369,
+    "std": 0.548,
+    "median": 0.663,
+    "p25": 0.465,
+    "p75": 0.808
+  },
+  "post_injection_diagnoses": 802,
+  "post_injection_false_diagnoses": 0,
+  "post_injection_false_diagnosis_rate": 0.0,
+  "false_diagnosis_rate": 0.0,
+  "num_diagnoses_after_injection": 802,
+  "avg_chain_accuracy": 0.871,
+  "chain_accuracy_n": 54,
+  "chain_order_correct_count": 48,
+  "chain_order_n": 54,
+  "chain_order_accuracy": 0.8889,
+  "avg_physical_chain_coverage": 0.64,
+  "physical_chain_coverage_n": 54,
+  "scenarios_with_unobserved_physical_nodes": [
+    "imu_rate_drop",
+    "lidar_dropout",
+    "lidar_latency",
+    "lidar_link_loss",
+    "lidar_noise",
+    "lidar_noise_plus_perception_workload",
+    "localization_restart",
+    "odometry_stale",
+    "perception_crash",
+    "perception_degradation",
+    "perception_delay",
+    "perception_link_latency"
+  ],
+  "nominal_fault_free_windows": 56,
+  "nominal_fault_free_sec": 113.134,
+  "nominal_anomalies": 0,
+  "nominal_diagnoses": 4,
+  "nominal_false_alarms": 4,
+  "nominal_false_alarm_rate_per_min": 2.1214,
+  "nominal_false_alarms_per_min": 2.1214
+}
+
+====================================================================================================
+COHORTS AND DENOMINATORS (no silent denominator switching)
+====================================================================================================
+  ALL RUNS              n = 54   proposed Top-1 = 51/54 (0.9444)
+  COMMON-EVIDENCE SUBSET n = 51   proposed Top-1 = 48/51 (0.9412)
+      baseline independent        Top-1 = 27/51 (0.5294)  MRR = 0.7255
+      baseline temporal_only      Top-1 = 42/51 (0.8235)  MRR = 0.8824
+      baseline static_dep_anom    Top-1 = 48/51 (0.9412)  MRR = 0.9412
+      baseline static_dep_temp    Top-1 = 48/51 (0.9412)  MRR = 0.9412
+      baseline proposed           Top-1 = 48/51 (0.9412)  MRR = 0.9412
+  EXCLUDED from the subset n = 3  reasons = {'scenario declares no ground-truth root cause (expect_no_diagnosis)': 3}  keys = ['planning_topic_change']
+  inclusion criterion: scenario declares a ground-truth root cause; defined before the comparison and independent of which method succeeded
+  denominators match: True
+  NOTE: the best baseline equals the proposed method on this scenario set; these results validate functionality, they do not establish superiority.
+
+BASELINES (Top-1 over all evaluated runs, identical evidence):
+  independent      top1 = 27/51 (53%)  MRR = 0.725
+  temporal_only    top1 = 42/51 (82%)  MRR = 0.882
+  static_dep_anom  top1 = 48/51 (94%)  MRR = 0.941
+  static_dep_temp  top1 = 48/51 (94%)  MRR = 0.941
+  proposed         top1 = 48/51 (94%)  MRR = 0.941
+ABLATIONS (Top-1 over all evaluated runs):
+  full     {'wD': 0.3, 'wT': 0.3, 'wS': 0.25, 'wA': 0.15}  top1 = 48/51 (94%)
+  no_D     {'wD': 0.0, 'wT': 0.3, 'wS': 0.25, 'wA': 0.15}  top1 = 48/51 (94%)
+  no_T     {'wD': 0.3, 'wT': 0.0, 'wS': 0.25, 'wA': 0.15}  top1 = 48/51 (94%)
+  no_S     {'wD': 0.3, 'wT': 0.3, 'wS': 0.0, 'wA': 0.15}  top1 = 48/51 (94%)
+  no_A     {'wD': 0.3, 'wT': 0.3, 'wS': 0.25, 'wA': 0.0}  top1 = 48/51 (94%)
+
+NOMINAL: 113.1s fault-free observed, 0 anomalies, 4 false alarms (2.1214/min)
+
+Results written to runs/gazebo/bench2/results.json
+EXIT=0

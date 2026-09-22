@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>rca_gazebo</name>
+  <version>0.1.0</version>
+  <description>Gazebo Harmonic simulation backend for the dependency-aware temporal RCA experiments.
+    Provides the world, the differential-drive robot, the ros_gz bridge configuration, the ROS 2
+    sensor driver nodes (which also carry the runtime degradation layer) and the Gazebo scenario
+    runner. The processing pipeline (perception / localization / planning / control) is reused
+    verbatim from rca_sim, so both simulators feed the identical diagnostic monitor and RCA engine.
+  </description>
+  <maintainer email="lynx@todo.todo">lynx</maintainer>
+  <license>Apache-2.0</license>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>rca_sim</exec_depend>
+  <exec_depend>diagnostic_monitor</exec_depend>
+  <exec_depend>rca_test_system</exec_depend>
+  <exec_depend>ros_gz_sim</exec_depend>
+  <exec_depend>ros_gz_bridge</exec_depend>
+  <exec_depend>ros_gz_image</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

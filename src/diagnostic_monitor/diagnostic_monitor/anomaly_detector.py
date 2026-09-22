@@ -6,8 +6,9 @@ events, and node crashes.
 
 Design notes (research prototype, deterministic and interpretable):
 - A z-score anomaly is only *emitted* after `confirm_samples` consecutive
-  out-of-band observations. A single late/odd sample (OS scheduling jitter,
-  WSL2 stalls) is therefore never reported as an anomaly on its own.
+  out-of-band observations deviating in the same direction. A single late/odd
+  sample (OS scheduling jitter, WSL2 stalls) is therefore never reported as an
+  anomaly on its own, and neither is a stall followed by its catch-up burst.
 - Anomalous samples never update the baseline, so a fault does not
   contaminate the "normal" model and detection persists for its duration.
 - Every anomaly carries two times: `timestamp` (when the evidence was
@@ -40,6 +41,7 @@ class MetricBaseline:
         # Consecutive out-of-band observations (confirmation counter) and when the streak began
         self.outlier_streak = 0
         self.streak_start: Optional[float] = None
+        self.streak_sign = 0             # +1 above / -1 below the baseline mean
 
     def update(self, value: float):
         self.count += 1
@@ -134,6 +136,7 @@ class AnomalyDetector:
         confirm_samples: int = 2,
         timeout_floor_sec: float = 0.45,
         crash_realert_sec: float = 2.0,
+        forget_missing_after_sec: float = 60.0,
     ):
         self.warmup_duration_sec = warmup_duration_sec
         self.z_threshold = z_threshold
@@ -142,6 +145,10 @@ class AnomalyDetector:
         self.confirm_samples = max(1, int(confirm_samples))
         self.timeout_floor_sec = timeout_floor_sec
         self.crash_realert_sec = crash_realert_sec
+        # A node absent for much longer than the RCA evidence window can no longer
+        # contribute to a live diagnosis; stop re-alerting and forget it, so a node
+        # that left the system permanently is not reported as crashing forever.
+        self.forget_missing_after_sec = forget_missing_after_sec
 
         self.start_time = time.time()
         self.baselines: Dict[Tuple[str, str], MetricBaseline] = {}  # (node, metric) -> MetricBaseline
@@ -190,8 +197,12 @@ class AnomalyDetector:
             return 2.0
         if 'obstacle_count' in metric:
             return 1.0
-        if 'linear_vel' in metric:
+        if metric.endswith(('_empty', 'cmd_zero', 'stale_repeat')):     # binary validity indicators
+            return 0.5
+        if 'pose_uncertainty' in metric:
             return 0.25
+        if 'linear_vel' in metric:
+            return 0.45
         return 0.15
 
     def process_metric(
@@ -237,7 +248,13 @@ class AnomalyDetector:
         # Anomaly condition: requires both statistical z-score AND physical absolute deviation
         # to ensure normal OS thread/scheduling jitter is not falsely flagged.
         if z > self.z_threshold and abs_dev >= baseline.min_abs_dev:
+            sign = 1 if value > mean else -1
+            if baseline.outlier_streak > 0 and sign != baseline.streak_sign:
+                # A deviation in the opposite direction is not persistence: a scheduling
+                # stall (too long) followed by the catch-up burst (too short) is one event.
+                baseline.outlier_streak = 0
             baseline.outlier_streak += 1
+            baseline.streak_sign = sign
             if baseline.outlier_streak == 1:
                 baseline.streak_start = timestamp
             if baseline.outlier_streak < self.confirm_samples:
@@ -264,6 +281,7 @@ class AnomalyDetector:
         # Normal observation: reset confirmation streak and update baseline
         baseline.outlier_streak = 0
         baseline.streak_start = None
+        baseline.streak_sign = 0
         baseline.update(value)
         return None
 
@@ -316,6 +334,10 @@ class AnomalyDetector:
     def check_node_crashes(self, current_active_nodes: Set[str], current_time: float) -> List[Anomaly]:
         """Detects node termination / crash from the ROS graph.
 
+        A node that is still missing is re-reported every `crash_realert_sec`, and is
+        forgotten once it has been absent for `forget_missing_after_sec` (ten times the
+        RCA evidence window): a node that left the system for good must not be reported
+        as crashing forever.
         A node that is still missing is re-reported every `crash_realert_sec`
         (like an ongoing timeout) so the evidence stays inside the RCA window.
         """
@@ -339,6 +361,10 @@ class AnomalyDetector:
                 self.missing_nodes.pop(node)          # node restarted
                 continue
             last_alive, last_alert = self.missing_nodes[node]
+            if current_time - last_alive > self.forget_missing_after_sec:
+                # Gone for far longer than any evidence window: it left for good.
+                self.missing_nodes.pop(node)
+                continue
             if current_time - last_alert >= self.crash_realert_sec:
                 self.missing_nodes[node] = (last_alive, current_time)
                 crash_anomalies.append(Anomaly(

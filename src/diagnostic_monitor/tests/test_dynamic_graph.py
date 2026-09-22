@@ -59,6 +59,7 @@ def test_discoverer_topic_and_node_filtering():
     assert RosGraphDiscoverer.should_ignore_topic('/rca/fault_command')
     assert RosGraphDiscoverer.should_ignore_topic('/rca/eval_results')
     assert RosGraphDiscoverer.should_ignore_topic('/rca/diagnosis_report')
+    assert RosGraphDiscoverer.should_ignore_topic('/rca/dashboard_state')
 
     # Valid application topics must NOT be ignored
     assert not RosGraphDiscoverer.should_ignore_topic('/sensor/scan')
@@ -71,4 +72,53 @@ def test_discoverer_topic_and_node_filtering():
     assert RosGraphDiscoverer.should_ignore_node('fault_injector')
     assert RosGraphDiscoverer.should_ignore_node('experiment_controller')
     assert RosGraphDiscoverer.should_ignore_node('_ros2cli_daemon')
+    assert RosGraphDiscoverer.should_ignore_node('_NODE_NAME_UNKNOWN_')
     assert not RosGraphDiscoverer.should_ignore_node('sensor_node')
+
+
+class _Endpoint:
+    def __init__(self, node_name):
+        self.node_name = node_name
+
+
+class _FakeRosNode:
+    """Minimal stand-in for the rclpy graph API used by RosGraphDiscoverer."""
+
+    def __init__(self, nodes, topics, pubs, subs):
+        self._nodes, self._topics, self._pubs, self._subs = nodes, topics, pubs, subs
+
+    def get_node_names_and_namespaces(self):
+        return [(n, '/') for n in self._nodes]
+
+    def get_topic_names_and_types(self):
+        return [(t, ['std_msgs/msg/String']) for t in self._topics]
+
+    def get_publishers_info_by_topic(self, t):
+        return [_Endpoint(n) for n in self._pubs.get(t, [])]
+
+    def get_subscriptions_info_by_topic(self, t):
+        return [_Endpoint(n) for n in self._subs.get(t, [])]
+
+    def get_logger(self):
+        import logging
+        return logging.getLogger('fake')
+
+
+def test_discovery_includes_only_application_dataflow_participants():
+    """Observers that only touch /rca/* topics (monitor, CLI, TUI) or no topics at all
+    must never become graph nodes; app nodes and edges come purely from endpoints."""
+    ros = _FakeRosNode(
+        nodes=['sensor_node', 'perception_node', 'rca_tui', 'diagnostic_monitor', 'idle_tool', '_ros2cli_123'],
+        topics=['/sensor/scan', '/rca/dashboard_state', '/rosout', '/rca/fault_command'],
+        pubs={'/sensor/scan': ['sensor_node'], '/rca/dashboard_state': ['diagnostic_monitor'],
+              '/rosout': ['sensor_node', 'rca_tui', 'idle_tool']},
+        subs={'/sensor/scan': ['perception_node', 'diagnostic_monitor'], '/rca/dashboard_state': ['rca_tui'],
+              '/rca/fault_command': ['sensor_node', 'perception_node']},
+    )
+    g = RosGraphDiscoverer.discover(ros)
+    assert g.nodes == {'sensor_node', 'perception_node'}
+    assert g.successors('sensor_node') == {'perception_node'}
+    assert g.edge_topics[('sensor_node', 'perception_node')] == {'/sensor/scan'}
+    # a node that later gains an application subscription joins the graph
+    ros._subs['/sensor/scan'].append('idle_tool')
+    assert 'idle_tool' in RosGraphDiscoverer.discover(ros).nodes

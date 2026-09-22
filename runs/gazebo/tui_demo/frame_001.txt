@@ -1,0 +1,46 @@
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Dynamic Dependency-Aware Temporal RCA  |  ROS 2 diagnostic console                                                                                            ROS LIVE │
+│ SYSTEM NORMAL   backend gazebo   nodes 9  edges 9  topics 8  anomalies(window) 0  anomalous nodes 0                             state age 0.0s  monitor up 101s  msgs 4│
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓┌────────────────────────────────────────────────────────────────┐
+┃╭ DEPENDENCY GRAPH (discovered at runtime) ──────────────────────────────────────────────────────────╮┃│╭ ROOT CAUSE DIAGNOSIS ────────────────────────────────────────╮│
+┃│                                                                                                    │┃││  ROOT CAUSE                                                  ││
+┃│╭────────────╮                                                                                      │┃││  None                                                        ││
+┃││[ ] camera_n│                                                                                      │┃││                                                              ││
+┃││ nominal    │                                                                                      │┃││  No anomalies in the RCA window (6s).                        ││
+┃││ in graph / │                                                                                      │┃││  System operating nominally.                                 ││
+┃│╰────────────╯                                                                                      │┃││                                                              ││
+┃│╭────────────╮                                                                                      │┃││                                                              ││
+┃││[ ] imu_node│    ╭─────────────╮    ╭──────────────╮    ╭───────────╮    ╭──────────╮   ╭─────────╮│┃││                                                              ││
+┃││ nominal    │    │[ ] perceptio│    │[ ] localizati│    │[ ] plannin│    │[ ] contro│   │[ ] sim_w││┃││                                                              ││
+┃││ in graph / │ ──▶│ nominal     │ ──▶│ nominal      │ ──▶│ nominal   │ ──▶│ nominal  │ ──│ nominal ││┃││                                                              ││
+┃│╰────────────╯    │ in graph / A│    │ in graph / AL│    │ in graph /│    │ in graph │   │ in graph││┃││                                                              ││
+┃│╭────────────╮    ╰─────────────╯    ╰──────────────╯    ╰───────────╯    ╰──────────╯   ╰─────────╯│┃││                                                              ││
+┃││[ ] lidar_no│                                                                                      │┃││                                                              ││
+┃││ nominal    │                                                                                      │┃││                                                              ││
+┃│╰────────────╯                                                                                      │┃││                                                              ││
+┃│╭────────────╮                                                                                      │┃││                                                              ││
+┃││[ ] odometry│                                                                                      │┃││                                                              ││
+┃││ nominal    │                                                                                      │┃││                                                              ││
+┃│╰────────────╯                                                                                      │┃││                                                              ││
+┃│                                                                                                    │┃││                                                              ││
+┃├────────────────────────────────────────────────────────────────────────────────────────────────────┤┃││                                                              ││
+┃│  edges (dynamic ROS 2 graph discovery):                                                            │┃││                                                              ││
+┃│  camera_node -> perception_node   via /sim/camera/image                                            │┃││                                                              ││
+┃│  control_node -> sim_world   via /cmd_vel                                                          │┃││                                                              ││
+┃│  imu_node -> localization_node   via /sim/imu/data                                                 │┃││                                                              ││
+┃│  lidar_node -> perception_node   via /sim/lidar/scan                                               │┃││                                                              ││
+┃│  localization_node -> planning_node   via /localization/pose                                       │┃││                                                              ││
+┃│  odometry_node -> localization_node   via /sim/odom                                                │┃││                                                              ││
+┃│  perception_node -> localization_node   via /perception/obstacles                                  │┃││                                                              ││
+┃│  perception_node -> planning_node   via /perception/obstacles                                      │┃││                                                              ││
+┃╰────────────────────────────────────────────────────────────────────────────────────────────────────╯┃│╰──────────────────────────────────────────────────────────────╯│
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛└────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│╭ TEMPORAL TIMELINE (onset-ordered evidence; ordering supports, does not prove, causality) ────────────────────────────────────────────────────────────────────────────╮│
+││21:18:33.18  graph                graph_discovered            5 nodes, 2 edges                                                                                        ││
+││21:18:34.18  graph                graph_discovered            6 nodes, 2 edges                                                                                        ││
+││21:18:35.18  graph                graph_discovered            9 nodes, 9 edges                                                                                        ││
+│╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯│
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+ [R] Refresh  [G] Graph  [D] Diagnosis  [T] Timeline  [↑/↓] Scroll focused panel  [Q] Quit             visualisation layer only: all RCA logic runs in diagnostic_monitor

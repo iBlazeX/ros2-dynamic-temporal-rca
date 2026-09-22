@@ -6,3 +6,8 @@ log/
 # Python bytecode
 __pycache__/
 *.pyc
+
+# live event store at the workspace root (archived copies are kept under runs/)
+/events.db
+/events.db-wal
+/events.db-shm

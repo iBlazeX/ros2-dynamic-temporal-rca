@@ -1,0 +1,1054 @@
+[
+  {
+    "label": "gazebo_only",
+    "timestamp": 1790112524.3679714,
+    "duration_sec": 30.0,
+    "method": "CPU from /proc/<pid>/stat utime+stime deltas over the window; RSS sampled every 1 s from /proc/<pid>/statm",
+    "machine": {
+      "logical_cores": 8,
+      "cpu_model": "11th Gen Intel(R) Core(TM) i7-11370H @ 3.30GHz",
+      "mem_total_mb": 7816,
+      "load_avg_1_5_15": [
+        3.46728515625,
+        4.64794921875,
+        3.6943359375
+      ],
+      "note": "cpu_percent_sum is raw process CPU where one busy core = 100 %; the machine has 8 logical cores, i.e. 800 % capacity"
+    },
+    "processes": {
+      "rca_sim": {
+        "processes": 0,
+        "pids": [],
+        "cpu_percent_sum": 0,
+        "core_equivalents": 0.0,
+        "percent_of_machine": 0.0,
+        "rss_mb_sum_mean": 0,
+        "rss_mb_sum_max": 0,
+        "per_process": [],
+        "cpu_percent_mean": 0,
+        "rss_mb_mean": 0
+      },
+      "gazebo": {
+        "processes": 7,
+        "pids": [
+          16263,
+          16264,
+          16265,
+          16266,
+          16267,
+          16268,
+          16269
+        ],
+        "cpu_percent_sum": 136.9,
+        "core_equivalents": 1.37,
+        "percent_of_machine": 17.1,
+        "rss_mb_sum_mean": 853.6,
+        "rss_mb_sum_max": 853.7,
+        "per_process": [
+          {
+            "pid": 16263,
+            "cmd": "gz sim -r -v 2 -s --headless-rendering /home/lynx/ros2_rca_ws/install/rca_gazebo/share/rca_gazebo/worlds/rca_arena.sdf",
+            "cpu_percent": 68.5,
+            "rss_mb_mean": 425.1,
+            "rss_mb_max": 425.2
+          },
+          {
+            "pid": 16264,
+            "cmd": "/opt/ros/jazzy/lib/ros_gz_bridge/parameter_bridge --ros-args -r __node:=gz_bridge --params-file /tmp/launch_params_kh0ws",
+            "cpu_percent": 10.4,
+            "rss_mb_mean": 56.1,
+            "rss_mb_max": 56.1
+          },
+          {
+            "pid": 16265,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/lidar_node --ros-args -r __node:=lidar_node --",
+            "cpu_percent": 11.1,
+            "rss_mb_mean": 74.5,
+            "rss_mb_max": 74.5
+          },
+          {
+            "pid": 16266,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/camera_node --ros-args -r __node:=camera_node ",
+            "cpu_percent": 11.0,
+            "rss_mb_mean": 74.6,
+            "rss_mb_max": 74.6
+          },
+          {
+            "pid": 16267,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/imu_node --ros-args -r __node:=imu_node --para",
+            "cpu_percent": 12.0,
+            "rss_mb_mean": 74.8,
+            "rss_mb_max": 74.8
+          },
+          {
+            "pid": 16268,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/odometry_node --ros-args -r __node:=odometry_n",
+            "cpu_percent": 12.3,
+            "rss_mb_mean": 74.4,
+            "rss_mb_max": 74.4
+          },
+          {
+            "pid": 16269,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/sim_world --ros-args -r __node:=sim_world --pa",
+            "cpu_percent": 11.6,
+            "rss_mb_mean": 74.1,
+            "rss_mb_max": 74.1
+          }
+        ],
+        "cpu_percent_mean": 136.9,
+        "rss_mb_mean": 853.6
+      },
+      "pipeline": {
+        "processes": 4,
+        "pids": [
+          16270,
+          16271,
+          16272,
+          16273
+        ],
+        "cpu_percent_sum": 54.0,
+        "core_equivalents": 0.54,
+        "percent_of_machine": 6.8,
+        "rss_mb_sum_mean": 296.4,
+        "rss_mb_sum_max": 296.4,
+        "per_process": [
+          {
+            "pid": 16270,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/perception_node --ros-args -r __node:=perception_nod",
+            "cpu_percent": 12.0,
+            "rss_mb_mean": 74.1,
+            "rss_mb_max": 74.1
+          },
+          {
+            "pid": 16271,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/localization_node --ros-args -r __node:=localization",
+            "cpu_percent": 16.6,
+            "rss_mb_mean": 75.0,
+            "rss_mb_max": 75.0
+          },
+          {
+            "pid": 16272,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/planning_node --ros-args -r __node:=planning_node --",
+            "cpu_percent": 13.1,
+            "rss_mb_mean": 73.6,
+            "rss_mb_max": 73.6
+          },
+          {
+            "pid": 16273,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/control_node --ros-args -r __node:=control_node --pa",
+            "cpu_percent": 12.3,
+            "rss_mb_mean": 73.7,
+            "rss_mb_max": 73.7
+          }
+        ],
+        "cpu_percent_mean": 54.0,
+        "rss_mb_mean": 296.4
+      },
+      "diagnostic_monitor": {
+        "processes": 0,
+        "pids": [],
+        "cpu_percent_sum": 0,
+        "core_equivalents": 0.0,
+        "percent_of_machine": 0.0,
+        "rss_mb_sum_mean": 0,
+        "rss_mb_sum_max": 0,
+        "per_process": [],
+        "cpu_percent_mean": 0,
+        "rss_mb_mean": 0
+      },
+      "tui": {
+        "processes": 0,
+        "pids": [],
+        "cpu_percent_sum": 0,
+        "core_equivalents": 0.0,
+        "percent_of_machine": 0.0,
+        "rss_mb_sum_mean": 0,
+        "rss_mb_sum_max": 0,
+        "per_process": [],
+        "cpu_percent_mean": 0,
+        "rss_mb_mean": 0
+      },
+      "simulation": {
+        "processes": 0,
+        "pids": [],
+        "cpu_percent_sum": 0,
+        "core_equivalents": 0.0,
+        "percent_of_machine": 0.0,
+        "rss_mb_sum_mean": 0,
+        "rss_mb_sum_max": 0,
+        "per_process": [],
+        "cpu_percent_mean": 0,
+        "rss_mb_mean": 0
+      },
+      "_window_sec": 30.02
+    }
+  },
+  {
+    "label": "gazebo_monitor_nominal",
+    "timestamp": 1790112661.5008016,
+    "duration_sec": 30.0,
+    "method": "CPU from /proc/<pid>/stat utime+stime deltas over the window; RSS sampled every 1 s from /proc/<pid>/statm",
+    "machine": {
+      "logical_cores": 8,
+      "cpu_model": "11th Gen Intel(R) Core(TM) i7-11370H @ 3.30GHz",
+      "mem_total_mb": 7816,
+      "load_avg_1_5_15": [
+        1.63671875,
+        3.5185546875,
+        3.4033203125
+      ],
+      "note": "cpu_percent_sum is raw process CPU where one busy core = 100 %; the machine has 8 logical cores, i.e. 800 % capacity"
+    },
+    "processes": {
+      "rca_sim": {
+        "processes": 0,
+        "pids": [],
+        "cpu_percent_sum": 0,
+        "core_equivalents": 0.0,
+        "percent_of_machine": 0.0,
+        "rss_mb_sum_mean": 0,
+        "rss_mb_sum_max": 0,
+        "per_process": [],
+        "cpu_percent_mean": 0,
+        "rss_mb_mean": 0
+      },
+      "gazebo": {
+        "processes": 7,
+        "pids": [
+          16519,
+          16520,
+          16521,
+          16522,
+          16523,
+          16524,
+          16525
+        ],
+        "cpu_percent_sum": 131.8,
+        "core_equivalents": 1.32,
+        "percent_of_machine": 16.5,
+        "rss_mb_sum_mean": 855.4,
+        "rss_mb_sum_max": 855.4,
+        "per_process": [
+          {
+            "pid": 16519,
+            "cmd": "gz sim -r -v 2 -s --headless-rendering /home/lynx/ros2_rca_ws/install/rca_gazebo/share/rca_gazebo/worlds/rca_arena.sdf",
+            "cpu_percent": 68.2,
+            "rss_mb_mean": 424.8,
+            "rss_mb_max": 424.8
+          },
+          {
+            "pid": 16520,
+            "cmd": "/opt/ros/jazzy/lib/ros_gz_bridge/parameter_bridge --ros-args -r __node:=gz_bridge --params-file /tmp/launch_params_1qcaj",
+            "cpu_percent": 10.1,
+            "rss_mb_mean": 56.3,
+            "rss_mb_max": 56.3
+          },
+          {
+            "pid": 16521,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/lidar_node --ros-args -r __node:=lidar_node --",
+            "cpu_percent": 10.5,
+            "rss_mb_mean": 74.9,
+            "rss_mb_max": 74.9
+          },
+          {
+            "pid": 16522,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/camera_node --ros-args -r __node:=camera_node ",
+            "cpu_percent": 10.0,
+            "rss_mb_mean": 74.8,
+            "rss_mb_max": 74.8
+          },
+          {
+            "pid": 16523,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/imu_node --ros-args -r __node:=imu_node --para",
+            "cpu_percent": 11.0,
+            "rss_mb_mean": 75.1,
+            "rss_mb_max": 75.1
+          },
+          {
+            "pid": 16524,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/odometry_node --ros-args -r __node:=odometry_n",
+            "cpu_percent": 11.6,
+            "rss_mb_mean": 75.1,
+            "rss_mb_max": 75.1
+          },
+          {
+            "pid": 16525,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/sim_world --ros-args -r __node:=sim_world --pa",
+            "cpu_percent": 10.4,
+            "rss_mb_mean": 74.4,
+            "rss_mb_max": 74.4
+          }
+        ],
+        "cpu_percent_mean": 131.8,
+        "rss_mb_mean": 855.4
+      },
+      "pipeline": {
+        "processes": 4,
+        "pids": [
+          16526,
+          16527,
+          16528,
+          16529
+        ],
+        "cpu_percent_sum": 50.2,
+        "core_equivalents": 0.5,
+        "percent_of_machine": 6.3,
+        "rss_mb_sum_mean": 298.0,
+        "rss_mb_sum_max": 298.0,
+        "per_process": [
+          {
+            "pid": 16526,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/perception_node --ros-args -r __node:=perception_nod",
+            "cpu_percent": 11.0,
+            "rss_mb_mean": 74.8,
+            "rss_mb_max": 74.8
+          },
+          {
+            "pid": 16527,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/localization_node --ros-args -r __node:=localization",
+            "cpu_percent": 16.1,
+            "rss_mb_mean": 75.6,
+            "rss_mb_max": 75.6
+          },
+          {
+            "pid": 16528,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/planning_node --ros-args -r __node:=planning_node --",
+            "cpu_percent": 11.9,
+            "rss_mb_mean": 73.8,
+            "rss_mb_max": 73.8
+          },
+          {
+            "pid": 16529,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/control_node --ros-args -r __node:=control_node --pa",
+            "cpu_percent": 11.2,
+            "rss_mb_mean": 73.8,
+            "rss_mb_max": 73.8
+          }
+        ],
+        "cpu_percent_mean": 50.2,
+        "rss_mb_mean": 298.0
+      },
+      "diagnostic_monitor": {
+        "processes": 1,
+        "pids": [
+          16731
+        ],
+        "cpu_percent_sum": 16.5,
+        "core_equivalents": 0.17,
+        "percent_of_machine": 2.1,
+        "rss_mb_sum_mean": 79.3,
+        "rss_mb_sum_max": 79.5,
+        "per_process": [
+          {
+            "pid": 16731,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/diagnostic_monitor/lib/diagnostic_monitor/monitor_node --ros-args -r __n",
+            "cpu_percent": 16.5,
+            "rss_mb_mean": 79.3,
+            "rss_mb_max": 79.5
+          }
+        ],
+        "cpu_percent_mean": 16.5,
+        "rss_mb_mean": 79.3
+      },
+      "tui": {
+        "processes": 0,
+        "pids": [],
+        "cpu_percent_sum": 0,
+        "core_equivalents": 0.0,
+        "percent_of_machine": 0.0,
+        "rss_mb_sum_mean": 0,
+        "rss_mb_sum_max": 0,
+        "per_process": [],
+        "cpu_percent_mean": 0,
+        "rss_mb_mean": 0
+      },
+      "simulation": {
+        "processes": 0,
+        "pids": [],
+        "cpu_percent_sum": 0,
+        "core_equivalents": 0.0,
+        "percent_of_machine": 0.0,
+        "rss_mb_sum_mean": 0,
+        "rss_mb_sum_max": 0,
+        "per_process": [],
+        "cpu_percent_mean": 0,
+        "rss_mb_mean": 0
+      },
+      "_window_sec": 30.02
+    },
+    "event_store": {
+      "window_sec": 15.0,
+      "telemetry_rows_per_sec": 366.9,
+      "anomaly_rows_per_sec": 0.0,
+      "diagnosis_rows_per_sec": 0.0,
+      "db_size_mb": 6.66
+    },
+    "dashboard_topic": {
+      "window_sec": 15.0,
+      "messages_per_sec": 0.87,
+      "mean_bytes": 5817
+    },
+    "rca_compute": {
+      "anomalies_in_window": 7,
+      "graph_nodes": 9,
+      "repetitions": 20,
+      "ms_per_diagnosis": 0.18
+    }
+  },
+  {
+    "label": "gazebo_monitor_fault",
+    "timestamp": 1790112729.2180445,
+    "duration_sec": 30.0,
+    "method": "CPU from /proc/<pid>/stat utime+stime deltas over the window; RSS sampled every 1 s from /proc/<pid>/statm",
+    "machine": {
+      "logical_cores": 8,
+      "cpu_model": "11th Gen Intel(R) Core(TM) i7-11370H @ 3.30GHz",
+      "mem_total_mb": 7816,
+      "load_avg_1_5_15": [
+        1.5419921875,
+        3.17919921875,
+        3.29736328125
+      ],
+      "note": "cpu_percent_sum is raw process CPU where one busy core = 100 %; the machine has 8 logical cores, i.e. 800 % capacity"
+    },
+    "processes": {
+      "rca_sim": {
+        "processes": 0,
+        "pids": [],
+        "cpu_percent_sum": 0,
+        "core_equivalents": 0.0,
+        "percent_of_machine": 0.0,
+        "rss_mb_sum_mean": 0,
+        "rss_mb_sum_max": 0,
+        "per_process": [],
+        "cpu_percent_mean": 0,
+        "rss_mb_mean": 0
+      },
+      "gazebo": {
+        "processes": 7,
+        "pids": [
+          16519,
+          16520,
+          16521,
+          16522,
+          16523,
+          16524,
+          16525
+        ],
+        "cpu_percent_sum": 137.0,
+        "core_equivalents": 1.37,
+        "percent_of_machine": 17.1,
+        "rss_mb_sum_mean": 856.2,
+        "rss_mb_sum_max": 856.3,
+        "per_process": [
+          {
+            "pid": 16519,
+            "cmd": "gz sim -r -v 2 -s --headless-rendering /home/lynx/ros2_rca_ws/install/rca_gazebo/share/rca_gazebo/worlds/rca_arena.sdf",
+            "cpu_percent": 69.6,
+            "rss_mb_mean": 424.8,
+            "rss_mb_max": 424.8
+          },
+          {
+            "pid": 16520,
+            "cmd": "/opt/ros/jazzy/lib/ros_gz_bridge/parameter_bridge --ros-args -r __node:=gz_bridge --params-file /tmp/launch_params_1qcaj",
+            "cpu_percent": 10.4,
+            "rss_mb_mean": 56.5,
+            "rss_mb_max": 56.5
+          },
+          {
+            "pid": 16521,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/lidar_node --ros-args -r __node:=lidar_node --",
+            "cpu_percent": 10.9,
+            "rss_mb_mean": 75.0,
+            "rss_mb_max": 75.0
+          },
+          {
+            "pid": 16522,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/camera_node --ros-args -r __node:=camera_node ",
+            "cpu_percent": 10.9,
+            "rss_mb_mean": 74.9,
+            "rss_mb_max": 75.0
+          },
+          {
+            "pid": 16523,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/imu_node --ros-args -r __node:=imu_node --para",
+            "cpu_percent": 11.9,
+            "rss_mb_mean": 75.2,
+            "rss_mb_max": 75.2
+          },
+          {
+            "pid": 16524,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/odometry_node --ros-args -r __node:=odometry_n",
+            "cpu_percent": 12.2,
+            "rss_mb_mean": 75.3,
+            "rss_mb_max": 75.3
+          },
+          {
+            "pid": 16525,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/sim_world --ros-args -r __node:=sim_world --pa",
+            "cpu_percent": 11.1,
+            "rss_mb_mean": 74.5,
+            "rss_mb_max": 74.5
+          }
+        ],
+        "cpu_percent_mean": 137.0,
+        "rss_mb_mean": 856.2
+      },
+      "pipeline": {
+        "processes": 4,
+        "pids": [
+          16526,
+          16527,
+          16528,
+          16529
+        ],
+        "cpu_percent_sum": 52.3,
+        "core_equivalents": 0.52,
+        "percent_of_machine": 6.5,
+        "rss_mb_sum_mean": 298.5,
+        "rss_mb_sum_max": 298.5,
+        "per_process": [
+          {
+            "pid": 16526,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/perception_node --ros-args -r __node:=perception_nod",
+            "cpu_percent": 11.2,
+            "rss_mb_mean": 74.9,
+            "rss_mb_max": 74.9
+          },
+          {
+            "pid": 16527,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/localization_node --ros-args -r __node:=localization",
+            "cpu_percent": 16.4,
+            "rss_mb_mean": 75.7,
+            "rss_mb_max": 75.7
+          },
+          {
+            "pid": 16528,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/planning_node --ros-args -r __node:=planning_node --",
+            "cpu_percent": 12.5,
+            "rss_mb_mean": 74.0,
+            "rss_mb_max": 74.0
+          },
+          {
+            "pid": 16529,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/control_node --ros-args -r __node:=control_node --pa",
+            "cpu_percent": 12.2,
+            "rss_mb_mean": 73.9,
+            "rss_mb_max": 73.9
+          }
+        ],
+        "cpu_percent_mean": 52.3,
+        "rss_mb_mean": 298.5
+      },
+      "diagnostic_monitor": {
+        "processes": 1,
+        "pids": [
+          16731
+        ],
+        "cpu_percent_sum": 17.1,
+        "core_equivalents": 0.17,
+        "percent_of_machine": 2.1,
+        "rss_mb_sum_mean": 79.7,
+        "rss_mb_sum_max": 79.7,
+        "per_process": [
+          {
+            "pid": 16731,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/diagnostic_monitor/lib/diagnostic_monitor/monitor_node --ros-args -r __n",
+            "cpu_percent": 17.1,
+            "rss_mb_mean": 79.7,
+            "rss_mb_max": 79.7
+          }
+        ],
+        "cpu_percent_mean": 17.1,
+        "rss_mb_mean": 79.7
+      },
+      "tui": {
+        "processes": 0,
+        "pids": [],
+        "cpu_percent_sum": 0,
+        "core_equivalents": 0.0,
+        "percent_of_machine": 0.0,
+        "rss_mb_sum_mean": 0,
+        "rss_mb_sum_max": 0,
+        "per_process": [],
+        "cpu_percent_mean": 0,
+        "rss_mb_mean": 0
+      },
+      "simulation": {
+        "processes": 0,
+        "pids": [],
+        "cpu_percent_sum": 0,
+        "core_equivalents": 0.0,
+        "percent_of_machine": 0.0,
+        "rss_mb_sum_mean": 0,
+        "rss_mb_sum_max": 0,
+        "per_process": [],
+        "cpu_percent_mean": 0,
+        "rss_mb_mean": 0
+      },
+      "_window_sec": 30.03
+    },
+    "event_store": {
+      "window_sec": 15.0,
+      "telemetry_rows_per_sec": 366.9,
+      "anomaly_rows_per_sec": 0.0,
+      "diagnosis_rows_per_sec": 0.0,
+      "db_size_mb": 9.61
+    },
+    "dashboard_topic": {
+      "window_sec": 15.0,
+      "messages_per_sec": 0.67,
+      "mean_bytes": 4495
+    },
+    "rca_compute": {
+      "anomalies_in_window": 7,
+      "graph_nodes": 9,
+      "repetitions": 20,
+      "ms_per_diagnosis": 0.22
+    }
+  },
+  {
+    "label": "gazebo_monitor_tui_nominal",
+    "timestamp": 1790112811.807139,
+    "duration_sec": 30.0,
+    "method": "CPU from /proc/<pid>/stat utime+stime deltas over the window; RSS sampled every 1 s from /proc/<pid>/statm",
+    "machine": {
+      "logical_cores": 8,
+      "cpu_model": "11th Gen Intel(R) Core(TM) i7-11370H @ 3.30GHz",
+      "mem_total_mb": 7816,
+      "load_avg_1_5_15": [
+        1.935546875,
+        2.89208984375,
+        3.18212890625
+      ],
+      "note": "cpu_percent_sum is raw process CPU where one busy core = 100 %; the machine has 8 logical cores, i.e. 800 % capacity"
+    },
+    "processes": {
+      "rca_sim": {
+        "processes": 0,
+        "pids": [],
+        "cpu_percent_sum": 0,
+        "core_equivalents": 0.0,
+        "percent_of_machine": 0.0,
+        "rss_mb_sum_mean": 0,
+        "rss_mb_sum_max": 0,
+        "per_process": [],
+        "cpu_percent_mean": 0,
+        "rss_mb_mean": 0
+      },
+      "gazebo": {
+        "processes": 7,
+        "pids": [
+          16519,
+          16520,
+          16521,
+          16522,
+          16523,
+          16524,
+          16525
+        ],
+        "cpu_percent_sum": 136.9,
+        "core_equivalents": 1.37,
+        "percent_of_machine": 17.1,
+        "rss_mb_sum_mean": 857.4,
+        "rss_mb_sum_max": 857.4,
+        "per_process": [
+          {
+            "pid": 16519,
+            "cmd": "gz sim -r -v 2 -s --headless-rendering /home/lynx/ros2_rca_ws/install/rca_gazebo/share/rca_gazebo/worlds/rca_arena.sdf",
+            "cpu_percent": 70.2,
+            "rss_mb_mean": 424.8,
+            "rss_mb_max": 424.8
+          },
+          {
+            "pid": 16520,
+            "cmd": "/opt/ros/jazzy/lib/ros_gz_bridge/parameter_bridge --ros-args -r __node:=gz_bridge --params-file /tmp/launch_params_1qcaj",
+            "cpu_percent": 10.6,
+            "rss_mb_mean": 56.7,
+            "rss_mb_max": 56.7
+          },
+          {
+            "pid": 16521,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/lidar_node --ros-args -r __node:=lidar_node --",
+            "cpu_percent": 11.2,
+            "rss_mb_mean": 75.2,
+            "rss_mb_max": 75.2
+          },
+          {
+            "pid": 16522,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/camera_node --ros-args -r __node:=camera_node ",
+            "cpu_percent": 10.5,
+            "rss_mb_mean": 75.1,
+            "rss_mb_max": 75.1
+          },
+          {
+            "pid": 16523,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/imu_node --ros-args -r __node:=imu_node --para",
+            "cpu_percent": 11.5,
+            "rss_mb_mean": 75.4,
+            "rss_mb_max": 75.4
+          },
+          {
+            "pid": 16524,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/odometry_node --ros-args -r __node:=odometry_n",
+            "cpu_percent": 12.1,
+            "rss_mb_mean": 75.5,
+            "rss_mb_max": 75.5
+          },
+          {
+            "pid": 16525,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/sim_world --ros-args -r __node:=sim_world --pa",
+            "cpu_percent": 10.8,
+            "rss_mb_mean": 74.7,
+            "rss_mb_max": 74.7
+          }
+        ],
+        "cpu_percent_mean": 136.9,
+        "rss_mb_mean": 857.4
+      },
+      "pipeline": {
+        "processes": 4,
+        "pids": [
+          16526,
+          16527,
+          16528,
+          16529
+        ],
+        "cpu_percent_sum": 51.7,
+        "core_equivalents": 0.52,
+        "percent_of_machine": 6.5,
+        "rss_mb_sum_mean": 299.3,
+        "rss_mb_sum_max": 299.3,
+        "per_process": [
+          {
+            "pid": 16526,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/perception_node --ros-args -r __node:=perception_nod",
+            "cpu_percent": 11.2,
+            "rss_mb_mean": 75.1,
+            "rss_mb_max": 75.1
+          },
+          {
+            "pid": 16527,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/localization_node --ros-args -r __node:=localization",
+            "cpu_percent": 16.5,
+            "rss_mb_mean": 75.9,
+            "rss_mb_max": 75.9
+          },
+          {
+            "pid": 16528,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/planning_node --ros-args -r __node:=planning_node --",
+            "cpu_percent": 12.3,
+            "rss_mb_mean": 74.2,
+            "rss_mb_max": 74.2
+          },
+          {
+            "pid": 16529,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/control_node --ros-args -r __node:=control_node --pa",
+            "cpu_percent": 11.7,
+            "rss_mb_mean": 74.1,
+            "rss_mb_max": 74.1
+          }
+        ],
+        "cpu_percent_mean": 51.7,
+        "rss_mb_mean": 299.3
+      },
+      "diagnostic_monitor": {
+        "processes": 1,
+        "pids": [
+          16731
+        ],
+        "cpu_percent_sum": 16.9,
+        "core_equivalents": 0.17,
+        "percent_of_machine": 2.1,
+        "rss_mb_sum_mean": 79.9,
+        "rss_mb_sum_max": 79.9,
+        "per_process": [
+          {
+            "pid": 16731,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/diagnostic_monitor/lib/diagnostic_monitor/monitor_node --ros-args -r __n",
+            "cpu_percent": 16.9,
+            "rss_mb_mean": 79.9,
+            "rss_mb_max": 79.9
+          }
+        ],
+        "cpu_percent_mean": 16.9,
+        "rss_mb_mean": 79.9
+      },
+      "tui": {
+        "processes": 1,
+        "pids": [
+          16860
+        ],
+        "cpu_percent_sum": 2.4,
+        "core_equivalents": 0.02,
+        "percent_of_machine": 0.3,
+        "rss_mb_sum_mean": 32.7,
+        "rss_mb_sum_max": 32.7,
+        "per_process": [
+          {
+            "pid": 16860,
+            "cmd": "/home/lynx/ros2_rca_ws/install/diagnostic_tui/lib/diagnostic_tui/rca_tui",
+            "cpu_percent": 2.4,
+            "rss_mb_mean": 32.7,
+            "rss_mb_max": 32.7
+          }
+        ],
+        "cpu_percent_mean": 2.4,
+        "rss_mb_mean": 32.7
+      },
+      "simulation": {
+        "processes": 0,
+        "pids": [],
+        "cpu_percent_sum": 0,
+        "core_equivalents": 0.0,
+        "percent_of_machine": 0.0,
+        "rss_mb_sum_mean": 0,
+        "rss_mb_sum_max": 0,
+        "per_process": [],
+        "cpu_percent_mean": 0,
+        "rss_mb_mean": 0
+      },
+      "_window_sec": 30.02
+    },
+    "event_store": {
+      "window_sec": 15.0,
+      "telemetry_rows_per_sec": 368.6,
+      "anomaly_rows_per_sec": 0.0,
+      "diagnosis_rows_per_sec": 0.0,
+      "db_size_mb": 13.07
+    },
+    "dashboard_topic": {
+      "window_sec": 15.0,
+      "messages_per_sec": 0.73,
+      "mean_bytes": 4495
+    },
+    "rca_compute": {
+      "anomalies_in_window": 7,
+      "graph_nodes": 9,
+      "repetitions": 20,
+      "ms_per_diagnosis": 0.62
+    }
+  },
+  {
+    "label": "gazebo_monitor_tui_fault",
+    "timestamp": 1790112879.8399694,
+    "duration_sec": 30.0,
+    "method": "CPU from /proc/<pid>/stat utime+stime deltas over the window; RSS sampled every 1 s from /proc/<pid>/statm",
+    "machine": {
+      "logical_cores": 8,
+      "cpu_model": "11th Gen Intel(R) Core(TM) i7-11370H @ 3.30GHz",
+      "mem_total_mb": 7816,
+      "load_avg_1_5_15": [
+        1.38037109375,
+        2.54931640625,
+        3.04150390625
+      ],
+      "note": "cpu_percent_sum is raw process CPU where one busy core = 100 %; the machine has 8 logical cores, i.e. 800 % capacity"
+    },
+    "processes": {
+      "rca_sim": {
+        "processes": 0,
+        "pids": [],
+        "cpu_percent_sum": 0,
+        "core_equivalents": 0.0,
+        "percent_of_machine": 0.0,
+        "rss_mb_sum_mean": 0,
+        "rss_mb_sum_max": 0,
+        "per_process": [],
+        "cpu_percent_mean": 0,
+        "rss_mb_mean": 0
+      },
+      "gazebo": {
+        "processes": 7,
+        "pids": [
+          16519,
+          16520,
+          16521,
+          16522,
+          16523,
+          16524,
+          16525
+        ],
+        "cpu_percent_sum": 142.1,
+        "core_equivalents": 1.42,
+        "percent_of_machine": 17.8,
+        "rss_mb_sum_mean": 853.9,
+        "rss_mb_sum_max": 854.1,
+        "per_process": [
+          {
+            "pid": 16519,
+            "cmd": "gz sim -r -v 2 -s --headless-rendering /home/lynx/ros2_rca_ws/install/rca_gazebo/share/rca_gazebo/worlds/rca_arena.sdf",
+            "cpu_percent": 71.3,
+            "rss_mb_mean": 420.8,
+            "rss_mb_max": 420.8
+          },
+          {
+            "pid": 16520,
+            "cmd": "/opt/ros/jazzy/lib/ros_gz_bridge/parameter_bridge --ros-args -r __node:=gz_bridge --params-file /tmp/launch_params_1qcaj",
+            "cpu_percent": 10.8,
+            "rss_mb_mean": 56.8,
+            "rss_mb_max": 56.8
+          },
+          {
+            "pid": 16521,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/lidar_node --ros-args -r __node:=lidar_node --",
+            "cpu_percent": 11.8,
+            "rss_mb_mean": 75.3,
+            "rss_mb_max": 75.3
+          },
+          {
+            "pid": 16522,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/camera_node --ros-args -r __node:=camera_node ",
+            "cpu_percent": 11.1,
+            "rss_mb_mean": 75.2,
+            "rss_mb_max": 75.2
+          },
+          {
+            "pid": 16523,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/imu_node --ros-args -r __node:=imu_node --para",
+            "cpu_percent": 12.5,
+            "rss_mb_mean": 75.5,
+            "rss_mb_max": 75.5
+          },
+          {
+            "pid": 16524,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/odometry_node --ros-args -r __node:=odometry_n",
+            "cpu_percent": 13.2,
+            "rss_mb_mean": 75.5,
+            "rss_mb_max": 75.6
+          },
+          {
+            "pid": 16525,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_gazebo/lib/rca_gazebo/sim_world --ros-args -r __node:=sim_world --pa",
+            "cpu_percent": 11.4,
+            "rss_mb_mean": 74.8,
+            "rss_mb_max": 74.9
+          }
+        ],
+        "cpu_percent_mean": 142.1,
+        "rss_mb_mean": 853.9
+      },
+      "pipeline": {
+        "processes": 4,
+        "pids": [
+          16526,
+          16527,
+          16528,
+          16529
+        ],
+        "cpu_percent_sum": 54.4,
+        "core_equivalents": 0.54,
+        "percent_of_machine": 6.8,
+        "rss_mb_sum_mean": 299.7,
+        "rss_mb_sum_max": 299.8,
+        "per_process": [
+          {
+            "pid": 16526,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/perception_node --ros-args -r __node:=perception_nod",
+            "cpu_percent": 12.1,
+            "rss_mb_mean": 75.2,
+            "rss_mb_max": 75.2
+          },
+          {
+            "pid": 16527,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/localization_node --ros-args -r __node:=localization",
+            "cpu_percent": 17.0,
+            "rss_mb_mean": 76.0,
+            "rss_mb_max": 76.0
+          },
+          {
+            "pid": 16528,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/planning_node --ros-args -r __node:=planning_node --",
+            "cpu_percent": 12.8,
+            "rss_mb_mean": 74.3,
+            "rss_mb_max": 74.3
+          },
+          {
+            "pid": 16529,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/rca_sim/lib/rca_sim/control_node --ros-args -r __node:=control_node --pa",
+            "cpu_percent": 12.5,
+            "rss_mb_mean": 74.2,
+            "rss_mb_max": 74.3
+          }
+        ],
+        "cpu_percent_mean": 54.4,
+        "rss_mb_mean": 299.7
+      },
+      "diagnostic_monitor": {
+        "processes": 1,
+        "pids": [
+          16731
+        ],
+        "cpu_percent_sum": 19.7,
+        "core_equivalents": 0.2,
+        "percent_of_machine": 2.5,
+        "rss_mb_sum_mean": 80.3,
+        "rss_mb_sum_max": 80.3,
+        "per_process": [
+          {
+            "pid": 16731,
+            "cmd": "/usr/bin/python3 /home/lynx/ros2_rca_ws/install/diagnostic_monitor/lib/diagnostic_monitor/monitor_node --ros-args -r __n",
+            "cpu_percent": 19.7,
+            "rss_mb_mean": 80.3,
+            "rss_mb_max": 80.3
+          }
+        ],
+        "cpu_percent_mean": 19.7,
+        "rss_mb_mean": 80.3
+      },
+      "tui": {
+        "processes": 1,
+        "pids": [
+          16860
+        ],
+        "cpu_percent_sum": 3.4,
+        "core_equivalents": 0.03,
+        "percent_of_machine": 0.4,
+        "rss_mb_sum_mean": 33.0,
+        "rss_mb_sum_max": 33.1,
+        "per_process": [
+          {
+            "pid": 16860,
+            "cmd": "/home/lynx/ros2_rca_ws/install/diagnostic_tui/lib/diagnostic_tui/rca_tui",
+            "cpu_percent": 3.4,
+            "rss_mb_mean": 33.0,
+            "rss_mb_max": 33.1
+          }
+        ],
+        "cpu_percent_mean": 3.4,
+        "rss_mb_mean": 33.0
+      },
+      "simulation": {
+        "processes": 0,
+        "pids": [],
+        "cpu_percent_sum": 0,
+        "core_equivalents": 0.0,
+        "percent_of_machine": 0.0,
+        "rss_mb_sum_mean": 0,
+        "rss_mb_sum_max": 0,
+        "per_process": [],
+        "cpu_percent_mean": 0,
+        "rss_mb_mean": 0
+      },
+      "_window_sec": 30.02
+    },
+    "event_store": {
+      "window_sec": 15.0,
+      "telemetry_rows_per_sec": 369.1,
+      "anomaly_rows_per_sec": 9.13,
+      "diagnosis_rows_per_sec": 2.0,
+      "db_size_mb": 16.42
+    },
+    "dashboard_topic": {
+      "window_sec": 15.0,
+      "messages_per_sec": 0.6,
+      "mean_bytes": 15721
+    },
+    "rca_compute": {
+      "anomalies_in_window": 91,
+      "graph_nodes": 9,
+      "repetitions": 20,
+      "ms_per_diagnosis": 0.17
+    }
+  }
+]

@@ -8,13 +8,18 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     return LaunchDescription([
-        DeclareLaunchArgument('db_path', default_value='events.db', description='Path to SQLite database'),
+        DeclareLaunchArgument('db_path', default_value='',
+                              description='SQLite event store; empty = auto ($RCA_DB_PATH, else <workspace>/events.db)'),
         DeclareLaunchArgument('warmup_sec', default_value='4.0', description='Warmup grace period in seconds'),
         DeclareLaunchArgument('z_threshold', default_value='3.0', description='Statistical z-score threshold'),
         DeclareLaunchArgument('w_d', default_value='0.30', description='Dependency weight wD'),
         DeclareLaunchArgument('w_t', default_value='0.30', description='Temporal weight wT'),
         DeclareLaunchArgument('w_s', default_value='0.25', description='Symptom coverage weight wS'),
         DeclareLaunchArgument('w_a', default_value='0.15', description='Anomaly severity weight wA'),
+        DeclareLaunchArgument('simulator', default_value='unknown',
+                              description='Backend label copied into /rca/dashboard_state '
+                                          '(rca_sim | gazebo | rca_test_system). Presentation only; '
+                                          'never evaluation ground truth.'),
 
         Node(
             package='diagnostic_monitor',
@@ -29,6 +34,7 @@ def generate_launch_description():
                 'w_t': LaunchConfiguration('w_t'),
                 'w_s': LaunchConfiguration('w_s'),
                 'w_a': LaunchConfiguration('w_a'),
+                'simulator': LaunchConfiguration('simulator'),
             }],
         ),
     ])

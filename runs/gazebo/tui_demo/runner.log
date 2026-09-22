@@ -1,0 +1,154 @@
+[INFO] [1790112013.646484846] [experiment_controller]: ExperimentController ready with DB: /home/lynx/ros2_rca_ws/events.db
+[INFO] [1790112018.851993389] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790112021.056203290] [experiment_controller]: >>> Injected noise on lidar_node (param=8.0, dur=10.0s)
+[INFO] [1790112029.067085023] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790112029.272387689] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790112036.990698153] [experiment_controller]: >>> Injected dropout on camera_node (param=1.0, dur=10.0s)
+[INFO] [1790112046.999984102] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790112047.210153697] [experiment_controller]: >>> Cleared all faults.
+[INFO] [1790112054.927713935] [experiment_controller]: >>> Injected crash on perception_node (param=0.0, dur=1.0s)
+[INFO] [1790112064.937634436] [experiment_controller]: >>> Cleared all faults.
+Event store: /home/lynx/ros2_rca_ws/events.db
+Simulator backend: gazebo
+Waiting 5.0s (fault-free warm-up)...
+warm-up 5.0s: anomalies 0, diagnoses 0
+discovered graph: 9 nodes 9 edges: [('camera_node', 'perception_node'), ('control_node', 'sim_world'), ('imu_node', 'localization_node'), ('lidar_node', 'perception_node'), ('localization_node', 'planning_node'), ('odometry_node', 'localization_node'), ('perception_node', 'localization_node'), ('perception_node', 'planning_node'), ('planning_node', 'control_node')]
+
+==============================================================================
+G03 LiDAR degradation: heavy noise and invalid returns   [rep 0]
+  faults: lidar_node:noise(p=8.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=lidar_node  accepted=['lidar_node']  top1=PASS rank=1  det=0.131s diag=0.335s FDR=0.0 chain_acc=1.0 phys_cov=0.4
+  anomalous nodes: ['lidar_node', 'perception_node']  chain: ['lidar_node', 'perception_node']
+  baselines (identical evidence):  independent=PASS  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to /home/lynx/ros2_rca_ws/runs/gazebo/tui_demo/results.json
+
+==============================================================================
+G04 camera dropout: the image stream stops (perception gating opens downstream first)   [rep 0]
+  faults: camera_node:dropout(p=1.0, +0.0s, 10.0s)
+==============================================================================
+  predicted=camera_node  accepted=['camera_node']  top1=PASS rank=1  det=0.697s diag=0.897s FDR=0.0 chain_acc=0.6 phys_cov=1.0
+  anomalous nodes: ['camera_node', 'control_node', 'localization_node', 'perception_node', 'planning_node']  chain: ['camera_node', 'perception_node', 'localization_node', 'planning_node', 'control_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to /home/lynx/ros2_rca_ws/runs/gazebo/tui_demo/results.json
+
+==============================================================================
+G14 node crash: perception process dies abruptly and is respawned   [rep 0]
+  faults: perception_node:crash(p=0.0, +0.0s, 1.0s)
+==============================================================================
+  predicted=perception_node  accepted=['perception_node']  top1=PASS rank=1  det=0.463s diag=0.463s FDR=0.0 chain_acc=1.0 phys_cov=0.5
+  anomalous nodes: ['localization_node', 'perception_node']  chain: ['perception_node', 'localization_node']
+  baselines (identical evidence):  independent=FAIL  temporal_only=PASS  static_dep_anom=PASS  static_dep_temp=PASS  proposed=PASS
+  ablation:  full=PASS  no_D=PASS  no_T=PASS  no_S=PASS  no_A=PASS
+
+Results written to /home/lynx/ros2_rca_ws/runs/gazebo/tui_demo/results.json
+
+======================================================================================================================
+SIMULATION BENCHMARK (proposed method, live; baselines/ablations on identical recorded evidence)
+======================================================================================================================
+scenario                                n top1 top3   MRR   det  diag   FDR chain  phys | indepe tempor static static propos |  full  no_D  no_T  no_S  no_A
+----------------------------------------------------------------------------------------------------------------------
+lidar_noise                             1    1    1   1.0 0.131 0.335   0.0   1.0   0.4 |      1      1      1      1      1 |     1     1     1     1     1
+camera_dropout                          1    1    1   1.0 0.697 0.897   0.0   0.6   1.0 |      0      1      1      1      1 |     1     1     1     1     1
+perception_crash                        1    1    1   1.0 0.463 0.463   0.0   1.0   0.5 |      0      1      1      1      1 |     1     1     1     1     1
+----------------------------------------------------------------------------------------------------------------------
+{
+  "total_experiments": 3,
+  "top1_correct": 3,
+  "top1_accuracy": 1.0,
+  "top3_correct": 3,
+  "top3_accuracy": 1.0,
+  "mean_reciprocal_rank": 1.0,
+  "avg_detection_latency_sec": 0.43,
+  "avg_diagnosis_latency_sec": 0.565,
+  "avg_correct_diagnosis_latency_sec": 0.565,
+  "detection_latency_stats": {
+    "n": 3,
+    "mean": 0.43,
+    "min": 0.131,
+    "max": 0.697,
+    "std": 0.232,
+    "median": 0.463,
+    "p25": 0.297,
+    "p75": 0.58
+  },
+  "diagnosis_latency_stats": {
+    "n": 3,
+    "mean": 0.565,
+    "min": 0.335,
+    "max": 0.897,
+    "std": 0.241,
+    "median": 0.463,
+    "p25": 0.399,
+    "p75": 0.68
+  },
+  "correct_diagnosis_latency_stats": {
+    "n": 3,
+    "mean": 0.565,
+    "min": 0.335,
+    "max": 0.897,
+    "std": 0.241,
+    "median": 0.463,
+    "p25": 0.399,
+    "p75": 0.68
+  },
+  "post_injection_diagnoses": 55,
+  "post_injection_false_diagnoses": 0,
+  "post_injection_false_diagnosis_rate": 0.0,
+  "false_diagnosis_rate": 0.0,
+  "num_diagnoses_after_injection": 55,
+  "avg_chain_accuracy": 0.867,
+  "chain_accuracy_n": 3,
+  "chain_order_correct_count": 3,
+  "chain_order_n": 3,
+  "chain_order_accuracy": 1.0,
+  "avg_physical_chain_coverage": 0.633,
+  "physical_chain_coverage_n": 3,
+  "scenarios_with_unobserved_physical_nodes": [
+    "lidar_noise",
+    "perception_crash"
+  ],
+  "nominal_fault_free_windows": 4,
+  "nominal_fault_free_sec": 6.032,
+  "nominal_anomalies": 0,
+  "nominal_diagnoses": 0,
+  "nominal_false_alarms": 0,
+  "nominal_false_alarm_rate_per_min": 0.0,
+  "nominal_false_alarms_per_min": 0.0
+}
+
+====================================================================================================
+COHORTS AND DENOMINATORS (no silent denominator switching)
+====================================================================================================
+  ALL RUNS              n = 3    proposed Top-1 = 3/3 (1.0)
+  COMMON-EVIDENCE SUBSET n = 3    proposed Top-1 = 3/3 (1.0)
+      baseline independent        Top-1 = 1/3 (0.3333)  MRR = 0.6111
+      baseline temporal_only      Top-1 = 3/3 (1.0)  MRR = 1.0
+      baseline static_dep_anom    Top-1 = 3/3 (1.0)  MRR = 1.0
+      baseline static_dep_temp    Top-1 = 3/3 (1.0)  MRR = 1.0
+      baseline proposed           Top-1 = 3/3 (1.0)  MRR = 1.0
+  EXCLUDED from the subset n = 0  reasons = {}  keys = []
+  inclusion criterion: scenario declares a ground-truth root cause; defined before the comparison and independent of which method succeeded
+  denominators match: True
+  NOTE: the best baseline equals the proposed method on this scenario set; these results validate functionality, they do not establish superiority.
+
+BASELINES (Top-1 over all evaluated runs, identical evidence):
+  independent      top1 = 1/3 (33%)  MRR = 0.611
+  temporal_only    top1 = 3/3 (100%)  MRR = 1.000
+  static_dep_anom  top1 = 3/3 (100%)  MRR = 1.000
+  static_dep_temp  top1 = 3/3 (100%)  MRR = 1.000
+  proposed         top1 = 3/3 (100%)  MRR = 1.000
+ABLATIONS (Top-1 over all evaluated runs):
+  full     {'wD': 0.3, 'wT': 0.3, 'wS': 0.25, 'wA': 0.15}  top1 = 3/3 (100%)
+  no_D     {'wD': 0.0, 'wT': 0.3, 'wS': 0.25, 'wA': 0.15}  top1 = 3/3 (100%)
+  no_T     {'wD': 0.3, 'wT': 0.0, 'wS': 0.25, 'wA': 0.15}  top1 = 3/3 (100%)
+  no_S     {'wD': 0.3, 'wT': 0.3, 'wS': 0.0, 'wA': 0.15}  top1 = 3/3 (100%)
+  no_A     {'wD': 0.3, 'wT': 0.3, 'wS': 0.25, 'wA': 0.0}  top1 = 3/3 (100%)
+
+NOMINAL: 6.0s fault-free observed, 0 anomalies, 0 false alarms (0.0/min)
+
+Results written to /home/lynx/ros2_rca_ws/runs/gazebo/tui_demo/results.json

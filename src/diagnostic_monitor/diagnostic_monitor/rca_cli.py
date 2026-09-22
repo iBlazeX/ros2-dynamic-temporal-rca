@@ -2,13 +2,15 @@
 
 import argparse
 import json
+import os
 import time
+from .db_path import HELP_TEXT as DB_HELP, resolve_db_path
 from .event_store import EventStore
 
 
 def main():
     parser = argparse.ArgumentParser(description='RCA Diagnostic CLI')
-    parser.add_argument('--db', type=str, default='events.db', help='Path to SQLite events.db')
+    parser.add_argument('--db', type=str, default=None, help=DB_HELP)
     parser.add_argument(
         '--action', type=str, default='latest',
         choices=['latest', 'anomalies', 'diagnoses', 'summary', 'graph', 'timeline', 'watch'],
@@ -19,8 +21,18 @@ def main():
     parser.add_argument('--json', action='store_true', help='Print raw JSON for latest diagnosis')
     args = parser.parse_args()
 
-    store = EventStore(args.db)
+    db_path = resolve_db_path(explicit=args.db)
+    if not os.path.exists(db_path):
+        # Never silently create an empty store: that is exactly the bug where the
+        # CLI reported zeros while the monitor was writing elsewhere.
+        print(f'No event store found at {db_path}')
+        print('Start the monitor first (ros2 launch rca_test_system system.launch.py), '
+              'or point --db / $RCA_DB_PATH at the database the monitor is using.')
+        return 2
+    store = EventStore(db_path)
     now = time.time()
+    if args.action != 'watch':
+        print(f'[db: {db_path}]')
 
     if args.action == 'latest':
         latest = store.get_latest_diagnosis()

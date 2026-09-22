@@ -26,6 +26,7 @@ from std_msgs.msg import String
 
 from diagnostic_monitor.anomaly_detector import Anomaly
 from diagnostic_monitor.baselines import BASELINE_NAMES, ABLATION_CONFIGS, run_ablations, run_all_baselines
+from diagnostic_monitor.db_path import HELP_TEXT as DB_HELP, resolve_db_path
 from diagnostic_monitor.evaluator import RCAEvaluator
 from diagnostic_monitor.event_store import EventStore
 from diagnostic_monitor.graph_engine import DependencyGraph
@@ -159,6 +160,37 @@ class ExperimentController(Node):
         return RCAEvaluator.aggregate_metrics(self.eval_results, k=self.k,
                                               nominal_windows=self.nominal_windows)
 
+    def compute_cohort(self) -> Dict[str, Any]:
+        """Explicit denominators for the proposed method vs the baselines."""
+        return RCAEvaluator.comparison_cohort(self.eval_results, self.baseline_results,
+                                              BASELINE_NAMES)
+
+    @staticmethod
+    def print_cohort(cohort: Dict[str, Any]):
+        a, s, x = cohort['all_runs'], cohort['common_evidence_subset'], cohort['excluded_from_common_subset']
+        print('\n' + '=' * 100)
+        print('COHORTS AND DENOMINATORS (no silent denominator switching)')
+        print('=' * 100)
+        print(f"  ALL RUNS              n = {a['n']:<4} proposed Top-1 = {a['proposed_top1_correct']}/{a['n']} "
+              f"({a['proposed_top1_accuracy']})")
+        print(f"  COMMON-EVIDENCE SUBSET n = {s['n']:<4} proposed Top-1 = {s['proposed_top1_correct']}/{s['n']} "
+              f"({s['proposed_top1_accuracy']})")
+        for m, b in s['baselines'].items():
+            print(f"      baseline {m:<18} Top-1 = {b['top1_correct']}/{b['n']} ({b['top1_accuracy']})  "
+                  f"MRR = {b['mean_reciprocal_rank']}")
+        print(f"  EXCLUDED from the subset n = {x['n']}  reasons = {x['reasons'] or '{}'}  keys = {x['keys']}")
+        print(f"  inclusion criterion: {s['inclusion_criterion']}")
+        print(f"  denominators match: {cohort['denominators_match']}")
+        best = max((b['top1_accuracy'] or 0.0) for b in s['baselines'].values()) if s['baselines'] else 0.0
+        prop = s['proposed_top1_accuracy'] or 0.0
+        if s['baselines']:
+            if prop < best:
+                print('  NOTE: at least one baseline outperforms the proposed method on this scenario set.')
+            elif prop == best:
+                print('  NOTE: the best baseline equals the proposed method on this scenario set; '
+                      'these results validate functionality, they do not establish superiority.')
+        return cohort
+
     # ----------------------------------------------------------- fault control
 
     def _publish_cmd(self, payload: Dict[str, Any]):
@@ -246,7 +278,17 @@ class ExperimentController(Node):
                 'physical_chain_coverage': 0.0,
                 'nominal_false_alarms': nominal_diags, 'nominal_window_sec': nominal_len,
                 'explanation': 'No diagnosis recorded in window.',
+                'num_false_diagnoses_after_injection': 0,
+                'expected_chain': sc['expected_chain'],
+                'physical_chain': sc.get('physical_chain', sc['expected_chain']),
+                'physically_affected_unobserved': list(sc.get('physical_chain', sc['expected_chain'])),
+                'anomalous_nodes_observed': sorted({a['node'] for a in anoms}),
+                't_inject': t_inject, 't_end': t_end,
             }
+            # The baselines are still scored on this run's evidence so that the
+            # proposed method and the baselines share identical denominators.
+            self._offline_comparison(sc, anoms, dyn_graph, t_end)
+            res['evaluated_offline'] = True
         else:
             final = _diag_from_record(diags[-1])
             res = RCAEvaluator.evaluate_single(
@@ -280,6 +322,7 @@ class ExperimentController(Node):
 
             # 5. Offline controlled comparison on identical evidence
             self._offline_comparison(sc, anoms, dyn_graph, t_end)
+            res['evaluated_offline'] = True
 
         # 6. Clear fault and cool down
         self.clear_faults()
@@ -347,6 +390,7 @@ class ExperimentController(Node):
                       f"(physical coverage {r['physical_chain_coverage']})")
 
         if self.baseline_results:
+            self.print_cohort(self.compute_cohort())
             print('\n' + '=' * 100)
             print('BASELINE COMPARISON (Top-1 accuracy across scenarios, identical evidence)')
             print('=' * 100)
@@ -372,6 +416,7 @@ class ExperimentController(Node):
             'db_path': self.db_path,
             'results': self.eval_results,
             'aggregate': self.compute_aggregate(),
+            'cohorts': self.compute_cohort(),
             'nominal_windows': self.nominal_windows,
             'baselines': self.baseline_results,
             'ablations': self.ablation_results,
@@ -384,7 +429,7 @@ class ExperimentController(Node):
 
 def main(args=None):
     parser = argparse.ArgumentParser(description='RCA Experiment Controller')
-    parser.add_argument('--db', type=str, default='events.db', help='Path to SQLite database')
+    parser.add_argument('--db', type=str, default=None, help=DB_HELP)
     parser.add_argument('--warmup', type=float, default=6.0, help='Initial warm-up wait time in seconds')
     parser.add_argument('--observation', type=float, default=6.0, help='Observation window after injection (s)')
     parser.add_argument('--duration', type=float, default=9.0, help='Fault duration (s), > observation')
@@ -406,7 +451,9 @@ def main(args=None):
         selected += [s for s in SCENARIOS if s.get('destructive')]
 
     rclpy.init(args=ros_args)
-    controller = ExperimentController(db_path=parsed.db, k=parsed.k)
+    db_path = resolve_db_path(explicit=parsed.db)
+    print(f'Event store: {db_path}')
+    controller = ExperimentController(db_path=db_path, k=parsed.k)
 
     print(f'Waiting {parsed.warmup}s for nominal system warm-up and graph discovery...')
     t_w0 = time.time()

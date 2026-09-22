@@ -95,10 +95,15 @@ def test_evaluator_extended_metrics():
     assert abs(r['chain_accuracy'] - 2 / 3) < 1e-3  # stored rounded to 4 dp
     assert r['chain_order_correct'] is False  # localization missing
 
-    second = dict(r, top1_correct=False, top2_correct=False, reciprocal_rank=0.5, false_diagnosis_rate=1.0)
+    second = dict(r, top1_correct=False, top2_correct=False, reciprocal_rank=0.5, false_diagnosis_rate=1.0,
+                  num_false_diagnoses_after_injection=4)
     agg = RCAEvaluator.aggregate_metrics([r, second], k=2)
     assert agg['top1_accuracy'] == 0.5 and agg['top2_accuracy'] == 0.5
     assert agg['false_diagnosis_rate'] == 0.625  # (1 + 4) / 8
+    assert agg['post_injection_false_diagnosis_rate'] == 0.625
+    assert agg['post_injection_false_diagnoses'] == 5 and agg['post_injection_diagnoses'] == 8
+    assert agg['detection_latency_stats']['n'] == 2 and agg['detection_latency_stats']['max'] == 0.2
+    assert agg['nominal_fault_free_windows'] == 0
     assert agg['avg_detection_latency_sec'] == 0.2
 
 

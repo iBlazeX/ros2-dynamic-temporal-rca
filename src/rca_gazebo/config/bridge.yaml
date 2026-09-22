@@ -1,0 +1,60 @@
+# ros_gz_bridge (parameter_bridge) configuration for the RCA Gazebo backend.
+#
+# Every bridged ROS topic lives under the "/gz/" namespace. That namespace is the
+# raw simulator transport: it carries Gazebo *simulation-time* stamps and is not
+# part of the monitored application data flow, so the diagnostic monitor is
+# launched with excluded_topic_prefixes:=['/gz/'] and never subscribes to it.
+# The bridge process therefore has no application topic endpoints and does not
+# appear in the discovered dependency graph.
+#
+# Direction values: GZ_TO_ROS, ROS_TO_GZ, BIDIRECTIONAL.
+#
+# ---------------------------------------------------------------- sensors in
+- ros_topic_name: "/gz/scan"
+  gz_topic_name: "/scan"
+  ros_type_name: "sensor_msgs/msg/LaserScan"
+  gz_type_name: "gz.msgs.LaserScan"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/gz/image"
+  gz_topic_name: "/camera/image"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "gz.msgs.Image"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/gz/camera_info"
+  gz_topic_name: "/camera/camera_info"
+  ros_type_name: "sensor_msgs/msg/CameraInfo"
+  gz_type_name: "gz.msgs.CameraInfo"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/gz/imu"
+  gz_topic_name: "/imu"
+  ros_type_name: "sensor_msgs/msg/Imu"
+  gz_type_name: "gz.msgs.IMU"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/gz/odom"
+  gz_topic_name: "/model/rca_bot/odometry"
+  ros_type_name: "nav_msgs/msg/Odometry"
+  gz_type_name: "gz.msgs.Odometry"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/gz/tf"
+  gz_topic_name: "/model/rca_bot/tf"
+  ros_type_name: "tf2_msgs/msg/TFMessage"
+  gz_type_name: "gz.msgs.Pose_V"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/gz/clock"
+  gz_topic_name: "/clock"
+  ros_type_name: "rosgraph_msgs/msg/Clock"
+  gz_type_name: "gz.msgs.Clock"
+  direction: GZ_TO_ROS
+
+# ------------------------------------------------------------- actuation out
+- ros_topic_name: "/gz/cmd_vel"
+  gz_topic_name: "/model/rca_bot/cmd_vel"
+  ros_type_name: "geometry_msgs/msg/Twist"
+  gz_type_name: "gz.msgs.Twist"
+  direction: ROS_TO_GZ

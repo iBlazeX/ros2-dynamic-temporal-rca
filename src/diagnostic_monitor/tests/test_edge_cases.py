@@ -186,3 +186,97 @@ def test_event_store_graph_snapshots_and_range_queries(tmp_path):
     assert store.get_diagnoses_between(12.0, 13.0)[0]['breakdown']['propagation_chain'] == ['a', 'b']
     assert store.counts()['graph_snapshots'] == 1
     store.close()
+
+
+def test_post_fault_queue_drain_reordering_is_bounded_and_informational():
+    """After a latency fault expires, the sensor publishes new scans immediately while the
+    still-delayed older scans drain later (real reordering). The detector must report at
+    most one low-severity out_of_order observation per delayed message and nothing once
+    the drain is over; it must not fire timeouts or statistical anomalies for it."""
+    from diagnostic_monitor.dashboard_state import INFORMATIONAL_TYPES
+    det = AnomalyDetector(warmup_duration_sec=0.1, confirm_samples=2)
+    det.start_time = 0.0
+    node, topic = 'sensor_node', '/sensor/scan'
+    period, delay = 0.1, 0.4
+    n_delayed = int(round(delay / period))
+    t = 50.0
+    for i in range(40):                      # nominal stream
+        det.check_header_order(t, node, topic, t)
+        t += period
+    # fault expiry at time T: arrivals interleave new (stamp=now) and delayed (stamp=now-delay)
+    T = t
+    arrivals = []
+    for k in range(n_delayed):
+        arrivals.append((T + k * period, T + k * period))                # new scan, immediate
+        arrivals.append((T + k * period + 0.01, T - delay + k * period))  # delayed scan drains
+    for k in range(n_delayed, n_delayed + 10):                            # back to normal
+        arrivals.append((T + k * period, T + k * period))
+    flagged = []
+    for arrive, stamp in arrivals:
+        _, anom = det.check_header_order(arrive, node, topic, stamp)
+        if anom is not None:
+            flagged.append(anom)
+    assert 1 <= len(flagged) <= n_delayed
+    assert all(a.metric == 'out_of_order' and a.severity < 0.5 for a in flagged)
+    assert all(a.metric in INFORMATIONAL_TYPES for a in flagged)
+    # the last flagged observation happens during the drain, never afterwards
+    assert max(a.timestamp for a in flagged) < T + n_delayed * period
+
+
+def test_stall_then_catch_up_burst_is_not_confirmed():
+    """A scheduling stall (interval too long) followed by the catch-up burst (interval too
+    short) are two out-of-band samples in opposite directions: one event, no anomaly.
+    Two too-long intervals in a row still confirm."""
+    det, t = _trained_detector(confirm=2)
+    assert det.process_metric(t + 0.39, 'sensor_node', '/sensor/scan', '/sensor/scan:inter_arrival', 0.39) is None
+    assert det.process_metric(t + 0.41, 'sensor_node', '/sensor/scan', '/sensor/scan:inter_arrival', 0.017) is None
+    assert det.process_metric(t + 0.51, 'sensor_node', '/sensor/scan', '/sensor/scan:inter_arrival', 0.1) is None
+    assert det.process_metric(t + 0.91, 'sensor_node', '/sensor/scan', '/sensor/scan:inter_arrival', 0.4) is None
+    a = det.process_metric(t + 1.31, 'sensor_node', '/sensor/scan', '/sensor/scan:inter_arrival', 0.4)
+    assert a is not None and a.onset == t + 0.91
+
+
+def test_permanently_departed_node_is_forgotten_instead_of_re_alerting_forever():
+    """A node that joins a running system and then leaves for good must stop
+    producing node_crash evidence once it is far outside the RCA window.
+
+    Found by scripts/graph_probe.py: an auxiliary node that exited cleanly stayed
+    in `missing_nodes` indefinitely, so the monitor re-alerted every
+    `crash_realert_sec` forever and the graph kept retaining its edges.
+    """
+    det = AnomalyDetector(warmup_duration_sec=0.0, crash_realert_sec=2.0,
+                          forget_missing_after_sec=60.0)
+    det.start_time = 0.0
+    t = 100.0
+    # the node is alive and observed
+    det.check_node_crashes({'a', 'aux'}, t)
+    det.last_seen_times[('aux', '/aux/probe')] = t
+    det.check_node_crashes({'a', 'aux'}, t + 1.0)
+
+    # it disappears: the crash is reported, and re-reported while it matters
+    first = det.check_node_crashes({'a'}, t + 2.0)
+    assert [x.metric for x in first] == ['node_crash'] and first[0].node == 'aux'
+    assert 'aux' in det.missing_nodes
+    again = det.check_node_crashes({'a'}, t + 10.0)
+    assert [x.node for x in again] == ['aux'], 'still within the useful horizon'
+
+    # far beyond the horizon it is forgotten and never re-alerted again
+    assert det.check_node_crashes({'a'}, t + 70.0) == []
+    assert 'aux' not in det.missing_nodes
+    assert det.check_node_crashes({'a'}, t + 200.0) == []
+
+
+def test_a_crashed_node_still_produces_evidence_inside_the_rca_window():
+    """The forget horizon must not weaken crash detection where it matters."""
+    det = AnomalyDetector(warmup_duration_sec=0.0, crash_realert_sec=2.0,
+                          forget_missing_after_sec=60.0)
+    det.start_time = 0.0
+    det.check_node_crashes({'perception_node'}, 10.0)
+    det.last_seen_times[('perception_node', '/perception/obstacles')] = 10.0
+    det.check_node_crashes({'perception_node'}, 10.5)
+    alerts = []
+    for dt in (0.2, 2.5, 5.0, 8.0):
+        alerts += det.check_node_crashes(set(), 11.0 + dt)
+    assert len(alerts) >= 3
+    assert all(a.node == 'perception_node' and a.metric == 'node_crash' for a in alerts)
+    assert all(a.severity == 1.0 for a in alerts)

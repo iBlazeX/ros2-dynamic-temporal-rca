@@ -1,0 +1,17 @@
+frame_000.txt: system=NORMAL backend=rca_sim root=[] anomalous=[] starved=[]
+frame_006.txt: system=DEGRADED backend=rca_sim root=['lidar_node'] anomalous=['perception_no'] starved=[]
+frame_008.txt: system=DEGRADED backend=rca_sim root=['lidar_node'] anomalous=['perception_nod'] starved=[]
+frame_013.txt: system=RECOVERING backend=rca_sim root=['lidar_node'] anomalous=['perception_nod'] starved=[]
+frame_014.txt: system=RECOVERING backend=rca_sim root=['lidar_node'] anomalous=['perception_no'] starved=[]
+frame_015.txt: system=NORMAL backend=rca_sim root=[] anomalous=[] starved=[]
+frame_017.txt: system=DEGRADED backend=rca_sim root=['perception_node'] anomalous=[] starved=[]
+frame_018.txt: system=DEGRADED backend=rca_sim root=['perception_nod'] anomalous=['localization_n'] starved=[]
+frame_022.txt: system=RECOVERING backend=rca_sim root=['perception_nod'] anomalous=['localization_n'] starved=[]
+frame_023.txt: system=RECOVERING backend=rca_sim root=['localization_no'] anomalous=[] starved=[]
+frame_024.txt: system=NORMAL backend=rca_sim root=[] anomalous=[] starved=[]
+frame_025.txt: system=DEGRADED backend=rca_sim root=['camera_node'] anomalous=['perception_no'] starved=[]
+frame_027.txt: system=DEGRADED backend=rca_sim root=['camera_node'] anomalous=['localization_', 'perception_n'] starved=[]
+frame_031.txt: system=DEGRADED backend=rca_sim root=['camera_node'] anomalous=['contro', 'localization', 'perception_', 'plannin'] starved=[]
+
+frames=33 distinct_states=14
+ground-truth leak check: PASS (nothing leaked)

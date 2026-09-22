@@ -85,16 +85,15 @@ def main(args=None):
     parser = argparse.ArgumentParser(description='RCA Fault Injector')
     parser.add_argument(
         '--target', type=str, default='sensor_node',
-        choices=['sensor_node', 'perception_node', 'localization_node', 'navigation_node', 'all'],
-        help='Target node name'
+        help='Target node name (rca_test_system: sensor_node|perception_node|localization_node|'
+             'navigation_node; rca_sim: lidar_node|camera_node|imu_node|odometry_node|perception_node|'
+             'localization_node|planning_node|control_node; or all)'
     )
     parser.add_argument(
         '--type', type=str, default='latency',
-        choices=[
-            'latency', 'dropout', 'degradation', 'localization_failure',
-            'navigation_failure', 'crash', 'processing_delay', 'message_delay', 'clear'
-        ],
-        help='Fault type'
+        help='Fault type. rca_test_system: latency|dropout|degradation|localization_failure|'
+             'navigation_failure|crash|processing_delay|message_delay|clear. rca_sim adds: noise|bias|stale|'
+             'rate|jitter|loss|workload|cpu_pressure|stop|restart|control_failure|topic_change'
     )
     parser.add_argument('--param', type=float, default=0.35, help='Fault parameter (delay sec, drop rate, etc.)')
     parser.add_argument('--duration', type=float, default=10.0, help='Duration in seconds')

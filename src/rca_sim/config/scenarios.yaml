@@ -1,0 +1,278 @@
+# Review 1 simulation scenarios (EVALUATION LAYER ONLY).
+#
+# Everything under `ground_truth` is consumed exclusively by the scenario runner
+# (rca_sim/scenario_runner.py). The diagnostic monitor, anomaly detector, RCA
+# engine, dashboard state and TUI never read this file.
+#
+# Fault mechanisms (see rca_sim/degradation.py):
+#   sensor:   noise (sigma scale), bias (m), dropout (prob), stale (repeat last), rate (keep fraction)
+#   link:     latency (s), jitter (sigma s), loss (prob)
+#   workload: workload (ms CPU per callback), cpu_pressure (busy threads)
+#   lifecycle: crash (abrupt exit), stop (clean exit; launch respawns), restart (sensor node re-created after param s)
+#   behaviour: degradation, localization_failure, navigation_failure, control_failure, topic_change
+#
+# ground_truth fields:
+#   root              primary injected root (earliest onset)
+#   accepted_roots    every injected root; a diagnosis naming any of them counts as correct
+#   observable_chain  nodes whose symptom the monitor's metrics can observe (drives chain accuracy)
+#   physical_chain    nodes physically affected (reported as coverage only, never credited)
+#   expect_no_diagnosis  true for pure graph changes without a fault (false alarms are counted)
+
+environment:
+  name: rca_sim
+  simulator: rca_sim
+  description: >-
+    Lightweight 2-D kinematic simulator (rclpy) with ray-cast LiDAR, camera FOV
+    detections, dead-reckoned odometry and IMU; deterministic from the launch seed.
+  # Design-time dependency graph used ONLY by the static-graph baselines.
+  static_design_graph:
+    nodes: [lidar_node, camera_node, imu_node, odometry_node, perception_node, localization_node, planning_node, control_node, sim_world]
+    edges:
+      - {from: lidar_node, to: perception_node, topics: [/sim/lidar/scan]}
+      - {from: camera_node, to: perception_node, topics: [/sim/camera/image]}
+      - {from: imu_node, to: localization_node, topics: [/sim/imu/data]}
+      - {from: odometry_node, to: localization_node, topics: [/sim/odom]}
+      - {from: perception_node, to: localization_node, topics: [/perception/obstacles]}
+      - {from: perception_node, to: planning_node, topics: [/perception/obstacles]}
+      - {from: localization_node, to: planning_node, topics: [/localization/pose]}
+      - {from: planning_node, to: control_node, topics: [/planning/path]}
+      - {from: control_node, to: sim_world, topics: [/cmd_vel]}
+
+defaults:
+  repetitions: 5
+  observation_sec: 8.0
+  settle_sec: 25.0
+  fault_duration: 10.0
+
+scenarios:
+  # ---------------------------------------------------------------- single faults
+  - key: lidar_noise
+    name: "S01 sensor degradation: LiDAR noise / invalid returns"
+    group: single
+    faults: [{target: lidar_node, type: noise, param: 8.0, onset: 0.0}]
+    ground_truth:
+      root: lidar_node
+      accepted_roots: [lidar_node]
+      observable_chain: [lidar_node, perception_node]
+      physical_chain: [lidar_node, perception_node, localization_node, planning_node, control_node]
+
+  - key: lidar_dropout
+    name: "S02 sensor dropout: LiDAR stops publishing"
+    group: single
+    faults: [{target: lidar_node, type: dropout, param: 1.0, onset: 0.0}]
+    ground_truth:
+      root: lidar_node
+      accepted_roots: [lidar_node]
+      observable_chain: [lidar_node, perception_node, localization_node]
+      physical_chain: [lidar_node, perception_node, localization_node, planning_node, control_node]
+
+  - key: perception_degradation
+    name: "S03 perception processing degradation: empty obstacle sets"
+    group: single
+    faults: [{target: perception_node, type: degradation, param: 0.0, onset: 0.0}]
+    ground_truth:
+      root: perception_node
+      accepted_roots: [perception_node]
+      observable_chain: [perception_node, localization_node]
+      physical_chain: [perception_node, localization_node, planning_node, control_node]
+
+  - key: perception_crash
+    name: "S04 perception node failure (process crash, respawned by launch)"
+    group: single
+    faults: [{target: perception_node, type: crash, param: 0.0, onset: 0.0, duration: 1.0}]
+    observation_sec: 10.0
+    ground_truth:
+      root: perception_node
+      accepted_roots: [perception_node]
+      observable_chain: [perception_node, localization_node]
+      physical_chain: [perception_node, localization_node, planning_node, control_node]
+
+  - key: localization_failure
+    name: "S05 localization failure: pose jump + uncertainty spike"
+    group: single
+    faults: [{target: localization_node, type: localization_failure, param: 20.0, onset: 0.0}]
+    ground_truth:
+      root: localization_node
+      accepted_roots: [localization_node]
+      observable_chain: [localization_node, planning_node, control_node]
+      physical_chain: [localization_node, planning_node, control_node]
+
+  - key: control_failure
+    name: "S06 control failure: erratic velocity commands"
+    group: single
+    faults: [{target: control_node, type: control_failure, param: 1.0, onset: 0.0}]
+    ground_truth:
+      root: control_node
+      accepted_roots: [control_node]
+      observable_chain: [control_node]
+      physical_chain: [control_node]
+
+  # ---------------------------------------------------------------- communication
+  - key: perception_link_latency
+    name: "S07 communication: perception output delayed 0.4 s"
+    group: communication
+    faults: [{target: perception_node, type: latency, param: 0.4, onset: 0.0}]
+    ground_truth:
+      root: perception_node
+      accepted_roots: [perception_node]
+      observable_chain: [perception_node, localization_node]
+      physical_chain: [perception_node, localization_node, planning_node, control_node]
+
+  - key: lidar_link_jitter
+    name: "S08 communication: LiDAR link jitter (sigma 0.25 s)"
+    group: communication
+    faults: [{target: lidar_node, type: jitter, param: 0.25, onset: 0.0}]
+    ground_truth:
+      root: lidar_node
+      accepted_roots: [lidar_node]
+      observable_chain: [lidar_node, perception_node]
+      physical_chain: [lidar_node, perception_node, localization_node]
+
+  - key: lidar_link_loss
+    name: "S09 communication: LiDAR message loss 60 %"
+    group: communication
+    faults: [{target: lidar_node, type: loss, param: 0.6, onset: 0.0}]
+    ground_truth:
+      root: lidar_node
+      accepted_roots: [lidar_node]
+      observable_chain: [lidar_node, perception_node]
+      physical_chain: [lidar_node, perception_node, localization_node]
+
+  # ---------------------------------------------------------------- workload
+  - key: perception_workload
+    name: "S10 workload: perception CPU work 150 ms per callback"
+    group: workload
+    faults: [{target: perception_node, type: workload, param: 150.0, onset: 0.0}]
+    ground_truth:
+      root: perception_node
+      accepted_roots: [perception_node]
+      observable_chain: [perception_node]
+      physical_chain: [perception_node, localization_node, planning_node]
+
+  # ---------------------------------------------------------------- dynamic graph
+  - key: localization_restart
+    name: "S11 node restart: localization clean stop, respawned after 4 s"
+    group: dynamic_graph
+    faults: [{target: localization_node, type: stop, param: 0.0, onset: 0.0, duration: 1.0}]
+    observation_sec: 10.0
+    ground_truth:
+      root: localization_node
+      accepted_roots: [localization_node]
+      observable_chain: [localization_node, planning_node]
+      physical_chain: [localization_node, planning_node, control_node]
+
+  - key: camera_disappear_reappear
+    name: "S12 node disappearance / reappearance: camera removed for 6 s"
+    group: dynamic_graph
+    faults: [{target: camera_node, type: restart, param: 6.0, onset: 0.0, duration: 1.0}]
+    observation_sec: 10.0
+    ground_truth:
+      root: camera_node
+      accepted_roots: [camera_node]
+      observable_chain: [camera_node, perception_node, localization_node]
+      physical_chain: [camera_node, perception_node, localization_node, planning_node, control_node]
+
+  - key: planning_topic_change
+    name: "S13 runtime topic change: planner switches pose source to raw odometry (no fault)"
+    group: dynamic_graph
+    faults: [{target: planning_node, type: topic_change, param: 1.0, onset: 0.0}]
+    ground_truth:
+      root: null
+      accepted_roots: []
+      expect_no_diagnosis: true
+      observable_chain: []
+      physical_chain: []
+
+  # ---------------------------------------------------------------- compound
+  - key: lidar_noise_plus_perception_jitter
+    name: "S14 compound: LiDAR noise + perception link jitter 2 s later"
+    group: compound
+    faults:
+      - {target: lidar_node, type: noise, param: 8.0, onset: 0.0}
+      - {target: perception_node, type: jitter, param: 0.3, onset: 2.0}
+    observation_sec: 10.0
+    ground_truth:
+      root: lidar_node
+      accepted_roots: [lidar_node, perception_node]
+      observable_chain: [lidar_node, perception_node]
+      physical_chain: [lidar_node, perception_node, localization_node, planning_node, control_node]
+
+  - key: lidar_noise_plus_perception_workload
+    name: "S15 compound: LiDAR noise + perception workload 1.5 s later"
+    group: compound
+    faults:
+      - {target: lidar_node, type: noise, param: 8.0, onset: 0.0}
+      - {target: perception_node, type: workload, param: 150.0, onset: 1.5}
+    observation_sec: 10.0
+    ground_truth:
+      root: lidar_node
+      accepted_roots: [lidar_node, perception_node]
+      observable_chain: [lidar_node, perception_node]
+      physical_chain: [lidar_node, perception_node, localization_node, planning_node, control_node]
+
+  - key: perception_plus_localization_degradation
+    name: "S16 compound: perception degradation + localization degradation 1 s later"
+    group: compound
+    faults:
+      - {target: perception_node, type: degradation, param: 0.0, onset: 0.0}
+      - {target: localization_node, type: degradation, param: 0.6, onset: 1.0}
+    observation_sec: 10.0
+    ground_truth:
+      root: perception_node
+      accepted_roots: [perception_node, localization_node]
+      observable_chain: [perception_node, localization_node]
+      physical_chain: [perception_node, localization_node, planning_node, control_node]
+
+  # ---------------------------------------------------------------- ambiguous
+  - key: odometry_stale_cascade
+    name: "S17 ambiguous: mild upstream (stale odometry) with strong downstream symptoms"
+    group: ambiguous
+    faults: [{target: odometry_node, type: stale, param: 1.0, onset: 0.0}]
+    observation_sec: 10.0
+    ground_truth:
+      root: odometry_node
+      accepted_roots: [odometry_node]
+      observable_chain: [odometry_node, localization_node, planning_node]
+      physical_chain: [odometry_node, localization_node, planning_node, control_node]
+
+  - key: workload_then_localization_failure
+    name: "S18 ambiguous: mild perception workload, then strong localization failure 3 s later"
+    group: ambiguous
+    faults:
+      - {target: perception_node, type: workload, param: 120.0, onset: 0.0}
+      - {target: localization_node, type: localization_failure, param: 20.0, onset: 3.0}
+    observation_sec: 10.0
+    ground_truth:
+      root: perception_node
+      accepted_roots: [perception_node, localization_node]
+      observable_chain: [perception_node, localization_node, planning_node, control_node]
+      physical_chain: [perception_node, localization_node, planning_node, control_node]
+
+  - key: camera_dropout_gated_perception
+    name: "S20 ambiguous: low-rate camera dropout; perception empties before the camera timeout is confirmable"
+    group: ambiguous
+    faults: [{target: camera_node, type: dropout, param: 1.0, onset: 0.0}]
+    observation_sec: 10.0
+    ground_truth:
+      root: camera_node
+      accepted_roots: [camera_node]
+      observable_chain: [camera_node, perception_node, localization_node]
+      physical_chain: [camera_node, perception_node, localization_node, planning_node, control_node]
+
+  - key: lidar_dropout_with_localization_stop
+    name: "S19 ambiguous: LiDAR dropout, localization stops mid-incident (graph changes)"
+    group: ambiguous
+    faults:
+      - {target: lidar_node, type: dropout, param: 1.0, onset: 0.0}
+      - {target: localization_node, type: stop, param: 0.0, onset: 3.0, duration: 1.0}
+    observation_sec: 12.0
+    ground_truth:
+      root: lidar_node
+      accepted_roots: [lidar_node, localization_node]
+      observable_chain: [lidar_node, perception_node, localization_node]
+      physical_chain: [lidar_node, perception_node, localization_node, planning_node, control_node]
+
+demos:
+  - {key: lidar_noise, title: "Demo 1: nominal -> LiDAR degradation -> cascade -> lidar_node identified"}
+  - {key: perception_crash, title: "Demo 2: nominal -> perception failure -> perception_node identified"}
+  - {key: camera_dropout_gated_perception, title: "Demo 3: camera loss seen downstream first; dependency structure identifies camera_node"}

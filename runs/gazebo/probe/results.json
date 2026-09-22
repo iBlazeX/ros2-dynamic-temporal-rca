@@ -1,0 +1,922 @@
+{
+  "generated_at": 1790109501.0277936,
+  "simulator": "gazebo",
+  "environment": {
+    "name": "rca_gazebo",
+    "simulator": "gazebo",
+    "description": "Gazebo Harmonic (gz sim 8) world rca_arena.sdf with a differential-drive robot (gpu_lidar 10 Hz, camera 5 Hz, IMU 20 Hz, DiffDrive odometry 20 Hz), bridged to ROS 2 through ros_gz_bridge into the /gz namespace, then driven by the rca_gazebo sensor drivers and the rca_sim processing pipeline.",
+    "static_design_graph": {
+      "nodes": [
+        "lidar_node",
+        "camera_node",
+        "imu_node",
+        "odometry_node",
+        "perception_node",
+        "localization_node",
+        "planning_node",
+        "control_node",
+        "sim_world"
+      ],
+      "edges": [
+        {
+          "from": "lidar_node",
+          "to": "perception_node",
+          "topics": [
+            "/sim/lidar/scan"
+          ]
+        },
+        {
+          "from": "camera_node",
+          "to": "perception_node",
+          "topics": [
+            "/sim/camera/image"
+          ]
+        },
+        {
+          "from": "imu_node",
+          "to": "localization_node",
+          "topics": [
+            "/sim/imu/data"
+          ]
+        },
+        {
+          "from": "odometry_node",
+          "to": "localization_node",
+          "topics": [
+            "/sim/odom"
+          ]
+        },
+        {
+          "from": "perception_node",
+          "to": "localization_node",
+          "topics": [
+            "/perception/obstacles"
+          ]
+        },
+        {
+          "from": "perception_node",
+          "to": "planning_node",
+          "topics": [
+            "/perception/obstacles"
+          ]
+        },
+        {
+          "from": "localization_node",
+          "to": "planning_node",
+          "topics": [
+            "/localization/pose"
+          ]
+        },
+        {
+          "from": "planning_node",
+          "to": "control_node",
+          "topics": [
+            "/planning/path"
+          ]
+        },
+        {
+          "from": "control_node",
+          "to": "sim_world",
+          "topics": [
+            "/cmd_vel"
+          ]
+        }
+      ]
+    }
+  },
+  "launch_seed": 7,
+  "db_path": "/home/lynx/ros2_rca_ws/events.db",
+  "results": [
+    {
+      "scenario": "G03 LiDAR degradation: heavy noise and invalid returns",
+      "key": "lidar_noise",
+      "group": "single",
+      "rep": 0,
+      "launch_seed": 7,
+      "faults": [
+        {
+          "target": "lidar_node",
+          "type": "noise",
+          "param": 8.0,
+          "onset": 0.0,
+          "duration": 10.0
+        }
+      ],
+      "ground_truth": "lidar_node",
+      "accepted_roots": [
+        "lidar_node"
+      ],
+      "expect_no_diagnosis": false,
+      "t_inject": 1790109459.3575816,
+      "t_end": 1790109467.3577058,
+      "num_anomalies": 180,
+      "num_diagnoses_after_injection": 16,
+      "anomalous_nodes_observed": [
+        "control_node",
+        "lidar_node",
+        "perception_node",
+        "planning_node"
+      ],
+      "nominal_false_alarms": 36,
+      "nominal_window_sec": 18.057,
+      "discovered_graph": {
+        "nodes": [
+          "camera_node",
+          "control_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "sim_world"
+        ],
+        "edges": [
+          {
+            "from": "camera_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/camera/image"
+            ]
+          },
+          {
+            "from": "control_node",
+            "to": "sim_world",
+            "topics": [
+              "/cmd_vel"
+            ]
+          },
+          {
+            "from": "imu_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/imu/data"
+            ]
+          },
+          {
+            "from": "lidar_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/lidar/scan"
+            ]
+          },
+          {
+            "from": "localization_node",
+            "to": "planning_node",
+            "topics": [
+              "/localization/pose"
+            ]
+          },
+          {
+            "from": "odometry_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/odom"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "localization_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "planning_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "planning_node",
+            "to": "control_node",
+            "topics": [
+              "/planning/path"
+            ]
+          }
+        ]
+      },
+      "predicted_root_cause": "lidar_node",
+      "confidence": 0.7,
+      "fault_type": "noise",
+      "top1_correct": true,
+      "top3_correct": true,
+      "ground_truth_rank": 1,
+      "reciprocal_rank": 1.0,
+      "detection_latency_sec": 0.094,
+      "diagnosis_latency_sec": 0.336,
+      "correct_diagnosis_latency_sec": 1.336,
+      "false_diagnosis_rate": 0.125,
+      "num_false_diagnoses_after_injection": 2,
+      "ranking": [
+        "lidar_node",
+        "planning_node",
+        "control_node",
+        "perception_node",
+        "camera_node",
+        "imu_node",
+        "odometry_node",
+        "localization_node"
+      ],
+      "chain_accuracy": 0.5,
+      "chain_accuracy_numerator": 2,
+      "chain_accuracy_denominator": 4,
+      "chain_order_correct": true,
+      "predicted_chain": [
+        "lidar_node",
+        "perception_node",
+        "planning_node",
+        "control_node"
+      ],
+      "expected_chain": [
+        "lidar_node",
+        "perception_node"
+      ],
+      "physical_chain": [
+        "lidar_node",
+        "perception_node",
+        "localization_node",
+        "planning_node",
+        "control_node"
+      ],
+      "physical_chain_coverage": 0.8,
+      "physical_chain_numerator": 4,
+      "physical_chain_denominator": 5,
+      "physically_affected_unobserved": [
+        "localization_node"
+      ],
+      "explanation": "============================================================\nROOT CAUSE DIAGNOSIS: lidar_node (Confidence: 0.700)\n============================================================\nScore Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:\n  R(lidar_node) = 0.3\u00b7D(1.00) + 0.3\u00b7T(0.00) + 0.25\u00b7S(1.00) + 0.15\u00b7A(1.00) = 0.700\n  - Dependency D: 1.00 (reaches 3 downstream anomalous node(s); 0 anomalous upstream node(s))\n  - Temporal   T: 0.00 (first anomaly at t=1790109459.41s; earliest in window = supporting evidence, not proof of causality)\n  - Symptom    S: 1.00 (explains 4/4 anomalous nodes)\n  - Severity   A: 1.00 (max normalised severity on node, 57 direct anomaly event(s))\n\nPropagation Chain (evidence-ordered, via discovered graph edges):\n  lidar_node (t=1790109459.41s: /sim/lidar/scan:nan_ratio, sev=1.00)\n    \u2514\u2500\u2192 perception_node via /sim/lidar/scan (t=1790109461.79s, +2.39s after lidar_node: /perception/obstacles:obstacle_empty)\n      \u2514\u2500\u2192 planning_node via /perception/obstacles (t=1790109352.05s, -109.74s after perception_node: /planning/path:path_empty)\n        \u2514\u2500\u2192 control_node via /planning/path (t=1790109352.06s, +0.01s after planning_node: /cmd_vel:cmd_zero)\n\nCandidate Ranking & Evidence Comparison:\n  #2 planning_node        R=0.625 (\u0394 -0.075) [downstream of lidar_node in discovered graph; lower symptom coverage (50% vs 100%)]\n  #3 control_node         R=0.512 (\u0394 -0.188) [downstream of lidar_node in discovered graph; lower symptom coverage (25% vs 100%)]\n  #4 perception_node      R=0.488 (\u0394 -0.213) [downstream of lidar_node in discovered graph; lower symptom coverage (75% vs 100%)]\n============================================================",
+      "evaluated_offline": true
+    },
+    {
+      "scenario": "G06 sensor rate reduction: IMU publishes at a quarter of its rate",
+      "key": "imu_rate_drop",
+      "group": "single",
+      "rep": 0,
+      "launch_seed": 7,
+      "faults": [
+        {
+          "target": "imu_node",
+          "type": "rate",
+          "param": 0.25,
+          "onset": 0.0,
+          "duration": 10.0
+        }
+      ],
+      "ground_truth": "imu_node",
+      "accepted_roots": [
+        "imu_node"
+      ],
+      "expect_no_diagnosis": false,
+      "t_inject": 1790109492.818266,
+      "t_end": 1790109500.8183699,
+      "num_anomalies": 80,
+      "num_diagnoses_after_injection": 16,
+      "anomalous_nodes_observed": [
+        "control_node",
+        "planning_node"
+      ],
+      "nominal_false_alarms": 36,
+      "nominal_window_sec": 18.047,
+      "discovered_graph": {
+        "nodes": [
+          "camera_node",
+          "control_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "planning_node",
+          "sim_world"
+        ],
+        "edges": [
+          {
+            "from": "camera_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/camera/image"
+            ]
+          },
+          {
+            "from": "control_node",
+            "to": "sim_world",
+            "topics": [
+              "/cmd_vel"
+            ]
+          },
+          {
+            "from": "imu_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/imu/data"
+            ]
+          },
+          {
+            "from": "lidar_node",
+            "to": "perception_node",
+            "topics": [
+              "/sim/lidar/scan"
+            ]
+          },
+          {
+            "from": "localization_node",
+            "to": "planning_node",
+            "topics": [
+              "/localization/pose"
+            ]
+          },
+          {
+            "from": "odometry_node",
+            "to": "localization_node",
+            "topics": [
+              "/sim/odom"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "localization_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "perception_node",
+            "to": "planning_node",
+            "topics": [
+              "/perception/obstacles"
+            ]
+          },
+          {
+            "from": "planning_node",
+            "to": "control_node",
+            "topics": [
+              "/planning/path"
+            ]
+          }
+        ]
+      },
+      "predicted_root_cause": "planning_node",
+      "confidence": 1.0,
+      "fault_type": "rate",
+      "top1_correct": false,
+      "top3_correct": false,
+      "ground_truth_rank": 4,
+      "reciprocal_rank": 0.25,
+      "detection_latency_sec": 0.034,
+      "diagnosis_latency_sec": 0.378,
+      "correct_diagnosis_latency_sec": null,
+      "false_diagnosis_rate": 1.0,
+      "num_false_diagnoses_after_injection": 16,
+      "ranking": [
+        "planning_node",
+        "control_node",
+        "camera_node",
+        "imu_node",
+        "lidar_node",
+        "localization_node",
+        "odometry_node",
+        "perception_node"
+      ],
+      "chain_accuracy": 0.0,
+      "chain_accuracy_numerator": 0,
+      "chain_accuracy_denominator": 3,
+      "chain_order_correct": false,
+      "predicted_chain": [
+        "planning_node",
+        "control_node"
+      ],
+      "expected_chain": [
+        "imu_node"
+      ],
+      "physical_chain": [
+        "imu_node",
+        "localization_node"
+      ],
+      "physical_chain_coverage": 0.0,
+      "physical_chain_numerator": 0,
+      "physical_chain_denominator": 2,
+      "physically_affected_unobserved": [
+        "imu_node",
+        "localization_node"
+      ],
+      "explanation": "============================================================\nROOT CAUSE DIAGNOSIS: planning_node (Confidence: 1.000)\n============================================================\nScore Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:\n  R(planning_node) = 0.3\u00b7D(1.00) + 0.3\u00b7T(1.00) + 0.25\u00b7S(1.00) + 0.15\u00b7A(1.00) = 1.000\n  - Dependency D: 1.00 (reaches 1 downstream anomalous node(s); 0 anomalous upstream node(s))\n  - Temporal   T: 1.00 (first anomaly at t=1790109352.05s; earliest in window = supporting evidence, not proof of causality)\n  - Symptom    S: 1.00 (explains 2/2 anomalous nodes)\n  - Severity   A: 1.00 (max normalised severity on node, 30 direct anomaly event(s))\n\nPropagation Chain (evidence-ordered, via discovered graph edges):\n  planning_node (t=1790109352.05s: /planning/path:path_empty, sev=1.00)\n    \u2514\u2500\u2192 control_node via /planning/path (t=1790109352.06s, +0.01s after planning_node: /cmd_vel:cmd_zero)\n\nCandidate Ranking & Evidence Comparison:\n  #2 control_node         R=0.574 (\u0394 -0.426) [first anomaly 0.01s after planning_node; downstream of planning_node in discovered graph; lower symptom coverage (50% vs 100%)]\n  #3 camera_node          R=0.565 (\u0394 -0.435) [no direct anomaly observed]\n  #4 imu_node             R=0.565 (\u0394 -0.435) [no direct anomaly observed]\n============================================================",
+      "evaluated_offline": true
+    }
+  ],
+  "per_scenario": [
+    {
+      "key": "lidar_noise",
+      "scenario": "G03 LiDAR degradation: heavy noise and invalid returns",
+      "group": "single",
+      "runs": 1,
+      "top1": 1,
+      "top3": 1,
+      "mrr": 1.0,
+      "detection_latency": 0.094,
+      "diagnosis_latency": 0.336,
+      "fdr": 0.125,
+      "chain_accuracy": 0.5,
+      "physical_coverage": 0.8,
+      "evaluated_offline": 1,
+      "baseline_independent_top1": 1,
+      "baseline_temporal_only_top1": 0,
+      "baseline_static_dep_anom_top1": 1,
+      "baseline_static_dep_temp_top1": 0,
+      "baseline_proposed_top1": 1,
+      "ablation_full_top1": 1,
+      "ablation_no_D_top1": 0,
+      "ablation_no_T_top1": 1,
+      "ablation_no_S_top1": 0,
+      "ablation_no_A_top1": 1
+    },
+    {
+      "key": "imu_rate_drop",
+      "scenario": "G06 sensor rate reduction: IMU publishes at a quarter of its rate",
+      "group": "single",
+      "runs": 1,
+      "top1": 0,
+      "top3": 0,
+      "mrr": 0.25,
+      "detection_latency": 0.034,
+      "diagnosis_latency": 0.378,
+      "fdr": 1.0,
+      "chain_accuracy": 0.0,
+      "physical_coverage": 0.0,
+      "evaluated_offline": 1,
+      "baseline_independent_top1": 0,
+      "baseline_temporal_only_top1": 0,
+      "baseline_static_dep_anom_top1": 0,
+      "baseline_static_dep_temp_top1": 0,
+      "baseline_proposed_top1": 0,
+      "ablation_full_top1": 0,
+      "ablation_no_D_top1": 0,
+      "ablation_no_T_top1": 0,
+      "ablation_no_S_top1": 0,
+      "ablation_no_A_top1": 0
+    }
+  ],
+  "aggregate": {
+    "total_experiments": 2,
+    "top1_correct": 1,
+    "top1_accuracy": 0.5,
+    "top3_correct": 1,
+    "top3_accuracy": 0.5,
+    "mean_reciprocal_rank": 0.625,
+    "avg_detection_latency_sec": 0.064,
+    "avg_diagnosis_latency_sec": 0.357,
+    "avg_correct_diagnosis_latency_sec": 1.336,
+    "detection_latency_stats": {
+      "n": 2,
+      "mean": 0.064,
+      "min": 0.034,
+      "max": 0.094,
+      "std": 0.03,
+      "median": 0.064,
+      "p25": 0.049,
+      "p75": 0.079
+    },
+    "diagnosis_latency_stats": {
+      "n": 2,
+      "mean": 0.357,
+      "min": 0.336,
+      "max": 0.378,
+      "std": 0.021,
+      "median": 0.357,
+      "p25": 0.347,
+      "p75": 0.367
+    },
+    "correct_diagnosis_latency_stats": {
+      "n": 1,
+      "mean": 1.336,
+      "min": 1.336,
+      "max": 1.336,
+      "std": 0.0,
+      "median": 1.336,
+      "p25": 1.336,
+      "p75": 1.336
+    },
+    "post_injection_diagnoses": 32,
+    "post_injection_false_diagnoses": 18,
+    "post_injection_false_diagnosis_rate": 0.5625,
+    "false_diagnosis_rate": 0.5625,
+    "num_diagnoses_after_injection": 32,
+    "avg_chain_accuracy": 0.25,
+    "chain_accuracy_n": 2,
+    "chain_order_correct_count": 1,
+    "chain_order_n": 2,
+    "chain_order_accuracy": 0.5,
+    "avg_physical_chain_coverage": 0.4,
+    "physical_chain_coverage_n": 2,
+    "scenarios_with_unobserved_physical_nodes": [
+      "imu_rate_drop",
+      "lidar_noise"
+    ],
+    "nominal_fault_free_windows": 3,
+    "nominal_fault_free_sec": 56.104,
+    "nominal_anomalies": 560,
+    "nominal_diagnoses": 112,
+    "nominal_false_alarms": 112,
+    "nominal_false_alarm_rate_per_min": 119.7776,
+    "nominal_false_alarms_per_min": 119.7776
+  },
+  "cohorts": {
+    "all_runs": {
+      "n": 2,
+      "proposed_top1_correct": 1,
+      "proposed_top1_accuracy": 0.5
+    },
+    "common_evidence_subset": {
+      "n": 2,
+      "proposed_top1_correct": 1,
+      "proposed_top1_accuracy": 0.5,
+      "baselines": {
+        "independent": {
+          "top1_correct": 1,
+          "n": 2,
+          "top1_accuracy": 0.5,
+          "mean_reciprocal_rank": 0.5
+        },
+        "temporal_only": {
+          "top1_correct": 0,
+          "n": 2,
+          "top1_accuracy": 0.0,
+          "mean_reciprocal_rank": 0.1667
+        },
+        "static_dep_anom": {
+          "top1_correct": 1,
+          "n": 2,
+          "top1_accuracy": 0.5,
+          "mean_reciprocal_rank": 0.6667
+        },
+        "static_dep_temp": {
+          "top1_correct": 0,
+          "n": 2,
+          "top1_accuracy": 0.0,
+          "mean_reciprocal_rank": 0.4167
+        },
+        "proposed": {
+          "top1_correct": 1,
+          "n": 2,
+          "top1_accuracy": 0.5,
+          "mean_reciprocal_rank": 0.625
+        }
+      },
+      "inclusion_criterion": "scenario declares a ground-truth root cause; defined before the comparison and independent of which method succeeded"
+    },
+    "excluded_from_common_subset": {
+      "n": 0,
+      "reasons": {},
+      "keys": []
+    },
+    "denominators_match": true
+  },
+  "nominal_windows": [
+    {
+      "name": "warmup",
+      "t_start": 1790109414.0777147,
+      "t_end": 1790109434.0780804,
+      "duration_sec": 20.0,
+      "anomalies": 200,
+      "diagnoses": 40,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    },
+    {
+      "name": "pre_lidar_noise_r0",
+      "t_start": 1790109441.3001564,
+      "t_end": 1790109459.3575816,
+      "duration_sec": 18.057,
+      "anomalies": 180,
+      "diagnoses": 36,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    },
+    {
+      "name": "pre_imu_rate_drop_r0",
+      "t_start": 1790109474.7709918,
+      "t_end": 1790109492.818266,
+      "duration_sec": 18.047,
+      "anomalies": 180,
+      "diagnoses": 36,
+      "anomalous_nodes": [
+        "control_node",
+        "planning_node"
+      ],
+      "diagnosed_roots": [
+        "planning_node"
+      ]
+    }
+  ],
+  "baselines": [
+    {
+      "scenario": "G03 LiDAR degradation: heavy noise and invalid returns",
+      "key": "lidar_noise",
+      "rep": 0,
+      "ground_truth": "lidar_node",
+      "accepted_roots": [
+        "lidar_node"
+      ],
+      "independent": {
+        "ranking": [
+          "lidar_node",
+          "control_node",
+          "planning_node",
+          "perception_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "temporal_only": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "lidar_node",
+          "perception_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "static_dep_anom": {
+        "ranking": [
+          "lidar_node",
+          "perception_node",
+          "camera_node",
+          "planning_node",
+          "control_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "static_dep_temp": {
+        "ranking": [
+          "planning_node",
+          "lidar_node",
+          "control_node",
+          "camera_node",
+          "perception_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "proposed": {
+        "ranking": [
+          "lidar_node",
+          "planning_node",
+          "control_node",
+          "perception_node",
+          "camera_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G06 sensor rate reduction: IMU publishes at a quarter of its rate",
+      "key": "imu_rate_drop",
+      "rep": 0,
+      "ground_truth": "imu_node",
+      "accepted_roots": [
+        "imu_node"
+      ],
+      "independent": {
+        "ranking": [
+          "control_node",
+          "planning_node"
+        ],
+        "rank": -1,
+        "top1": false
+      },
+      "temporal_only": {
+        "ranking": [
+          "planning_node",
+          "control_node"
+        ],
+        "rank": -1,
+        "top1": false
+      },
+      "static_dep_anom": {
+        "ranking": [
+          "planning_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "static_dep_temp": {
+        "ranking": [
+          "planning_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "proposed": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 4,
+        "top1": false
+      }
+    }
+  ],
+  "ablations": [
+    {
+      "scenario": "G03 LiDAR degradation: heavy noise and invalid returns",
+      "key": "lidar_noise",
+      "rep": 0,
+      "ground_truth": "lidar_node",
+      "accepted_roots": [
+        "lidar_node"
+      ],
+      "full": {
+        "ranking": [
+          "lidar_node",
+          "planning_node",
+          "control_node",
+          "perception_node",
+          "camera_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_D": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "lidar_node",
+          "perception_node",
+          "camera_node",
+          "imu_node",
+          "localization_node",
+          "odometry_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "no_T": {
+        "ranking": [
+          "lidar_node",
+          "perception_node",
+          "camera_node",
+          "planning_node",
+          "imu_node",
+          "odometry_node",
+          "control_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      },
+      "no_S": {
+        "ranking": [
+          "planning_node",
+          "lidar_node",
+          "control_node",
+          "perception_node",
+          "camera_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 2,
+        "top1": false
+      },
+      "no_A": {
+        "ranking": [
+          "lidar_node",
+          "planning_node",
+          "camera_node",
+          "control_node",
+          "perception_node",
+          "imu_node",
+          "odometry_node",
+          "localization_node"
+        ],
+        "rank": 1,
+        "top1": true
+      }
+    },
+    {
+      "scenario": "G06 sensor rate reduction: IMU publishes at a quarter of its rate",
+      "key": "imu_rate_drop",
+      "rep": 0,
+      "ground_truth": "imu_node",
+      "accepted_roots": [
+        "imu_node"
+      ],
+      "full": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 4,
+        "top1": false
+      },
+      "no_D": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 4,
+        "top1": false
+      },
+      "no_T": {
+        "ranking": [
+          "planning_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 3,
+        "top1": false
+      },
+      "no_S": {
+        "ranking": [
+          "planning_node",
+          "control_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node"
+        ],
+        "rank": 4,
+        "top1": false
+      },
+      "no_A": {
+        "ranking": [
+          "planning_node",
+          "camera_node",
+          "imu_node",
+          "lidar_node",
+          "localization_node",
+          "odometry_node",
+          "perception_node",
+          "control_node"
+        ],
+        "rank": 3,
+        "top1": false
+      }
+    }
+  ]
+}

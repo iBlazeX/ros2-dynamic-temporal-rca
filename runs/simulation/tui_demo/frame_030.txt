@@ -1,0 +1,46 @@
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Dynamic Dependency-Aware Temporal RCA  |  ROS 2 diagnostic console                                                                                            ROS LIVE │
+│ SYSTEM DEGRADED   backend rca_sim   nodes 9  edges 9  topics 8  anomalies(window) 170  anomalous nodes 3                        state age 0.4s  monitor up 85s  msgs 46│
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓┌────────────────────────────────────────────────────────────────┐
+┃╭ DEPENDENCY GRAPH (discovered at runtime) ──────────────────────────────────────────────────────────╮┃│╭ ROOT CAUSE DIAGNOSIS ────────────────────────────────────────╮│
+┃│                                                                                                    │┃││  ROOT CAUSE                                                  ││
+┃│╭────────────────╮                                                                                  │┃││  camera_node                                                 ││
+┃││[*] camera_node │                                                                                  │┃││                                                              ││
+┃│╰────────────────╯                                                                                  │┃││  Confidence: 0.998                                           ││
+┃│╭────────────────╮   ╭────────────────╮   ╭─────────────────╮   ╭─────────╮   ╭────────╮   ╭───────╮│┃││                                                              ││
+┃││[ ] imu_node    │   │[!] perception_n│   │[!] localization_│   │[ ] plann│   │[ ] cont│   │[ ] sim││┃││  Dependency  ██████████████ 1.00                             ││
+┃│╰────────────────╯ ──│ obstacle_empty │ ──│ pose_uncertainty│ ──│ nominal │ ──│ nominal│ ──│ nomina││┃││  Temporal    █████████████▉ 0.99                             ││
+┃│╭────────────────╮   │ in graph / ALIV│   │ in graph / ALIVE│   │ in graph│   │ in grap│   │ in gra││┃││  Symptoms    ██████████████ 1.00                             ││
+┃││[ ] lidar_node  │   ╰────────────────╯   ╰─────────────────╯   ╰─────────╯   ╰────────╯   ╰───────╯│┃││  Severity    ██████████████ 1.00                             ││
+┃│╰────────────────╯                                                                                  │┃││                                                              ││
+┃│╭────────────────╮                                                                                  │┃││  Propagation: camera_node -> perception_node -> localization_││
+┃││[ ] odometry_nod│                                                                                  │┃││  Ranking:                                                    ││
+┃│╰────────────────╯                                                                                  │┃││   1. camera_node        R=0.998                              ││
+┃│                                                                                                    │┃││   2. perception_node    R=0.717                              ││
+┃├────────────────────────────────────────────────────────────────────────────────────────────────────┤┃││   3. localization_node  R=0.432                              ││
+┃│  edges (dynamic ROS 2 graph discovery):                                                            │┃││   4. lidar_node         R=0.382                              ││
+┃│  camera_node -> perception_node   via /sim/camera/image                                            │┃│├──────────────────────────────────────────────────────────────┤│
+┃│  control_node -> sim_world   via /cmd_vel                                                          │┃││  Evidence (from diagnostic monitor):                         ││
+┃│  imu_node -> localization_node   via /sim/imu/data                                                 │┃││  ROOT CAUSE DIAGNOSIS: camera_node (Confidence: 0.998)       ││
+┃│  lidar_node -> perception_node   via /sim/lidar/scan                                               │┃││  Score Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:          ││
+┃╰────────────────────────────────────────────────────────────────────────────────────────────────────╯┃│╰──────────────────────────────────────────────────────────────╯│
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛└────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│╭ TEMPORAL TIMELINE (onset-ordered evidence; ordering supports, does not prove, causality) ────────────────────────────────────────────────────────────────────────────╮│
+││22:18:38.58  perception_node      obstacle_empty    sev 1.00  Value 1.0000 deviated from baseline 0.0000±0.0001 (z=10000.0, confirmed x2) (recorded t=1790115518.69)  ││
+││22:18:38.98  perception_node      obstacle_empty    sev 1.00  Value 1.0000 deviated from baseline 0.0000±0.0001 (z=10000.0, confirmed x2) (recorded t=1790115519.09)  ││
+││22:18:45.10  system               window_cleared              no anomalies in RCA window; operating nominally                                                         ││
+││22:18:47.43 perception_node    message_timeout sev 1.00 Message timeout on /perception/obstacles: no message for 0.62s (expected ~0.100s, threshold 0.45s, l (recorded││
+││22:18:47.60  perception_node      diagnosis         sev 0.98  probable root cause perception_node (R=0.977, chain perception_node)                                    ││
+││22:18:49.10  localization_node    pose_uncertainty  sev 1.00  Value 0.3360 deviated from baseline 0.0736±0.0218 (z=12.0, confirmed x2) (recorded t=1790115529.16)     ││
+││22:18:57.60  localization_node    diagnosis         sev 1.00  probable root cause localization_node (R=1.000, chain localization_node)                                ││
+││22:18:58.10  system               window_cleared              no anomalies in RCA window; operating nominally                                                         ││
+││22:19:00.38  perception_node      obstacle_empty    sev 1.00  Value 1.0000 deviated from baseline 0.0000±0.0001 (z=10000.0, confirmed x2) (recorded t=1790115540.48)  ││
+││22:19:00.41 camera_node        message_timeout sev 1.00 Message timeout on /sim/camera/image: no message for 0.79s (expected ~0.200s, threshold 0.60s, last  (recorded││
+││22:19:00.60  camera_node          diagnosis         sev 0.97  probable root cause camera_node (R=0.973, chain camera_node -> perception_node)                         ││
+││22:19:02.40  localization_node    pose_uncertainty  sev 1.00  Value 0.3367 deviated from baseline 0.0757±0.0285 (z=9.1, confirmed x2) (recorded t=1790115542.46)      ││
+││  [16-27/27]  press T then ↑/↓                                                                                                                                        ││
+│╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯│
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+ [R] Refresh  [G] Graph  [D] Diagnosis  [T] Timeline  [↑/↓] Scroll focused panel  [Q] Quit             visualisation layer only: all RCA logic runs in diagnostic_monitor

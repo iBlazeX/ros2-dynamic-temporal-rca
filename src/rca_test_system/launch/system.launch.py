@@ -21,7 +21,8 @@ def generate_launch_description():
     monitor_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_diag, 'launch', 'monitor.launch.py')
-        )
+        ),
+        launch_arguments={'simulator': 'rca_test_system'}.items(),
     )
 
     return LaunchDescription([

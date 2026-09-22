@@ -1,0 +1,138 @@
+[INFO] [launch]: All log files can be found below /home/lynx/.ros/log/2026-09-21-00-29-11-459620-WINDOWS-FIRE-8889
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [sim_world-1]: process started with pid [8893]
+[INFO] [perception_node-2]: process started with pid [8894]
+[INFO] [localization_node-3]: process started with pid [8895]
+[INFO] [planning_node-4]: process started with pid [8896]
+[INFO] [control_node-5]: process started with pid [8897]
+[INFO] [monitor_node-6]: process started with pid [8898]
+[monitor_node-6] [INFO] [1789950552.528407253] [diagnostic_monitor]: DiagnosticMonitorNode started. DB: /home/lynx/ros2_rca_ws/events.db, Weights: (wD=0.3, wT=0.3, wS=0.25, wA=0.15), z>3.0 confirmed x2, warmup 4.0s
+[planning_node-4] [WARN] [1789950552.651617999] [planning_node]: planning_node: pose source = localization
+[planning_node-4] [INFO] [1789950552.652476291] [planning_node]: planning_node ready (pose + obstacles -> /planning/path)
+[control_node-5] [INFO] [1789950552.655286803] [control_node]: control_node ready (path -> /cmd_vel)
+[sim_world-1] [WARN] [1789950552.665856313] [rcl.logging_rosout]: Publisher already registered for node name: 'sim_world'. If this is due to multiple nodes with the same name then all logs for the logger named 'sim_world' will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[perception_node-2] [INFO] [1789950552.702016356] [perception_node]: perception_node ready (lidar + camera -> /perception/obstacles)
+[sim_world-1] [INFO] [1789950552.702954068] [sim_world]: sensor node started: lidar_node
+[sim_world-1] [WARN] [1789950552.703417222] [rcl.logging_rosout]: Publisher already registered for node name: 'sim_world'. If this is due to multiple nodes with the same name then all logs for the logger named 'sim_world' will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[localization_node-3] [INFO] [1789950552.713984604] [localization_node]: localization_node ready (odom + imu + landmarks -> /localization/pose)
+[sim_world-1] [INFO] [1789950552.717375892] [sim_world]: sensor node started: camera_node
+[sim_world-1] [WARN] [1789950552.717790038] [rcl.logging_rosout]: Publisher already registered for node name: 'sim_world'. If this is due to multiple nodes with the same name then all logs for the logger named 'sim_world' will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[sim_world-1] [INFO] [1789950552.730317313] [sim_world]: sensor node started: imu_node
+[sim_world-1] [WARN] [1789950552.730786086] [rcl.logging_rosout]: Publisher already registered for node name: 'sim_world'. If this is due to multiple nodes with the same name then all logs for the logger named 'sim_world' will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[sim_world-1] [INFO] [1789950552.747073746] [sim_world]: sensor node started: odometry_node
+[sim_world-1] [INFO] [1789950552.747699259] [sim_world]: sim_world ready (seed=7, obstacles=12)
+[monitor_node-6] [INFO] [1789950553.505622888] [diagnostic_monitor]: Discovered graph: nodes=['control_node', 'localization_node', 'perception_node', 'planning_node', 'sim_world'] edges=[control_node->sim_world, localization_node->planning_node, perception_node->localization_node, perception_node->planning_node, planning_node->control_node, sim_world->localization_node, sim_world->perception_node]
+[monitor_node-6] [INFO] [1789950553.564101788] [diagnostic_monitor]: Dynamically subscribed to monitor topic: /cmd_vel [geometry_msgs/msg/TwistStamped]
+[monitor_node-6] [INFO] [1789950553.566344714] [diagnostic_monitor]: Dynamically subscribed to monitor topic: /localization/pose [geometry_msgs/msg/PoseWithCovarianceStamped]
+[monitor_node-6] [INFO] [1789950553.568328259] [diagnostic_monitor]: Dynamically subscribed to monitor topic: /perception/obstacles [geometry_msgs/msg/PoseArray]
+[monitor_node-6] [INFO] [1789950553.587765966] [diagnostic_monitor]: Dynamically subscribed to monitor topic: /planning/path [nav_msgs/msg/Path]
+[monitor_node-6] [INFO] [1789950553.653503667] [diagnostic_monitor]: Dynamically subscribed to monitor topic: /sim/camera/image [sensor_msgs/msg/Image]
+[monitor_node-6] [INFO] [1789950553.655586188] [diagnostic_monitor]: Dynamically subscribed to monitor topic: /sim/imu/data [sensor_msgs/msg/Imu]
+[monitor_node-6] [INFO] [1789950553.657857699] [diagnostic_monitor]: Dynamically subscribed to monitor topic: /sim/lidar/scan [sensor_msgs/msg/LaserScan]
+[monitor_node-6] [INFO] [1789950553.659655366] [diagnostic_monitor]: Dynamically subscribed to monitor topic: /sim/odom [nav_msgs/msg/Odometry]
+[monitor_node-6] [WARN] [1789950583.347490877] [diagnostic_monitor]: ANOMALY on [localization_node] /localization/pose:latency: Value 0.2525 deviated from baseline 0.0137±0.0026 (z=91.5, confirmed x2) (sev=1.00)
+[monitor_node-6] [WARN] [1789950583.348730895] [diagnostic_monitor]: ANOMALY on [planning_node] /planning/path:inter_arrival: Value 0.0032 deviated from baseline 0.2000±0.0013 (z=146.1, confirmed x2) (sev=1.00)
+[monitor_node-6] [WARN] [1789950583.349444008] [diagnostic_monitor]: ANOMALY on [sim_world] /sim/imu/data:latency: Value 0.2693 deviated from baseline 0.0105±0.0009 (z=300.3, confirmed x2) (sev=1.00)
+[monitor_node-6] [WARN] [1789950583.350280021] [diagnostic_monitor]: ANOMALY on [sim_world] /sim/odom:latency: Value 0.2557 deviated from baseline 0.0109±0.0012 (z=203.2, confirmed x2) (sev=1.00)
+[monitor_node-6] [WARN] [1789950583.356811811] [diagnostic_monitor]: ANOMALY on [sim_world] /sim/camera/image:inter_arrival: Value 0.0071 deviated from baseline 0.2000±0.0011 (z=176.5, confirmed x2) (sev=1.00)
+[monitor_node-6] [INFO] [1789950583.506749286] [diagnostic_monitor]: 
+[monitor_node-6] ============================================================
+[monitor_node-6] ROOT CAUSE DIAGNOSIS: localization_node (Confidence: 0.700)
+[monitor_node-6] ============================================================
+[monitor_node-6] Score Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:
+[monitor_node-6]   R(localization_node) = 0.3·D(0.00) + 0.3·T(1.00) + 0.25·S(1.00) + 0.15·A(1.00) = 0.700
+[monitor_node-6]   - Dependency D: 0.00 (reaches 3 downstream anomalous node(s); 3 anomalous upstream node(s))
+[monitor_node-6]   - Temporal   T: 1.00 (first anomaly at t=1789950583.34s; earliest in window = supporting evidence, not proof of causality)
+[monitor_node-6]   - Symptom    S: 1.00 (explains 3/3 anomalous nodes)
+[monitor_node-6]   - Severity   A: 1.00 (max normalised severity on node, 1 direct anomaly event(s))
+[monitor_node-6] 
+[monitor_node-6] Propagation Chain (evidence-ordered, via discovered graph edges):
+[monitor_node-6]   localization_node (t=1789950583.34s: /localization/pose:latency, sev=1.00)
+[monitor_node-6]     └─→ planning_node via /localization/pose (t=1789950583.34s, +0.00s after localization_node: /planning/path:inter_arrival)
+[monitor_node-6]   (anomalous but not reachable from localization_node: sim_world)
+[monitor_node-6] 
+[monitor_node-6] Candidate Ranking & Evidence Comparison:
+[monitor_node-6]   #2 planning_node        R=0.700 (Δ -0.000) [first anomaly 0.00s after localization_node]
+[monitor_node-6]   #3 sim_world            R=0.700 (Δ -0.000) [first anomaly 0.00s after localization_node]
+[monitor_node-6]   #4 control_node         R=0.265 (Δ -0.435) [no direct anomaly observed]
+[monitor_node-6] ============================================================
+[monitor_node-6] [INFO] [1789950589.506608416] [diagnostic_monitor]: Anomaly window cleared. System operating nominally.
+[monitor_node-6] [INFO] [1789950604.506790312] [diagnostic_monitor]: Discovered graph: nodes=['_NODE_NAME_UNKNOWN_', 'control_node', 'localization_node', 'perception_node', 'planning_node', 'sim_world'] edges=[control_node->sim_world, localization_node->_NODE_NAME_UNKNOWN_, localization_node->planning_node, perception_node->localization_node, perception_node->planning_node, planning_node->control_node, sim_world->localization_node, sim_world->perception_node]
+[monitor_node-6] [WARN] [1789950605.505540140] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 0.0s (sev=1.00)
+[monitor_node-6] [FATAL] [1789950605.506133657] [diagnostic_monitor]: CRASH DETECTED: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 0.0s
+[monitor_node-6] [INFO] [1789950605.508322682] [diagnostic_monitor]: 
+[monitor_node-6] ============================================================
+[monitor_node-6] ROOT CAUSE DIAGNOSIS: _NODE_NAME_UNKNOWN_ (Confidence: 1.000)
+[monitor_node-6] ============================================================
+[monitor_node-6] Score Breakdown  R(C) = wD*D + wT*T + wS*S + wA*A:
+[monitor_node-6]   R(_NODE_NAME_UNKNOWN_) = 0.3·D(1.00) + 0.3·T(1.00) + 0.25·S(1.00) + 0.15·A(1.00) = 1.000
+[monitor_node-6]   - Dependency D: 1.00 (reaches 0 downstream anomalous node(s); 0 anomalous upstream node(s))
+[monitor_node-6]   - Temporal   T: 1.00 (first anomaly at t=1789950605.50s; earliest in window = supporting evidence, not proof of causality)
+[monitor_node-6]   - Symptom    S: 1.00 (explains 1/1 anomalous nodes)
+[monitor_node-6]   - Severity   A: 1.00 (max normalised severity on node, 1 direct anomaly event(s))
+[monitor_node-6] 
+[monitor_node-6] Propagation Chain (evidence-ordered, via discovered graph edges):
+[monitor_node-6]   _NODE_NAME_UNKNOWN_ (t=1789950605.50s: node_crash, sev=1.00)
+[monitor_node-6] 
+[monitor_node-6] Candidate Ranking & Evidence Comparison:
+[monitor_node-6]   #2 control_node         R=0.415 (Δ -0.585) [no direct anomaly observed; does not reach observed symptoms via dependency edges]
+[monitor_node-6]   #3 localization_node    R=0.415 (Δ -0.585) [no direct anomaly observed; does not reach observed symptoms via dependency edges]
+[monitor_node-6]   #4 perception_node      R=0.415 (Δ -0.585) [no direct anomaly observed; does not reach observed symptoms via dependency edges]
+[monitor_node-6] ============================================================
+[monitor_node-6] [WARN] [1789950607.507149971] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 2.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950609.506385707] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 4.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950612.506390328] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 7.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950615.505923853] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 10.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950617.505418501] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 12.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950620.505484550] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 15.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950622.506068263] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 17.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950625.505707222] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 20.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950628.506101306] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 23.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950631.505544387] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 26.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950633.505663656] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 28.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950635.505939332] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 30.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950637.506718122] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 32.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950639.506465827] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 34.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950642.506257701] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 37.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950644.506581140] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 39.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950647.505478821] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 42.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950650.505800877] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 45.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950653.506095221] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 48.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950656.505676620] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 51.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950658.506395233] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 53.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950661.505679268] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 56.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950663.505717146] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 58.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950666.505575729] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 61.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950669.506576094] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 64.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950671.506379567] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 66.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950674.505975552] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 69.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950676.505577542] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 71.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950679.506179304] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 74.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950682.505481967] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 77.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950685.506157318] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 80.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950688.506400723] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 83.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950690.505510799] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 85.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950693.505353010] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 88.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950695.505478200] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 90.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950697.505694554] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 92.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950700.505931476] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 95.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950702.505433312] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 97.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950704.505626038] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 99.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950707.506566636] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 102.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950710.505639220] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 105.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950713.505762921] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 108.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950716.506580840] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 111.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950719.505692765] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 114.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950722.506041473] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 117.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950724.506322412] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 119.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950726.505798606] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 121.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950729.505872819] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 124.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950731.505512701] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 126.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950734.505666584] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 129.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950737.505971559] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 132.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950739.505877039] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 134.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950741.505672942] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 136.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950743.505558081] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 138.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950746.506724257] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 141.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950749.506367421] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 144.0s (sev=1.00)
+[monitor_node-6] [WARN] [1789950752.506302707] [diagnostic_monitor]: ANOMALY on [_NODE_NAME_UNKNOWN_] node_crash: Node _NODE_NAME_UNKNOWN_ absent from ROS 2 graph (process crash or killed); last seen alive t=1789950605.50, missing for 147.0s (sev=1.00)

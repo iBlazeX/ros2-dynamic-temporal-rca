@@ -1,0 +1,19 @@
+frame_000.txt: system=NORMAL backend=gazebo root=[] anomalous=[] starved=[]
+frame_007.txt: system=DEGRADED backend=gazebo root=['lidar_node'] anomalous=['perception_no'] starved=[]
+frame_009.txt: system=DEGRADED backend=gazebo root=['lidar_node'] anomalous=['perception_nod'] starved=[]
+frame_014.txt: system=RECOVERING backend=gazebo root=['lidar_node'] anomalous=['perception_no'] starved=[]
+frame_016.txt: system=NORMAL backend=gazebo root=[] anomalous=[] starved=[]
+frame_018.txt: system=DEGRADED backend=gazebo root=['camera_node'] anomalous=['perception_no'] starved=[]
+frame_019.txt: system=DEGRADED backend=gazebo root=['camera_node'] anomalous=['localization_', 'perception_n'] starved=[]
+frame_023.txt: system=DEGRADED backend=gazebo root=['camera_node'] anomalous=['contro', 'localization', 'perception_', 'plannin'] starved=[]
+frame_025.txt: system=DEGRADED backend=gazebo root=['camera_node'] anomalous=['contro', 'localizatio', 'perception_', 'planning'] starved=[]
+frame_026.txt: system=RECOVERING backend=gazebo root=['camera_node'] anomalous=['contro', 'localizatio', 'perception_', 'planning'] starved=[]
+frame_028.txt: system=NORMAL backend=gazebo root=[] anomalous=[] starved=[]
+frame_029.txt: system=DEGRADED backend=gazebo root=['perception_node'] anomalous=[] starved=[]
+frame_031.txt: system=DEGRADED backend=gazebo root=['perception_nod'] anomalous=['localization_n'] starved=[]
+frame_033.txt: system=DEGRADED backend=gazebo root=['perception'] anomalous=['localization_no'] starved=[]
+frame_035.txt: system=RECOVERING backend=gazebo root=['perception'] anomalous=['localization_no'] starved=[]
+frame_final.txt: system=RECOVERING backend=gazebo root=['perceptio'] anomalous=['localization_no'] starved=[]
+
+frames=37 distinct_states=16
+ground-truth leak check: PASS (nothing leaked)

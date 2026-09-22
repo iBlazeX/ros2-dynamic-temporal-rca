@@ -1,0 +1,537 @@
+{
+  "backend": "rca_sim",
+  "simulator": "rca_sim",
+  "generated_at": 1790115170.800033,
+  "snapshots": [
+    {
+      "label": "baseline",
+      "t": 1790115179.0301528,
+      "nodes": [
+        "camera_node",
+        "control_node",
+        "imu_node",
+        "lidar_node",
+        "localization_node",
+        "odometry_node",
+        "perception_node",
+        "planning_node",
+        "sim_world"
+      ],
+      "edges": [
+        [
+          "camera_node",
+          "perception_node"
+        ],
+        [
+          "control_node",
+          "sim_world"
+        ],
+        [
+          "imu_node",
+          "localization_node"
+        ],
+        [
+          "lidar_node",
+          "perception_node"
+        ],
+        [
+          "localization_node",
+          "planning_node"
+        ],
+        [
+          "odometry_node",
+          "localization_node"
+        ],
+        [
+          "perception_node",
+          "localization_node"
+        ],
+        [
+          "perception_node",
+          "planning_node"
+        ],
+        [
+          "planning_node",
+          "control_node"
+        ]
+      ]
+    },
+    {
+      "label": "after_camera_stop",
+      "t": 1790115185.4437504,
+      "nodes": [
+        "camera_node",
+        "control_node",
+        "imu_node",
+        "lidar_node",
+        "localization_node",
+        "odometry_node",
+        "perception_node",
+        "planning_node",
+        "sim_world"
+      ],
+      "edges": [
+        [
+          "camera_node",
+          "perception_node"
+        ],
+        [
+          "control_node",
+          "sim_world"
+        ],
+        [
+          "imu_node",
+          "localization_node"
+        ],
+        [
+          "lidar_node",
+          "perception_node"
+        ],
+        [
+          "localization_node",
+          "planning_node"
+        ],
+        [
+          "odometry_node",
+          "localization_node"
+        ],
+        [
+          "perception_node",
+          "localization_node"
+        ],
+        [
+          "perception_node",
+          "planning_node"
+        ],
+        [
+          "planning_node",
+          "control_node"
+        ]
+      ]
+    },
+    {
+      "label": "after_camera_restart",
+      "t": 1790115200.5050714,
+      "nodes": [
+        "camera_node",
+        "control_node",
+        "imu_node",
+        "lidar_node",
+        "localization_node",
+        "odometry_node",
+        "perception_node",
+        "planning_node",
+        "sim_world"
+      ],
+      "edges": [
+        [
+          "camera_node",
+          "perception_node"
+        ],
+        [
+          "control_node",
+          "sim_world"
+        ],
+        [
+          "imu_node",
+          "localization_node"
+        ],
+        [
+          "lidar_node",
+          "perception_node"
+        ],
+        [
+          "localization_node",
+          "planning_node"
+        ],
+        [
+          "odometry_node",
+          "localization_node"
+        ],
+        [
+          "perception_node",
+          "localization_node"
+        ],
+        [
+          "perception_node",
+          "planning_node"
+        ],
+        [
+          "planning_node",
+          "control_node"
+        ]
+      ]
+    },
+    {
+      "label": "after_perception_crash",
+      "t": 1790115260.6261714,
+      "nodes": [
+        "camera_node",
+        "control_node",
+        "imu_node",
+        "lidar_node",
+        "localization_node",
+        "odometry_node",
+        "perception_node",
+        "planning_node",
+        "sim_world"
+      ],
+      "edges": [
+        [
+          "camera_node",
+          "perception_node"
+        ],
+        [
+          "control_node",
+          "sim_world"
+        ],
+        [
+          "imu_node",
+          "localization_node"
+        ],
+        [
+          "lidar_node",
+          "perception_node"
+        ],
+        [
+          "localization_node",
+          "planning_node"
+        ],
+        [
+          "odometry_node",
+          "localization_node"
+        ],
+        [
+          "perception_node",
+          "localization_node"
+        ],
+        [
+          "perception_node",
+          "planning_node"
+        ],
+        [
+          "planning_node",
+          "control_node"
+        ]
+      ]
+    },
+    {
+      "label": "after_perception_respawn",
+      "t": 1790115280.6994133,
+      "nodes": [
+        "camera_node",
+        "control_node",
+        "imu_node",
+        "lidar_node",
+        "localization_node",
+        "odometry_node",
+        "perception_node",
+        "planning_node",
+        "sim_world"
+      ],
+      "edges": [
+        [
+          "camera_node",
+          "perception_node"
+        ],
+        [
+          "control_node",
+          "sim_world"
+        ],
+        [
+          "imu_node",
+          "localization_node"
+        ],
+        [
+          "lidar_node",
+          "perception_node"
+        ],
+        [
+          "localization_node",
+          "planning_node"
+        ],
+        [
+          "odometry_node",
+          "localization_node"
+        ],
+        [
+          "perception_node",
+          "localization_node"
+        ],
+        [
+          "perception_node",
+          "planning_node"
+        ],
+        [
+          "planning_node",
+          "control_node"
+        ]
+      ]
+    },
+    {
+      "label": "after_planning_topic_change",
+      "t": 1790115290.9349294,
+      "nodes": [
+        "camera_node",
+        "control_node",
+        "imu_node",
+        "lidar_node",
+        "localization_node",
+        "odometry_node",
+        "perception_node",
+        "planning_node",
+        "sim_world"
+      ],
+      "edges": [
+        [
+          "camera_node",
+          "perception_node"
+        ],
+        [
+          "control_node",
+          "sim_world"
+        ],
+        [
+          "imu_node",
+          "localization_node"
+        ],
+        [
+          "lidar_node",
+          "perception_node"
+        ],
+        [
+          "odometry_node",
+          "localization_node"
+        ],
+        [
+          "odometry_node",
+          "planning_node"
+        ],
+        [
+          "perception_node",
+          "localization_node"
+        ],
+        [
+          "perception_node",
+          "planning_node"
+        ],
+        [
+          "planning_node",
+          "control_node"
+        ]
+      ]
+    },
+    {
+      "label": "after_clear",
+      "t": 1790115306.1923223,
+      "nodes": [
+        "camera_node",
+        "control_node",
+        "imu_node",
+        "lidar_node",
+        "localization_node",
+        "odometry_node",
+        "perception_node",
+        "planning_node",
+        "sim_world"
+      ],
+      "edges": [
+        [
+          "camera_node",
+          "perception_node"
+        ],
+        [
+          "control_node",
+          "sim_world"
+        ],
+        [
+          "imu_node",
+          "localization_node"
+        ],
+        [
+          "lidar_node",
+          "perception_node"
+        ],
+        [
+          "localization_node",
+          "planning_node"
+        ],
+        [
+          "odometry_node",
+          "localization_node"
+        ],
+        [
+          "perception_node",
+          "localization_node"
+        ],
+        [
+          "perception_node",
+          "planning_node"
+        ],
+        [
+          "planning_node",
+          "control_node"
+        ]
+      ]
+    },
+    {
+      "label": "with_aux_node",
+      "t": 1790115318.2426467,
+      "nodes": [
+        "aux_probe_node",
+        "camera_node",
+        "control_node",
+        "imu_node",
+        "lidar_node",
+        "localization_node",
+        "odometry_node",
+        "perception_node",
+        "planning_node",
+        "sim_world"
+      ],
+      "edges": [
+        [
+          "camera_node",
+          "perception_node"
+        ],
+        [
+          "control_node",
+          "sim_world"
+        ],
+        [
+          "imu_node",
+          "localization_node"
+        ],
+        [
+          "lidar_node",
+          "aux_probe_node"
+        ],
+        [
+          "lidar_node",
+          "perception_node"
+        ],
+        [
+          "localization_node",
+          "planning_node"
+        ],
+        [
+          "odometry_node",
+          "localization_node"
+        ],
+        [
+          "perception_node",
+          "localization_node"
+        ],
+        [
+          "perception_node",
+          "planning_node"
+        ],
+        [
+          "planning_node",
+          "control_node"
+        ]
+      ]
+    },
+    {
+      "label": "after_aux_node_left",
+      "t": 1790115332.5195804,
+      "nodes": [
+        "aux_probe_node",
+        "camera_node",
+        "control_node",
+        "imu_node",
+        "lidar_node",
+        "localization_node",
+        "odometry_node",
+        "perception_node",
+        "planning_node",
+        "sim_world"
+      ],
+      "edges": [
+        [
+          "camera_node",
+          "perception_node"
+        ],
+        [
+          "control_node",
+          "sim_world"
+        ],
+        [
+          "imu_node",
+          "localization_node"
+        ],
+        [
+          "lidar_node",
+          "aux_probe_node"
+        ],
+        [
+          "lidar_node",
+          "perception_node"
+        ],
+        [
+          "localization_node",
+          "planning_node"
+        ],
+        [
+          "odometry_node",
+          "localization_node"
+        ],
+        [
+          "perception_node",
+          "localization_node"
+        ],
+        [
+          "perception_node",
+          "planning_node"
+        ],
+        [
+          "planning_node",
+          "control_node"
+        ]
+      ]
+    }
+  ],
+  "checks": {
+    "node_stop_and_restart": {
+      "left_ros_graph_after_sec": 0.2,
+      "returned_to_ros_graph_after_sec": 6.21,
+      "monitor_graph_after_restart_has_camera_node": true,
+      "note": "a node that exits cleanly unregisters from DDS immediately, so unlike a SIGKILL it leaves the ROS graph at once; the monitor keeps its last-known edges for the RCA window so the starvation it caused can still be attributed to it"
+    },
+    "crash_detection": {
+      "first_anomaly_sec": 0.628,
+      "left_ros_graph_after_sec": null,
+      "ros_graph_timeout_sec": 60.0,
+      "node_was_in_graph_before": true,
+      "note": "runtime starvation detects the crash; DDS graph membership only confirms it later"
+    },
+    "node_disappeared_on_stop": {
+      "camera_node_in_baseline": true,
+      "camera_node_in_monitor_graph_while_down": true,
+      "camera_node_after_restart": true
+    },
+    "topic_endpoint_change": {
+      "baseline_has_localization_to_planning": true,
+      "changed_has_localization_to_planning": false,
+      "changed_has_odometry_to_planning": true,
+      "edges_differ_from_baseline": true
+    },
+    "graph_recovered": {
+      "final_nodes_equal_baseline": true,
+      "final_edges_equal_baseline": true
+    },
+    "node_appearance": {
+      "aux_in_graph_before": false,
+      "aux_in_graph_while_running": true,
+      "aux_edge_lidar_to_aux": true,
+      "aux_in_graph_after_clean_exit": true
+    },
+    "dds_participant_lease": {
+      "killed_with": "SIGKILL (no clean DDS unregister)",
+      "left_ros_graph_after_sec": 20.04,
+      "timeout_sec": 90.0,
+      "rmw": "rmw_fastrtps_cpp (default)"
+    },
+    "snapshots_recorded": 5
+  }
+}

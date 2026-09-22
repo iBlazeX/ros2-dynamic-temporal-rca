@@ -1,0 +1,271 @@
+# Gazebo backend scenarios (EVALUATION LAYER ONLY).
+#
+# Everything under `ground_truth` is consumed exclusively by the Gazebo scenario
+# runner (rca_gazebo/scenario_runner.py). The diagnostic monitor, anomaly
+# detector, RCA engine, dashboard state and TUI never read this file.
+#
+# Fault mechanisms are the shared runtime primitives of rca_sim/degradation.py,
+# applied inside the rca_gazebo sensor drivers and the reused rca_sim processing
+# nodes. Every fault is a real runtime mechanism (delayed publication, dropped
+# messages, repeated measurement, injected CPU work, node exit), never a label.
+#
+#   sensor:    noise (sigma scale), bias, dropout (prob), stale (repeat last), rate (keep fraction)
+#   link:      latency (s), jitter (sigma s), loss (prob)
+#   workload:  workload (ms CPU per callback), cpu_pressure (busy threads)
+#   lifecycle: crash (abrupt exit), stop (clean exit; launch respawns), restart
+#   behaviour: degradation, localization_failure, navigation_failure, control_failure, topic_change
+#
+# ground_truth fields:
+#   root                 primary injected root (earliest onset)
+#   accepted_roots       every injected root; a diagnosis naming any of them counts as correct
+#   observable_chain     nodes whose symptom the monitor's metrics can observe (drives chain accuracy)
+#   physical_chain       nodes physically affected (reported as coverage only, never credited)
+#   expect_no_diagnosis  true for pure graph changes without a fault (false alarms are counted)
+
+environment:
+  name: rca_gazebo
+  simulator: gazebo
+  description: >-
+    Gazebo Harmonic (gz sim 8) world rca_arena.sdf with a differential-drive robot
+    (gpu_lidar 10 Hz, camera 5 Hz, IMU 20 Hz, DiffDrive odometry 20 Hz), bridged to
+    ROS 2 through ros_gz_bridge into the /gz namespace, then driven by the rca_gazebo
+    sensor drivers and the rca_sim processing pipeline.
+  # Design-time dependency graph used ONLY by the static-graph baselines.
+  static_design_graph:
+    nodes: [lidar_node, camera_node, imu_node, odometry_node, perception_node, localization_node, planning_node, control_node, sim_world]
+    edges:
+      - {from: lidar_node, to: perception_node, topics: [/sim/lidar/scan]}
+      - {from: camera_node, to: perception_node, topics: [/sim/camera/image]}
+      - {from: imu_node, to: localization_node, topics: [/sim/imu/data]}
+      - {from: odometry_node, to: localization_node, topics: [/sim/odom]}
+      - {from: perception_node, to: localization_node, topics: [/perception/obstacles]}
+      - {from: perception_node, to: planning_node, topics: [/perception/obstacles]}
+      - {from: localization_node, to: planning_node, topics: [/localization/pose]}
+      - {from: planning_node, to: control_node, topics: [/planning/path]}
+      - {from: control_node, to: sim_world, topics: [/cmd_vel]}
+
+defaults:
+  repetitions: 3
+  observation_sec: 8.0
+  settle_sec: 25.0
+  fault_duration: 10.0
+
+scenarios:
+  # ------------------------------------------------------- upstream sensor faults
+  - key: lidar_latency
+    name: "G01 LiDAR latency: scan publication delayed 0.4 s"
+    group: communication
+    benchmark: true
+    faults: [{target: lidar_node, type: latency, param: 0.4, onset: 0.0}]
+    ground_truth:
+      root: lidar_node
+      accepted_roots: [lidar_node]
+      observable_chain: [lidar_node, perception_node]
+      physical_chain: [lidar_node, perception_node, localization_node, planning_node, control_node]
+
+  - key: lidar_dropout
+    name: "G02 LiDAR dropout: the scan stops entirely"
+    group: single
+    benchmark: true
+    faults: [{target: lidar_node, type: dropout, param: 1.0, onset: 0.0}]
+    ground_truth:
+      root: lidar_node
+      accepted_roots: [lidar_node]
+      observable_chain: [lidar_node, perception_node, localization_node]
+      physical_chain: [lidar_node, perception_node, localization_node, planning_node, control_node]
+
+  - key: lidar_noise
+    name: "G03 LiDAR degradation: heavy noise and invalid returns"
+    group: single
+    benchmark: true
+    faults: [{target: lidar_node, type: noise, param: 8.0, onset: 0.0}]
+    ground_truth:
+      root: lidar_node
+      accepted_roots: [lidar_node]
+      observable_chain: [lidar_node, perception_node]
+      physical_chain: [lidar_node, perception_node, localization_node, planning_node, control_node]
+
+  - key: camera_dropout
+    name: "G04 camera dropout: the image stream stops (perception gating opens downstream first)"
+    group: ambiguous
+    benchmark: true
+    faults: [{target: camera_node, type: dropout, param: 1.0, onset: 0.0}]
+    observation_sec: 10.0
+    ground_truth:
+      root: camera_node
+      accepted_roots: [camera_node]
+      observable_chain: [camera_node, perception_node, localization_node]
+      physical_chain: [camera_node, perception_node, localization_node, planning_node, control_node]
+
+  - key: odometry_stale
+    name: "G05 stale/repeated sensor data: odometry repeats its last measurement"
+    group: ambiguous
+    benchmark: true
+    faults: [{target: odometry_node, type: stale, param: 1.0, onset: 0.0}]
+    observation_sec: 10.0
+    ground_truth:
+      root: odometry_node
+      accepted_roots: [odometry_node]
+      observable_chain: [odometry_node, localization_node, planning_node]
+      physical_chain: [odometry_node, localization_node, planning_node, control_node]
+
+  - key: imu_rate_drop
+    name: "G06 sensor rate reduction: IMU publishes at a quarter of its rate"
+    group: single
+    benchmark: true
+    faults: [{target: imu_node, type: rate, param: 0.25, onset: 0.0}]
+    ground_truth:
+      root: imu_node
+      accepted_roots: [imu_node]
+      observable_chain: [imu_node]
+      physical_chain: [imu_node, localization_node]
+
+  # -------------------------------------------------------------- processing faults
+  - key: perception_delay
+    name: "G07 perception processing delay: 0.4 s of real work per scan"
+    group: single
+    benchmark: true
+    faults: [{target: perception_node, type: processing_delay, param: 0.4, onset: 0.0}]
+    ground_truth:
+      root: perception_node
+      accepted_roots: [perception_node]
+      observable_chain: [perception_node]
+      physical_chain: [perception_node, localization_node, planning_node, control_node]
+
+  - key: perception_degradation
+    name: "G08 perception degradation: empty obstacle sets"
+    group: single
+    benchmark: true
+    faults: [{target: perception_node, type: degradation, param: 0.0, onset: 0.0}]
+    ground_truth:
+      root: perception_node
+      accepted_roots: [perception_node]
+      observable_chain: [perception_node, localization_node]
+      physical_chain: [perception_node, localization_node, planning_node, control_node]
+
+  - key: localization_failure
+    name: "G09 localization failure: pose jump and uncertainty spike"
+    group: single
+    benchmark: true
+    faults: [{target: localization_node, type: localization_failure, param: 20.0, onset: 0.0}]
+    ground_truth:
+      root: localization_node
+      accepted_roots: [localization_node]
+      observable_chain: [localization_node, planning_node, control_node]
+      physical_chain: [localization_node, planning_node, control_node]
+
+  - key: navigation_failure
+    name: "G10 planning failure: the planner emits no path"
+    group: single
+    benchmark: true
+    faults: [{target: planning_node, type: navigation_failure, param: 2.0, onset: 0.0}]
+    ground_truth:
+      root: planning_node
+      accepted_roots: [planning_node]
+      observable_chain: [planning_node, control_node]
+      physical_chain: [planning_node, control_node]
+
+  - key: control_failure
+    name: "G11 control failure: erratic velocity commands"
+    group: single
+    benchmark: true
+    faults: [{target: control_node, type: control_failure, param: 1.0, onset: 0.0}]
+    ground_truth:
+      root: control_node
+      accepted_roots: [control_node]
+      observable_chain: [control_node]
+      physical_chain: [control_node]
+
+  # ------------------------------------------------------------------ communication
+  - key: perception_link_latency
+    name: "G12 communication delay: perception output delayed 0.4 s"
+    group: communication
+    benchmark: true
+    faults: [{target: perception_node, type: latency, param: 0.4, onset: 0.0}]
+    ground_truth:
+      root: perception_node
+      accepted_roots: [perception_node]
+      observable_chain: [perception_node, localization_node]
+      physical_chain: [perception_node, localization_node, planning_node, control_node]
+
+  - key: lidar_link_loss
+    name: "G13 communication loss: 60 % of LiDAR messages dropped in flight"
+    group: communication
+    benchmark: true
+    faults: [{target: lidar_node, type: loss, param: 0.6, onset: 0.0}]
+    ground_truth:
+      root: lidar_node
+      accepted_roots: [lidar_node]
+      observable_chain: [lidar_node, perception_node]
+      physical_chain: [lidar_node, perception_node, localization_node]
+
+  # ----------------------------------------------------------------- dynamic graph
+  - key: perception_crash
+    name: "G14 node crash: perception process dies abruptly and is respawned"
+    group: dynamic_graph
+    benchmark: true
+    faults: [{target: perception_node, type: crash, param: 0.0, onset: 0.0, duration: 1.0}]
+    observation_sec: 10.0
+    ground_truth:
+      root: perception_node
+      accepted_roots: [perception_node]
+      observable_chain: [perception_node, localization_node]
+      physical_chain: [perception_node, localization_node, planning_node, control_node]
+
+  - key: localization_restart
+    name: "G15 process restart: localization stops cleanly and is respawned after 4 s"
+    group: dynamic_graph
+    benchmark: true
+    faults: [{target: localization_node, type: stop, param: 0.0, onset: 0.0, duration: 1.0}]
+    observation_sec: 10.0
+    ground_truth:
+      root: localization_node
+      accepted_roots: [localization_node]
+      observable_chain: [localization_node, planning_node]
+      physical_chain: [localization_node, planning_node, control_node]
+
+  - key: planning_topic_change
+    name: "G16 runtime topic change: the planner switches its pose source to raw odometry (no fault)"
+    group: dynamic_graph
+    benchmark: true
+    faults: [{target: planning_node, type: topic_change, param: 1.0, onset: 0.0}]
+    ground_truth:
+      root: null
+      accepted_roots: []
+      expect_no_diagnosis: true
+      observable_chain: []
+      physical_chain: []
+
+  # ----------------------------------------------------------------------- compound
+  - key: lidar_noise_plus_perception_workload
+    name: "G17 compound: LiDAR noise, then perception workload 1.5 s later"
+    group: compound
+    benchmark: true
+    faults:
+      - {target: lidar_node, type: noise, param: 8.0, onset: 0.0}
+      - {target: perception_node, type: workload, param: 150.0, onset: 1.5}
+    observation_sec: 10.0
+    ground_truth:
+      root: lidar_node
+      accepted_roots: [lidar_node, perception_node]
+      observable_chain: [lidar_node, perception_node]
+      physical_chain: [lidar_node, perception_node, localization_node, planning_node, control_node]
+
+  - key: camera_dropout_plus_localization_failure
+    name: "G18 ambiguous compound: camera loss, then a strong localization failure 3 s later"
+    group: ambiguous
+    benchmark: true
+    faults:
+      - {target: camera_node, type: dropout, param: 1.0, onset: 0.0}
+      - {target: localization_node, type: localization_failure, param: 20.0, onset: 3.0}
+    observation_sec: 12.0
+    ground_truth:
+      root: camera_node
+      accepted_roots: [camera_node, localization_node]
+      observable_chain: [camera_node, perception_node, localization_node, planning_node]
+      physical_chain: [camera_node, perception_node, localization_node, planning_node, control_node]
+
+demos:
+  - {key: lidar_noise, title: "Gazebo demo 1: nominal -> LiDAR degradation -> cascade -> lidar_node identified"}
+  - {key: perception_crash, title: "Gazebo demo 2: nominal -> perception process crash -> perception_node identified"}
+  - {key: camera_dropout, title: "Gazebo demo 3: camera loss seen downstream first; dependency structure identifies camera_node"}
