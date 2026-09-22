@@ -88,19 +88,25 @@ desktop.ini
 # Runtime SQLite files
 # ============================================================
 
-# Live databases should not accidentally get committed.
+# Live/runtime SQLite databases
 events.db
 events.db-wal
 events.db-shm
-
-# SQLite auxiliary files
-*.sqlite-shm
 *.sqlite-wal
+*.sqlite-shm
 
-# Keep explicitly curated research databases under runs/.
-!runs/
-!runs/**/*.db
-!runs/**/*.sqlite
+# Large raw benchmark databases
+runs/**/*.db
+runs/**/*.sqlite
+
+# Keep curated benchmark metadata/results
+!runs/**/results.json
+!runs/**/dynamic_graph.json
+!runs/**/overhead.json
+
+# Keep TUI demo artifacts
+!runs/**/tui_demo/
+!runs/**/tui_demo/**
 
 # ============================================================
 # Temporary / scratch files
