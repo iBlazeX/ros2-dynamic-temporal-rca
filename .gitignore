@@ -1,13 +1,144 @@
-# colcon / ROS 2 build outputs
+# ============================================================
+# ROS 2 / Colcon generated files
+# ============================================================
+
 build/
 install/
 log/
 
-# Python bytecode
-__pycache__/
-*.pyc
+# ============================================================
+# Python generated files
+# ============================================================
 
-# live event store at the workspace root (archived copies are kept under runs/)
-/events.db
-/events.db-wal
-/events.db-shm
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Coverage / test caches
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# ============================================================
+# Virtual environments
+# ============================================================
+
+.venv/
+venv/
+env/
+ENV/
+.webvenv/
+
+# ============================================================
+# CMake generated files
+# ============================================================
+
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+Makefile
+
+# ============================================================
+# IDE / editor files
+# ============================================================
+
+.idea/
+.vscode/
+*.iml
+
+# Zed
+.zed/
+
+# Temporary editor files
+*.swp
+*.swo
+*~
+.#*
+
+# ============================================================
+# OS files
+# ============================================================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ============================================================
+# ROS runtime / user-local files
+# ============================================================
+
+*.launch.xml.bak
+*.rviz.bak
+
+# ============================================================
+# Logs generated outside the curated runs/ directory
+# ============================================================
+
+*.log
+
+# Keep curated logs under runs/ if explicitly added.
+!runs/
+!runs/**/*.log
+
+# ============================================================
+# Runtime SQLite files
+# ============================================================
+
+# Live databases should not accidentally get committed.
+events.db
+events.db-wal
+events.db-shm
+
+# SQLite auxiliary files
+*.sqlite-shm
+*.sqlite-wal
+
+# Keep explicitly curated research databases under runs/.
+!runs/
+!runs/**/*.db
+!runs/**/*.sqlite
+
+# ============================================================
+# Temporary / scratch files
+# ============================================================
+
+*.tmp
+*.temp
+*.bak
+*.orig
+
+# ============================================================
+# Local secrets / environment files
+# ============================================================
+
+.env
+.env.*
+!.env.example
+
+# ============================================================
+# Python packaging
+# ============================================================
+
+*.egg-info/
+dist/
+wheelhouse/
+
+# ============================================================
+# Gazebo / simulation generated artifacts
+# ============================================================
+
+# Only ignore these if they are created inside the repo.
+gzserver/
+gzclient/
+
+# ============================================================
+# Misc generated reports
+# ============================================================
+
+# Uncomment only if these are purely generated and not research artifacts:
+# reports/generated/
+# results/generated/
